@@ -1,19 +1,20 @@
-require('dotenv-defaults').config()
+require("dotenv-defaults").config();
 
-const http = require('http')
-const express = require('express')
-const mongoose = require('mongoose')
-const WebSocket = require('ws')
+const http = require("http");
+const express = require("express");
+const mongoose = require("mongoose");
+const WebSocket = require("ws");
 
-const Message = require('./models/message')
+const Post = require("./models/post")
+const User = require("./models/user")
 
-const app = express()
-const server = http.createServer(app)
-const wss = new WebSocket.Server({ server })
+const app = express();
+const server = http.createServer(app);
+const wss = new WebSocket.Server({ server });
 
 if (!process.env.MONGO_URL) {
-  console.error('Missing MONGO_URL!!!')
-  process.exit(1)
+	console.error("Missing MONGO_URL!!!");
+	process.exit(1);
 }
 
 mongoose.connect(process.env.MONGO_URL, {
@@ -39,45 +40,13 @@ db.once('open', () => {
       sendData(['status', s])
     }
 
-    Message.find()
-      .limit(100)
-      .sort({ _id: 1 })
-      .exec((err, res) => {
-        if (err) throw err
-
-        // initialize app with existing messages
-        sendData(['init', res])
-      })
-
     ws.onmessage = (message) => {
       const { data } = message
       console.log(data)
       const [task, payload] = JSON.parse(data)
 
       switch (task) {
-        case 'input': {
-          // TODO
-          Message.insertMany([payload], () => {
-            sendData(['output', [payload]]);
-
-            sendStatus({
-              type: 'success',
-              msg: 'Message sent.'
-            })
-          });
-          
-          break
-        }
-        case 'clear': {
-          Message.deleteMany({}, () => {
-            sendData(['cleared'])
-
-            sendStatus({
-              type: 'info',
-              msg: 'Message cache cleared.'
-            })
-          })
-
+        case "login": {
           break
         }
         default:

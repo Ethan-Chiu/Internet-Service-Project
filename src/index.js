@@ -7,7 +7,7 @@ import 'antd/dist/antd.css'
 
 ReactDOM.render(
   <React.StrictMode>
-    <div class="g-signin2" data-onsuccess="onSignIn"></div>
+    {/* <div class="g-signin2" data-onsuccess="onSignIn"></div> */}
     <App />
   </React.StrictMode>,
   document.getElementById('root')
