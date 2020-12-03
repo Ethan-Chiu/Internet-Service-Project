@@ -1,12 +1,14 @@
 import "./App.css";
-import React, { useEffect, useRef, useState } from "react";
-import useChat from "./useChat";
+import React from "react";
 import { Button, Input, message, Tag } from "antd";
-import { Login, Main } from "./pages";
 import axios from 'axios'
 
 //react router
-import { HashRouter as Router, Switch, Route, Link } from "react-router-dom";
+import { HashRouter as Router, Switch, Route} from "react-router-dom";
+
+//page component
+import { Login, Main } from "./pages";
+import {MainHome, MainSearch, MainPost, MainProfile} from "./pages/main/main_pages";
 
 function App() {
 	return (
@@ -15,9 +17,22 @@ function App() {
 				<Route path="/login">
 					<Login />
 				</Route>
-				<Route path = "/main">
+				<Route exact path = "/main">
 					<Main />
 				</Route>
+					<Route path="/main/home">
+						<MainHome/>
+					</Route>
+					<Route path = "/main/search">
+						<MainSearch/>
+					</Route>
+					<Route path = "/main/post">
+						<MainPost/>
+					</Route>
+					<Route path = "/main/profile">
+						<MainProfile/>
+					</Route>
+				
 			</Switch>
 		</Router>
 	);

@@ -4,7 +4,7 @@ import GoogleBtn from './GoogleBtn';
 import InAppAccBtn from './InAppAccBtn'
 import './Login.css'
 
-//fontawesome
+//font awesome
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faFacebook } from '@fortawesome/free-brands-svg-icons'
 import { faGoogle } from '@fortawesome/free-brands-svg-icons'
