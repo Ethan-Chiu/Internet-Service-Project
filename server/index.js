@@ -1,20 +1,20 @@
-require('dotenv-defaults').config()
+require("dotenv-defaults").config();
 
-const http = require('http')
-const express = require('express')
-const mongoose = require('mongoose')
-const WebSocket = require('ws')
+const http = require("http");
+const express = require("express");
+const mongoose = require("mongoose");
+const WebSocket = require("ws");
 
 const Post = require("./models/post")
 const User = require("./models/user")
 
-const app = express()
-const server = http.createServer(app)
-const wss = new WebSocket.Server({ server })
+const app = express();
+const server = http.createServer(app);
+const wss = new WebSocket.Server({ server });
 
 if (!process.env.MONGO_URL) {
-  console.error('Missing MONGO_URL!!!')
-  process.exit(1)
+	console.error("Missing MONGO_URL!!!");
+	process.exit(1);
 }
 
 mongoose.connect(process.env.MONGO_URL, {
