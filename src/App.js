@@ -7,13 +7,16 @@ import axios from 'axios'
 import { HashRouter as Router, Switch, Route} from "react-router-dom";
 
 //page component
-import { Login, Main } from "./pages";
+import { Home, Login, Main } from "./pages";
 import {MainHome, MainSearch, MainPost, MainProfile} from "./pages/main/main_pages";
 
 function App() {
 	return (
 		<Router>
 			<Switch>
+				<Route exact path="/">
+					<Home />
+				</Route>
 				<Route path="/login">
 					<Login />
 				</Route>

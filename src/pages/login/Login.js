@@ -1,5 +1,5 @@
 import React from 'react'
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import GoogleBtn from './GoogleBtn';
 import InAppAccBtn from './InAppAccBtn'
 import './Login.css'
@@ -9,8 +9,9 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faFacebook } from '@fortawesome/free-brands-svg-icons'
 import { faGoogle } from '@fortawesome/free-brands-svg-icons'
 import { faInstagram } from '@fortawesome/free-brands-svg-icons'
+import {faAdjust} from '@fortawesome/free-solid-svg-icons'
 
-const Login  = ()=>{
+const Login  = () => {
 
     // const [signedin, setSignedin] = useState(false);
 
@@ -24,13 +25,36 @@ const Login  = ()=>{
         document.getElementById('container').classList.remove("right-panel-active");
     }
 
+    // function to set a given theme/color-scheme
+    function setTheme(themeName) {
+        localStorage.setItem('theme', themeName);
+        document.getElementById("theme-controller").className = themeName;
+    }
+    // function to toggle between light and dark theme
+    function toggleTheme() {
+    if (localStorage.getItem('theme') === 'theme-dark'){
+        setTheme('theme-light');
+    } else {
+        setTheme('theme-dark');
+    }
+    }
+
+    useEffect(
+        // Immediately invoked function to set the theme on initial load
+        () => {
+            if (localStorage.getItem('theme') === 'theme-dark') {
+                setTheme('theme-dark');
+            } else {
+                setTheme('theme-light');
+            }
+        }
+    );
+
     return(
-        <>
-            {/* <div>
-                <GoogleBtn/>
-                <InAppAccBtn/>
-            </div> */}
-            
+        <div class = "theme-dark" id = "theme-controller">
+            <div class = "top">
+                <button id = "themeswitch" onClick = {toggleTheme}><FontAwesomeIcon icon={faAdjust}/></button>
+            </div>
             <div class="container" id="container">
                 <div class="form-container sign-up-container">
                     <form action="#">
@@ -58,7 +82,7 @@ const Login  = ()=>{
                         <span>or use your account</span>
                         <input type="email" placeholder="Email" />
                         <input type="password" placeholder="Password" />
-                        <a href="#/Main">Forgot your password?</a>
+                        <a href="#/Main" >Forgot your password?</a>
                         <button>Sign In</button>
                     </form>
                 </div>
@@ -66,7 +90,7 @@ const Login  = ()=>{
                     <div class="overlay">
                         <div class="overlay-panel overlay-left">
                             <h1>Welcome Back!</h1>
-                            <p>To keep connected with us please login with your personal info</p>
+                            <p>Already have an account?</p>
                             <button class="ghost" id="signIn" onClick = {undomovePanel}>Sign In</button>
                         </div>
                         <div class="overlay-panel overlay-right">
@@ -86,7 +110,8 @@ const Login  = ()=>{
                     <a target="_blank" href="https://www.florin-pop.com/blog/2019/03/double-slider-sign-in-up-form/">here</a>.
                 </p>
             </footer>
-        </>
+        </div>
+        
     )
 }
 

@@ -4,18 +4,71 @@
 	box-sizing: border-box;
 }
 
-body {
-	background: #f6f5f7;
+.theme-light {
+	/*base color*/
+	--color-primary: #ebf0f6;
+	--color-secondary: #98ccd3;
+	--color-accent: #364e68;
+	--color-highlight: #132238;
+	/* additional color */
+	--font-color: #132238;
+	--shadow1: rgba(0, 0, 0, 0.25);
+	--shadow2: rgba(0, 0, 0, 0.22);
+ }
+ .theme-dark {
+	 /*base color*/
+	--color-primary: #132238;
+	--color-secondary: #364e68;
+	--color-accent: #98ccd3;
+	--color-highlight: #ebf0f6;
+	/* additional color */
+	--font-color: #ebf0f6;
+	--shadow1: rgba(178, 208, 226, 0.25);
+	--shadow2: rgba(178, 208, 226, 0.22);
+ }
+
+ .theme-dark{
+	background-color: var(--color-primary);
 	display: flex;
 	justify-content: center;
 	align-items: center;
 	flex-direction: column;
 	font-family: 'Montserrat', sans-serif;
-	height: 100vh;
+	height: 100%;
 	margin: -20px 0 50px;
+	padding: 150px 150px;
+}
+
+.theme-light{
+	background-color: var(--color-primary);
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	flex-direction: column;
+	font-family: 'Montserrat', sans-serif;
+	height: 100%;
+	margin: -20px 0 50px;
+	padding: 150px 150px;
+}
+
+.top{
+	top:0;
+	position: fixed;
+	text-align: right;
+	left: 0;
+    right: 0;
+}
+
+#themeswitch{
+	width: 40px;
+	height: 40px;
+	padding: 0;
+	margin: 30px 30px ;
+	border-radius: 50% ;	
 }
 
 h1 {
+	color: var(--font-color) !important ;
 	font-weight: bold;
 	margin: 0;
 }
@@ -25,8 +78,9 @@ h2 {
 }
 
 p {
-	font-size: 14px;
-	font-weight: 100;
+	color: var(--font-color);
+	font-size: 15px;
+	font-weight: 200;
 	line-height: 20px;
 	letter-spacing: 0.5px;
 	margin: 20px 0 30px;
@@ -37,7 +91,7 @@ span {
 }
 
 a {
-	color: #333;
+	color: var(--color-accent) !important;
 	font-size: 14px;
 	text-decoration: none;
 	margin: 15px 0;
@@ -45,9 +99,9 @@ a {
 
 button {
 	border-radius: 20px;
-	border: 1px solid #FF4B2B;
-	background-color: #FF4B2B;
-	color: #FFFFFF;
+	border: 1px solid var(--color-accent);
+	background-color: var(--color-accent);
+	color: var(--color-primary) !important;
 	font-size: 12px;
 	font-weight: bold;
 	padding: 12px 45px;
@@ -66,11 +120,11 @@ button:focus {
 
 button.ghost {
 	background-color: transparent;
-	border-color: #FFFFFF;
+	border-color: var(--color-primary);
 }
 
 form {
-	background-color: #FFFFFF;
+	background-color: var(--color-primary);
 	display: flex;
 	align-items: center;
 	justify-content: center;
@@ -90,10 +144,10 @@ input {
 }
 
 .container {
-	background-color: #fff;
+	background-color: var(--color-primary);
 	border-radius: 10px;
-  	box-shadow: 0 14px 28px rgba(0,0,0,0.25), 
-			0 10px 10px rgba(0,0,0,0.22);
+  	box-shadow: 0 14px 28px var(--shadow1), 
+			0 10px 10px var(--shadow2);
 	position: relative;
 	overflow: hidden;
 	width: 768px;
@@ -160,13 +214,13 @@ input {
 }
 
 .overlay {
-	background: #FF416C;
-	background: -webkit-linear-gradient(to right, #FF4B2B, #FF416C);
-	background: linear-gradient(to right, #FF4B2B, #FF416C);
+	background: var(--color-secondary);
+	background: -webkit-linear-gradient(to right, var(--color-accent), var(--color-secondary));
+	background: linear-gradient(to right, var(--color-accent), var(--color-secondary));
 	background-repeat: no-repeat;
 	background-size: cover;
 	background-position: 0 0;
-	color: #FFFFFF;
+	color: var(--color-primary);
 	position: relative;
 	left: -100%;
 	height: 100%;
@@ -218,13 +272,14 @@ input {
 
 .social-container a {
 	border: 1px solid #DDDDDD;
-	border-radius: 50%;
+	border-radius: 20%;
+	color: var(--color-accent);
 	display: inline-flex;
 	justify-content: center;
 	align-items: center;
 	margin: 0 5px;
 	height: 40px;
-	width: 40px;
+	width: 60px;
 }
 
 footer {
@@ -240,6 +295,7 @@ footer {
 }
 
 footer p {
+	color: var(--color-secondary);
     margin: 10px 0;
 }
 
