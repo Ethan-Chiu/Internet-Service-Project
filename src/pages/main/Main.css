@@ -1,0 +1,29 @@
+* {
+	box-sizing: border-box;
+}
+
+
+.main {
+    height: 100%;
+}
+
+.main-left {
+    background-color: rgb(233, 221, 221);
+    position: absolute;
+    left: 0;
+    right: 15%;
+    width: 15%;
+    height: 100%;
+}
+.main-center {
+    background-color: burlywood;
+    position: absolute;
+    left: 15%;
+    right: 65%;
+    width: 50%;
+    height:100%;
+}
+.main-right {
+    width: 33%;
+    float: right;
+}
