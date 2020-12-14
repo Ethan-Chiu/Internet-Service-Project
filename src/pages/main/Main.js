@@ -61,16 +61,29 @@ const Main = ()=>{
 	const [open3, setOpen3] = React.useState(false);
   
   const handleClick0 = () => {
-    setOpen0(!open0);
+      setOpen0(!open0);
+      setOpen1(false)
+      setOpen2(false)
+      setOpen3(false)
+    
 };
   const handleClick1 = () => {
-    	setOpen1(!open1);
+      setOpen1(!open1);
+      setOpen0(false)
+      setOpen2(false)
+      setOpen3(false)
 	};
 	const handleClick2 = () => {
-    	setOpen2(!open2);
+      setOpen2(!open2);
+      setOpen0(false)
+      setOpen1(false)
+      setOpen3(false)
 	};
 	const handleClick3 = () => {
-    	setOpen3(!open3);
+      setOpen3(!open3);
+      setOpen0(false)
+      setOpen2(false)
+      setOpen1(false)
   	};
 	return (
 		<>
@@ -104,7 +117,7 @@ const Main = ()=>{
           </Avatar>
         </ListItemIcon>
         <ListItemText primary={sample.title} />
-        {open0 ? <ExpandMore />:<ExpandLess /> }
+        {open0 ? <ExpandLess />: <ExpandMore />}
       </ListItem>
       <Collapse in={open0} timeout="auto" unmountOnExit>
         
