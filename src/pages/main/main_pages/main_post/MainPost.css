@@ -1,0 +1,21 @@
+.main-left {
+    background-color: red;
+    position: absolute;
+    left: 0;
+    right: 5%;
+    width: 5%;
+    height: 100%;
+}
+.main-center {
+    background-color: burlywood;
+    position: absolute;
+    left: 6%;
+    right: 66%;
+    top: 10.5%;
+    width: 50%;
+    height:100%;
+}
+.main-right {
+    width: 33%;
+    float: right;
+}

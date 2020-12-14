@@ -21,9 +21,12 @@
     left: 15%;
     right: 65%;
     width: 50%;
-    height:100%;
+    height:75%;
 }
 .main-right {
+    position: absolute;
+    top: 15%;
+    left: 65%;
+    right: 98%;
     width: 33%;
-    float: right;
 }

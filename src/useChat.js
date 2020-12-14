@@ -44,13 +44,16 @@ const useChat = () => {
     //console.log(data);
     client.send(JSON.stringify(data));
   }
-
-  const sendMessage = (msg) => {
-    // TODO
-    sendData(['comment', {	id:		"5fc7398178c97506763601d1",
-														text:	"WOW!" }]);
+  const sendComment = (msg) => {
+    sendData(['comment', msg])
   }
-
+  const sendPost = (msg) => {
+    // TODO
+    sendData(['post', msg]);
+  }
+  const hi = ()=>{
+    console.log('hi')
+  }
   const clearMessages = () => {
     // TODO
     sendData(['clear']);
@@ -60,8 +63,10 @@ const useChat = () => {
     status,
     opened,
     messages,
-    sendMessage,
-    clearMessages
+    sendComment,
+    sendPost,
+    clearMessages,
+    hi
   }
 }
 
