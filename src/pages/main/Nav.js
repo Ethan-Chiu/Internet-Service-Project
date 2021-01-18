@@ -186,7 +186,7 @@ const MainNav = () => {
             <MenuIcon />
           </IconButton>
           <Typography variant="h6" noWrap>
-            Mini variant drawer
+            Near To U
           </Typography>
         </Toolbar>
       </AppBar>
@@ -210,27 +210,35 @@ const MainNav = () => {
         </div>
         <Divider />
             <StyledMenuItem>
-            <ListItemIcon>
+            <IconButton href = "/#/main">
+              <ListItemIcon>
                 <FontAwesomeIcon icon={faStreetView} size="1x"/>
-            </ListItemIcon>
+              </ListItemIcon>
+            </IconButton>
             <Link to = "/main">main</Link>
             </StyledMenuItem>
             <StyledMenuItem>
-            <ListItemIcon>
+            <IconButton href = "/#/main/search">
+              <ListItemIcon>
                 <FontAwesomeIcon icon={faSearch} size="1x"/>
-            </ListItemIcon>
+              </ListItemIcon>
+            </IconButton>
             <Link to = "/main/search">search</Link>
             </StyledMenuItem>
             <StyledMenuItem>
-            <ListItemIcon>
+            <IconButton href = "/#/main/post">
+              <ListItemIcon>
                 <FontAwesomeIcon icon={faPlusSquare} size="1x"/>
-            </ListItemIcon>
+              </ListItemIcon>
+            </IconButton>
             <Link to = "/main/post">post</Link>
             </StyledMenuItem>
             <StyledMenuItem>
-            <ListItemIcon>
+            <IconButton href = "/#/main/profile">
+              <ListItemIcon>
                 <FontAwesomeIcon icon={faAddressCard} size="1x"/>
-            </ListItemIcon>
+              </ListItemIcon>
+            </IconButton>
             <Link to = "/main/profile">profile</Link>
             </StyledMenuItem>
       </Drawer>

@@ -16,7 +16,6 @@
     height: 100%;
 }
 .main-center {
-    background-color: burlywood;
     position: absolute;
     left: 15%;
     right: 65%;
@@ -30,3 +29,9 @@
     right: 98%;
     width: 33%;
 }
+#map {
+    height: 400px;
+    /* The height is 400 pixels */
+    width: 100%;
+    /* The width is the width of the web page */
+  }

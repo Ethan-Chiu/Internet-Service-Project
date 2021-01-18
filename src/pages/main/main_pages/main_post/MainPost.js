@@ -58,27 +58,29 @@ const MainPost = () =>
    
     return (
         <>
-        <div className = 'main-left'>
-            <MainNav />
-        </div>
-            
-        <div className = 'main-center'>
-            <img id="showimg" src="" />
-            <textarea cols="50" rows="5" placeholder = "輸入文字" id = 'text'></textarea>
-            <div>
-                <IconButton onClick = {addvideo}><VideoCallOutlinedIcon /></IconButton>
-                <IconButton onClick = {addphoto}><AddAPhotoIcon /></IconButton>
-                <input accept="image/*" className={classes.input} id="icon-button-file" type="file" name = 'file' />
-                <label htmlFor="icon-button-file">
-                    <IconButton color="primary" aria-label="upload picture" component="span" onClick = {addpic}>
-                    <AddPhotoAlternateIcon />
-                    </IconButton>
-                </label>
-                <Button onClick = {post}>post</Button>
+        <MainNav className = "nav"/>
+        <div className = "main-div">
+            <div className = 'main-left'>
+                
             </div>
-                    
+                
+            <div className = 'main-center'>
+                <img id="showimg" src="" />
+                <textarea cols="50" rows="5" placeholder = "輸入文字" id = 'text'></textarea>
+                <div>
+                    <IconButton onClick = {addvideo}><VideoCallOutlinedIcon /></IconButton>
+                    <IconButton onClick = {addphoto}><AddAPhotoIcon /></IconButton>
+                    <input accept="image/*" className={classes.input} id="icon-button-file" type="file" name = 'file' />
+                    <label htmlFor="icon-button-file">
+                        <IconButton color="primary" aria-label="upload picture" component="span" onClick = {addpic}>
+                        <AddPhotoAlternateIcon />
+                        </IconButton>
+                    </label>
+                    <Button onClick = {post}>post</Button>
+                </div>
+                        
+            </div>
         </div>
-        
         </>
     );
 }

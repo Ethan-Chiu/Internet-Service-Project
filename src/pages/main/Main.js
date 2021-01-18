@@ -8,6 +8,8 @@ import Box from '@material-ui/core/Box';
 import './Main.css'
 import { Button, Input, message, Tag } from 'antd'
 import useChat from '../../useChat'
+//map
+import GoogleMapReact from 'google-map-react';
 
 
 //SPA Navigation 
@@ -54,11 +56,13 @@ const sample = {
   }
 
 const Main = ()=>{
+  const AnyReactComponent = ({ text }) => <div>{text}</div>;
+  const { status, opened, messages, sendMessage, clearMessages } = useChat()
 	const classes = useStyles();
 	const [open0, setOpen0] = React.useState(true);
 	const [open1, setOpen1] = React.useState(false);
 	const [open2, setOpen2] = React.useState(false);
-	const [open3, setOpen3] = React.useState(false);
+  const [open3, setOpen3] = React.useState(false);
   
   const handleClick0 = () => {
       setOpen0(!open0);
@@ -91,9 +95,24 @@ const Main = ()=>{
 			<div className = 'main-left'>
 				<MainNav/>
 			</div>
-			<div>
-				<img src = 'map.png' className = 'main-center'></img>
-			</div>
+			<div className = 'main-center'>
+        <div style={{ height: '100vh', width: '100%' }}>
+          <GoogleMapReact
+            bootstrapURLKeys={{ key: "AIzaSyBES8rvsfwrOtLZ5S4EvedrOJ4OSIR49UY" }}
+            defaultCenter={ {
+              lat: 25.01,
+              lng: 121.53
+            }}
+            defaultZoom={15}
+          >
+            <AnyReactComponent
+              lat={59.955413}
+              lng={30.337844}
+              text="My Marker"
+            />
+          </GoogleMapReact>
+        </div>
+      </div>
 			<div className = 'main-right'>
 							
 				{/*<GridList cellHeight={90} cols={1} >
@@ -104,6 +123,7 @@ const Main = ()=>{
 				</GridListTile>
 					))}
 				</GridList>*/}
+  
 	<List
       component="nav"
       aria-labelledby="nested-list-subheader"
