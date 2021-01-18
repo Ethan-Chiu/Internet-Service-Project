@@ -21,87 +21,100 @@ import Button from '@material-ui/core/Button';
 
 
 const useStyles = makeStyles((theme) => ({
-	root: {
-	  maxWidth: "100%",
-	},
-	media: {
-	  height: 0,
-	  paddingTop: '56.25%', // 16:9
-	},
-	expand: {
-	  transform: 'rotate(0deg)',
-	  marginLeft: 'auto',
-	  transition: theme.transitions.create('transform', {
-		duration: theme.transitions.duration.shortest,
-	  }),
-	},
-	expandOpen: {
-	  transform: 'rotate(180deg)',
-	},
-	avatar: {
-	  backgroundColor: red[500],
-	},
-  }));
+  root: {
+    maxWidth: "100%",
+  },
+  media: {
+    height: 0,
+    paddingTop: '56.25%', // 16:9
+  },
+  expand: {
+    transform: 'rotate(0deg)',
+    marginLeft: 'auto',
+    transition: theme.transitions.create('transform', {
+      duration: theme.transitions.duration.shortest,
+    }),
+  },
+  expandOpen: {
+    transform: 'rotate(180deg)',
+  },
+  avatar: {
+    backgroundColor: red[500],
+  },
+}));
 
 
-const Post = (props: {title: string, author: string, text: string, picture: string, tags: Array, time: Function, id: number})=>{
+const Post = (props: { title: string, author: string, text: string, picture: string, tags: Array, time: Function, id: number }) => {
   const classes = useStyles();
-	const [expanded, setExpanded] = React.useState(false);
+  const [expanded, setExpanded] = React.useState(false);
   const sendcontrol = useRef()
-	const handleExpandClick = () => {
-	  setExpanded(!expanded);
-    };	
+  const handleExpandClick = () => {
+    setExpanded(!expanded);
+  };
 
-  const sendComment =()=>{
+  const sendComment = () => {
     console.log(document.getElementById(props.id).value)
     document.getElementById(props.id).value = ''
-  }  
-    return(
+  }
+  return (
     <Card className={classes.root}>
-        
-        <CardMedia
-          className={classes.media}
-          image={props.picture}
-          title="Paella dish"
-        />
-        <CardContent>
-          <Typography variant="body1" color="textSecondary" component="p">
-            {props.text}
-          </Typography>
-          <Typography variant="body2" color="textSecondary" component="p">
-            tags: {props.tags.map((tags, i)=>(
-            <>
-            <span style = {{color: 'blue', textDecoration: 'underline'}}>{tags}</span> 
+      <CardHeader
+        avatar={
+          <Avatar aria-label="recipe" className={classes.avatar}>
+            R
+          </Avatar>
+        }
+        action={
+          <IconButton aria-label="settings">
+            <MoreVertIcon />
+          </IconButton>
+        }
+        title="Shrimp and Chorizo Paella"
+        subheader="September 14, 2016"
+      />
+      <CardMedia
+        className={classes.media}
+        image={props.picture}
+        title="Paella dish"
+      />
+      <CardContent>
+        <Typography variant="body1" color="textSecondary" component="p">
+          {props.text}
+        </Typography>
+        <Typography variant="body2" color="textSecondary" component="p">
+          tags: {props.tags.map((tags, i) => (
+          <>
+            <span style={{ color: 'blue', textDecoration: 'underline' }}>{tags}</span>
             <span> </span>
-            </>))}
-          </Typography>
-        </CardContent>
-        <CardActions disableSpacing>
-          <IconButton aria-label="add to favorites">
-            <FavoriteIcon />
-          </IconButton>
-          <IconButton aria-label="share">
-            <ShareIcon />
-          </IconButton>
-          <IconButton
-            className={clsx(classes.expand, {
-              [classes.expandOpen]: expanded,
-            })}
-            onClick={handleExpandClick}
-            aria-expanded={expanded}
-            aria-label="show more"
-          >
-            <AddIcon />
-          </IconButton>
-        </CardActions>
-    
-        <Collapse in={expanded} timeout="auto" unmountOnExit>
-            <TextField placeholder="Addcomment" multiline rows={1} rowsMax={2} id ={props.id} ref={sendcontrol}/> 
-            <Button onClick = {()=>{sendComment()}} id = {props.id}>Send</Button>
-        </Collapse>
-        
-      </Card>
-      )
+          </>))}
+        </Typography>
+      </CardContent>
+      <CardActions disableSpacing>
+        <IconButton aria-label="add to favorites">
+          <FavoriteIcon />
+        </IconButton>
+        <IconButton aria-label="share">
+          <ShareIcon />
+        </IconButton>
+        <IconButton
+          className={clsx(classes.expand, {
+            [classes.expandOpen]: expanded,
+          })}
+          onClick={handleExpandClick}
+          aria-expanded={expanded}
+          aria-label="show more"
+        >
+          <AddIcon />
+        </IconButton>
+      </CardActions>
+
+      <Collapse in={expanded} timeout="auto" unmountOnExit>
+        <TextField placeholder="Addcomment" multiline rows={1} rowsMax={2} id={props.id} ref={sendcontrol} />
+        <Button onClick={() => { sendComment() }} id={props.id}>Send</Button>
+      </Collapse>
+
+    </Card>
+  )
 }
 
 export default Post;

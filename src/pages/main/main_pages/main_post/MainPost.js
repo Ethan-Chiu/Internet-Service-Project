@@ -14,71 +14,71 @@ import { AirlineSeatIndividualSuiteSharp } from '@material-ui/icons';
 
 const useStyles = makeStyles((theme) => ({
     root: {
-      '& > *': {
-        margin: theme.spacing(1),
-      },
+        '& > *': {
+            margin: theme.spacing(1),
+        },
     },
     input: {
-      display: 'none',
+        display: 'none',
     },
-  }));
+}));
 
 
-const MainPost = () =>
-{   
+const MainPost = () => {
     const { status, opened, messages, sendPost, clearMessages, hi } = useChat()
 
     const classes = useStyles();
-    const addphoto = ()=>{
+    const addphoto = () => {
         console.log('hi')
     }
-    const addpic = ()=>{
+    const addpic = (e) => {
         console.log('hi')
     }
-    const addvideo = ()=>{
+    const addvideo = () => {
         console.log('nigg')
     }
-    const post = ()=>{
+    const post = () => {
         sendPost(
             {
-                author:		'nigg',
-                location:	'somewhere',
-                type:		'post',
-                title:		'title',
-                text:		document.getElementById('text').value,
-                picture:	document.getElementById('showimg').src,
-                tags:		'',
-                likes:		0,
-                comments:	[],
-                time:		Date.now
+                author: 'nigg',
+                location: 'somewhere',
+                type: 'post',
+                title: 'title',
+                text: document.getElementById('text').value,
+                picture: document.getElementById('showimg').src,
+                tags: '',
+                likes: 0,
+                comments: [],
+                time: Date.now
             }
         )
-        
+
     }
-   
+
     return (
         <>
-        <div className = 'main-left'>
-            <MainNav />
-        </div>
-            
-        <div className = 'main-center'>
-            <img id="showimg" src="" />
-            <textarea cols="50" rows="5" placeholder = "輸入文字" id = 'text'></textarea>
-            <div>
-                <IconButton onClick = {addvideo}><VideoCallOutlinedIcon /></IconButton>
-                <IconButton onClick = {addphoto}><AddAPhotoIcon /></IconButton>
-                <input accept="image/*" className={classes.input} id="icon-button-file" type="file" name = 'file' />
-                <label htmlFor="icon-button-file">
-                    <IconButton color="primary" aria-label="upload picture" component="span" onClick = {addpic}>
-                    <AddPhotoAlternateIcon />
-                    </IconButton>
-                </label>
-                <Button onClick = {post}>post</Button>
+            <MainNav className='nav' />
+            <div className='main-div'>
+
+
+
+                <div className='main-center'>
+                    <img id="showimg" src="" />
+                    <textarea cols="50" rows="5" placeholder="輸入文字" id='text'></textarea>
+                    <div>
+                        <IconButton onClick={addvideo}><VideoCallOutlinedIcon /></IconButton>
+                        <IconButton onClick={addphoto}><AddAPhotoIcon /></IconButton>
+                        <input accept="image/*" className={classes.input} id="icon-button-file" type="file" name='file' onChange={(e) => { console.log(e.target.value) }} />
+                        <label htmlFor="icon-button-file">
+                            <IconButton color="primary" aria-label="upload picture" component="span" onClick={addpic}>
+                                <AddPhotoAlternateIcon />
+                            </IconButton>
+                        </label>
+                        <Button onClick={post}>post</Button>
+                    </div>
+
+                </div>
             </div>
-                    
-        </div>
-        
         </>
     );
 }
