@@ -21,6 +21,8 @@
     "axios": "^0.21.0",
     "filepond": "^4.23.1",
     "google-map-react": "^2.1.9",
+    "graphql": "^15.4.0",
+    "graphql-yoga": "^1.18.3",
     "react": "^17.0.1",
     "react-apollo": "^3.1.5",
     "react-dom": "^17.0.1",

@@ -8,6 +8,10 @@ const UserSchema = new Schema({
 	email:			{ type: String, required: true },
 	password:		{ type: String, required: true },
 	picture:		{ type: String },
+	age:				{ type: Number },
+	phone:			{ type: String },
+	address:		{ type: String },
+	introduction:	{ type: String },
 	lastappear:	{ type: { x: Number, y: Number, s: Number }}
 }, {
 	collection:	"User"
