@@ -16,10 +16,15 @@
     "@testing-library/react": "^11.1.0",
     "@testing-library/user-event": "^12.1.10",
     "antd": "^4.8.4",
+    "apollo-boost": "^0.4.9",
+    "apollo-link-ws": "^1.0.20",
     "axios": "^0.21.0",
     "filepond": "^4.23.1",
     "google-map-react": "^2.1.9",
+    "graphql": "^15.4.0",
+    "graphql-yoga": "^1.18.3",
     "react": "^17.0.1",
+    "react-apollo": "^3.1.5",
     "react-dom": "^17.0.1",
     "react-filepond": "^7.1.0",
     "react-google-login": "^5.1.25",
@@ -29,9 +34,7 @@
     "rebass": "^4.0.7",
     "socket.io-client": "^3.0.3",
     "web-vitals": "^0.2.4",
-    "websocket": "^1.0.32",
-    "apollo-boost": "^0.4.9",
-    "apollo-link-ws": "^1.0.20"
+    "websocket": "^1.0.32"
   },
   "scripts": {
     "start": "react-scripts start",
