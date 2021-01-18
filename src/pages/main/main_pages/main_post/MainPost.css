@@ -1,3 +1,11 @@
+.nav{
+    position: relative;
+}
+.main-div {
+    position: relative;
+    left: 75px;
+    top: 30px;
+}
 .main-left {
     background-color: red;
     position: absolute;
