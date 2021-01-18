@@ -167,8 +167,6 @@ db.once('open', async() => {
 								break
 							}
 						}
-						texts.push({ user: payload.user, text: payload.text })
-						await Post.updateOne({ _id: payload.id }, { $set: { comments: texts }})
 					})
 					break
 				}

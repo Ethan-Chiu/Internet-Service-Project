@@ -2,16 +2,17 @@ type Query {
 	login(account: String!, password: String!): String!
 	getPosts(locale: Location!): [Post]!
 	search(text: String!): [Post]!
-	profile(account: String!): User
+	getProfile(account: String!): User
 }
 
 type Mutation {
 	signup(data: UserInput!): String!
+	editProfile(data: UserInput!): String!
 	createPost(data: PostInput!): Post!
 	like(id: String!, user: String!): Post
 	unlike(id: String!, user: String!): Post
-	comment(id: String!, user: String!, text: String!): Post
-	deleteComment(id: String!, user: String!, text: String!): Post
+	comment(id: String!, user: String!, text: String!): String!
+	deleteComment(id: String!, user: String!, text: String!): String!
 }
 
 input UserInput {

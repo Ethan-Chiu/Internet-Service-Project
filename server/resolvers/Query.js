@@ -61,7 +61,7 @@ const Query = {
 		matchingposts.reverse()
 		return matchingposts
 	}
-	profile(parent, args, { db }, info) {
+	getProfile(parent, args, { db }, info) {
 		var data = {}
 		User.find({ account: args.account })
 			.exec((err, res) => {
