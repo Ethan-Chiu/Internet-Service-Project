@@ -9,8 +9,8 @@ const PostSchema = new Schema({
 	text:			{ type: String },
 	picture:	{ type: String },
 	tags:			{ type: Array },
-	likes:		{ type: Number, default: 0},
-	comments:	{ type: Array, default: [] },
+	likes:		{ type: [String], default: [] },
+	comments:	{ type: [{ user: String, text: String }], default: [] },
 	time:			{ type: Date, default: Date.now }
 }, {
 	collection:	"Post"

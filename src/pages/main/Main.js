@@ -31,7 +31,6 @@ import StarBorder from '@material-ui/icons/StarBorder';
 import Avatar from '@material-ui/core/Avatar';
 //bootstrap
 import Carousel from 'react-bootstrap/Carousel'
-import 'bootstrap/dist/css/bootstrap.min.css'
 import "react-slideshow-image/dist/styles.css"
 import { Slide } from 'react-slideshow-image';
 
@@ -102,7 +101,22 @@ const Main = () => {
           <MainNav />
         </div>
         <div className='main-center'>
-
+          <div style={{ height: '100vh', width: '100%' }}>
+            <GoogleMapReact
+              bootstrapURLKeys={{ key: "AIzaSyBES8rvsfwrOtLZ5S4EvedrOJ4OSIR49UY" }}
+              defaultCenter={{
+                lat: 25.01,
+                lng: 121.53
+              }}
+              defaultZoom={15}
+            >
+              <AnyReactComponent
+                lat={59.955413}
+                lng={30.337844}
+                text="My Marker"
+              />
+            </GoogleMapReact>
+          </div>
         </div>
         <div className='main-right'>
 
