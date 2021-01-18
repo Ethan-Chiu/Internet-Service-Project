@@ -1,0 +1,62 @@
+type Query {
+	login(account: String!, password: String!): String!
+	getPosts(locale: Location!): [Post]!
+	search(text: String!): [Post]!
+	getProfile(account: String!): User
+}
+
+type Mutation {
+	signup(data: UserInput!): String!
+	editProfile(data: UserInput!): String!
+	createPost(data: PostInput!): Post!
+	like(id: String!, user: String!): Post
+	unlike(id: String!, user: String!): Post
+	comment(id: String!, user: String!, text: String!): String!
+	deleteComment(id: String!, user: String!, text: String!): String!
+}
+
+input UserInput {
+	account: String!
+	password: String!
+	email: String!
+	name: String!
+	picture: String
+}
+
+input PostInput {
+	author: String!
+	location: Location!
+	type: String!
+	text: String
+	picture: String
+	tags: [String]
+}
+
+type User {
+	usertype: String!,
+	name: String!,
+	account: String!,
+	email: String!,
+	password: String!,
+	picture: String,
+	lastappear: Location
+}
+
+type Post {
+	author: String!,
+	location: Location!,
+	type: String!,
+	title: String!,
+	text: String,
+	picture: String,
+	tags: [String],
+	likes: [String]!,
+	comments: [{user: String!, text: String!}]!,
+	time: Date
+}
+
+type Location {
+	x: Number,
+	y: Number,
+	s: Number
+}

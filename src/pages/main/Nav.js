@@ -1,5 +1,5 @@
 import React from 'react'
-import {Link} from "react-router-dom";
+import { Link } from "react-router-dom";
 import './Nav.css'
 
 //font awesome
@@ -12,7 +12,7 @@ import { faPlusSquare } from '@fortawesome/free-solid-svg-icons'
 //import {  } from '@fortawesome/free-brands-svg-icons'
 
 //material ui
-import {withStyles, makeStyles, styled ,useTheme} from '@material-ui/core/styles';
+import { withStyles, makeStyles, styled, useTheme } from '@material-ui/core/styles';
 import BottomNavigation from '@material-ui/core/BottomNavigation';
 import BottomNavigationAction from '@material-ui/core/BottomNavigationAction';
 //menu
@@ -105,50 +105,50 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const StyledMenu = withStyles({
-    paper: {
-      border: '1px solid #d3d4d5',
-    },
-  })((props) => (
-    <Menu
-      elevation={0}
-      getContentAnchorEl={null}
-      anchorOrigin={{
-        vertical: 'bottom',
-        horizontal: 'center',
-      }}
-      transformOrigin={{
-        vertical: 'top',
-        horizontal: 'center',
-      }}
-      {...props}
-    />
-  ));
-  
+  paper: {
+    border: '1px solid #d3d4d5',
+  },
+})((props) => (
+  <Menu
+    elevation={0}
+    getContentAnchorEl={null}
+    anchorOrigin={{
+      vertical: 'bottom',
+      horizontal: 'center',
+    }}
+    transformOrigin={{
+      vertical: 'top',
+      horizontal: 'center',
+    }}
+    {...props}
+  />
+));
+
 const StyledMenuItem = withStyles((theme) => ({
-    root: {
-      '&:focus': {
-        backgroundColor: theme.palette.primary.main,
-        '& .MuiListItemIcon-root, & .MuiListItemText-primary': {
-          color: theme.palette.common.white,
-        },
+  root: {
+    '&:focus': {
+      backgroundColor: theme.palette.primary.main,
+      '& .MuiListItemIcon-root, & .MuiListItemText-primary': {
+        color: theme.palette.common.white,
       },
     },
-  }))(MenuItem);
+  },
+}))(MenuItem);
 
 const MainNav = () => {
 
-    const classes = useStyles();
-    const [value, setValue] = React.useState(0);
+  const classes = useStyles();
+  const [value, setValue] = React.useState(0);
 
-    const handleChange = (event, newValue) => {
-        setValue(newValue);
-    };
+  const handleChange = (event, newValue) => {
+    setValue(newValue);
+  };
 
-    const [anchorEl, setAnchorEl] = React.useState(null);
+  const [anchorEl, setAnchorEl] = React.useState(null);
 
-    const handleClick = (event) => {
-        setAnchorEl(event.currentTarget);
-    };
+  const handleClick = (event) => {
+    setAnchorEl(event.currentTarget);
+  };
 
     const handleClose = () => {
         setAnchorEl(null);
@@ -188,20 +188,21 @@ const MainNav = () => {
           <Typography variant="h6" noWrap>
             Near To U
           </Typography>
-        </Toolbar>
-      </AppBar>
-      <Drawer
-        variant="permanent"
-        className={clsx(classes.drawer, {
-          [classes.drawerOpen]: open,
-          [classes.drawerClose]: !open,
-        })}
-        classes={{
-          paper: clsx({
+          </Toolbar>
+        </AppBar>
+        <Drawer
+          variant="permanent"
+          className={clsx(classes.drawer, {
+            [classes.drawerOpen]: open,
+            [classes.drawerClose]: !open,
+          })}
+          classes={{
+            paper: clsx({
             [classes.drawerOpen]: open,
             [classes.drawerClose]: !open,
           }),
         }}
+        
       >
         <div className={classes.toolbar}>
           <IconButton onClick={handleDrawerClose}>
@@ -288,15 +289,15 @@ const MainNav = () => {
           <Link to = "/main/profile">profile</Link>
         </StyledMenuItem>
       </StyledMenu>
-    </div>*/}              
-               { /*<BottomNavigation value={value} onChange={handleChange} className={classes.root}>
+    </div>*/}
+      { /*<BottomNavigation value={value} onChange={handleChange} className={classes.root}>
                     <Link to = "/main"><BottomNavigationAction  icon={<FontAwesomeIcon icon={faStreetView} size="2x"/>} /></Link>
                     <Link to = "/main/search"><BottomNavigationAction  icon={<FontAwesomeIcon icon={faSearch} size="2x"/>} /></Link>
                     <Link to = "/main/post"><BottomNavigationAction icon={<FontAwesomeIcon icon={faPlusSquare} size="2x"/>} /></Link>
                     <Link to = "/main/profile"><BottomNavigationAction icon={<FontAwesomeIcon icon={faAddressCard} size="2x"/>} /></Link>
                 </BottomNavigation>*/}
-            
-            {/*<nav>
+
+      {/*<nav>
                 <ul>
                     <li>
                         <Link to = "/main">main<FontAwesomeIcon icon={faStreetView} size="2x"/></Link>
@@ -312,8 +313,8 @@ const MainNav = () => {
                     </li>
                 </ul>
             </nav>*/}
-        </>
-    );
+    </>
+  );
 
 }
 

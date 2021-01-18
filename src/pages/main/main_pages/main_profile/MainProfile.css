@@ -1,13 +1,15 @@
 .input {
     display: none;
 }
+
 .nav{
     position: relative;
 }
 .main-div {
-    position: relative;
-    left: 75px;
-    top: 30px;
+    overflow-y: scroll;
+    overflow-x: hidden;
+    top: -30px;
+    padding: 20px;
 }
 .profile_img {
     background-color: rgb(155, 155, 155);
@@ -33,4 +35,7 @@
     width: 140px;
     float: right;
     border-radius:10px
+}
+.profile{
+    padding: 20px;
 }

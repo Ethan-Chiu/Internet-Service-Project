@@ -4,6 +4,7 @@ const http = require("http");
 const express = require("express");
 const mongoose = require("mongoose");
 const WebSocket = require("ws");
+//const socketio = require("socket.io");
 
 const Post = require("./models/post")
 const User = require("./models/user")
@@ -11,6 +12,7 @@ const User = require("./models/user")
 const app = express();
 const server = http.createServer(app);
 const wss = new WebSocket.Server({ server });
+//const io = socketio(server)
 
 if (!process.env.MONGO_URL) {
 	console.error("Missing MONGO_URL!!!");
@@ -40,6 +42,7 @@ db.once('open', async() => {
 	//}
 	//const testUser = {	usertype:	"normal",
 											//name:			"David Melingsher",
+											//email:		"email@email.com",
 											//account:	"dav1205",
 											//password:	"1205"
 	//}
@@ -47,11 +50,10 @@ db.once('open', async() => {
 		.exec((err, res) => {
 			if (err) throw err
 		})
-	await Post.updateMany({ title: "te" }, { $inc: { likes: 1 }})
 
   wss.on('connection', ws => {
-	const sendData = (data) => {
-	  ws.send(JSON.stringify(data))
+		const sendData = (data) => {
+			ws.send(JSON.stringify(data))
     }
 
     const sendStatus = (s) => {
@@ -91,6 +93,20 @@ db.once('open', async() => {
 						})
 					break
         }
+				case "signup": {
+					User.find({ account: payload.account })
+						.exec( async (err, res) => {
+							if (err) throw err
+							if (res.length !== 0) {
+								sendData(["signup", "same account name"])
+							} else {
+								userdata = payload
+								userdata.usertype = "normal"
+								await User.create(userdata)
+							}
+						})
+					break
+				}
 				case "move": {
 					var posts = getPosts(payload.oldlocale, payload.newlocale)
 					sendData(["update", posts])
@@ -101,16 +117,88 @@ db.once('open', async() => {
 					break
 				}
 				case "like": {
-					await Post.updateOne({ _id: payload.id }, { $inc: { likes: 1 }})
+					Post.find({ _id: payload.id }).exec(async (err, res) => {
+						if (err) throw err
+						var likers = res[0].likes
+						var isin = false
+						for (var i=0; i<likers.length; i++) {
+							if (likers[i] === payload.user) {
+								isin = true
+							}
+						}
+						if (!isin) {
+							likers.push(payload.id)
+							await Post.updateOne({ _id: payload.id }, { $set: { likes: likers }})
+						}
+					})
+					break
+				}
+				case "unlike": {
+					Post.find({ _id: payload.id }).exec(async (err, res) => {
+						if (err) throw err
+						var likers = res[0].likes
+						for (var i=0; i<likers.length; i++) {
+							if (likers[i] === payload.user) {
+								likers.splice(i, 1)
+								await Post.updateOne({ _id: payload.id }, { $set: { likes: likers }})
+								break
+							}
+						}
+					})
 					break
 				}
 				case "comment": {
 					Post.find({ _id: payload.id }).exec(async (err, res) => {
 						if (err) throw err
 						var texts = res[0].comments
-						console.log(texts)
-						texts.push(payload.text)
+						texts.push({ user: payload.user, text: payload.text })
 						await Post.updateOne({ _id: payload.id }, { $set: { comments: texts }})
+					})
+					break
+				}
+				case "deletecomment": {
+					Post.find({ _id: payload.id }).exec(async (err, res) => {
+						if (err) throw err
+						var texts = res[0].comments
+						for (var i=0; i<text.length; i++) {
+							if (texts[i] === payload.comment) {
+								texts.splice(i, 1)
+								await Post.updateOne({ _id: payload.id }, { $set: { comments: texts }})
+								break
+							}
+						}
+					})
+					break
+				}
+				case "search": {
+					var titlematch = []
+					var tagmatch = []
+					var titlefit = []
+					var contentfit = []
+					Post.find().exec((err, res) => {
+						if (err) throw err
+						for (var i=0; i<res.length; i++) {
+							if (res[i].title == payload) {
+								titlematch.push(res[i])
+							} else if (res[i].tags.includes(payload)) {
+								tagmatch.push(res[i])
+							} else if (res[i].title.search(payload) !== -1) {
+								titlefit.push(res[i])
+							} else if (res[i].text.search(payload) !== -1) {
+								contentfit.push(res[i])
+							}
+						}
+					})
+					matchingposts = contentfit.concat(titlefit)
+						.concat(tagmatch).concat(titlematch)
+					matchingposts.reverse()
+					sendData(["searchresult", matchingposts])
+					break
+				}
+				case "profile": {
+					User.find({ account: payload.account }).exec((err, res) => {
+						if (err) throw err
+						sendData(res)
 					})
 					break
 				}

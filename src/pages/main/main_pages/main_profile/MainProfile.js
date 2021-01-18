@@ -1,4 +1,4 @@
-import React, {useState} from 'react'
+import React, { useState } from 'react'
 import './MainProfile.css'
 import MainNav from './../../Nav'
 //material ui
@@ -20,6 +20,7 @@ const MainProfile = () =>
     }
     return (
         <>
+         {<MainNav className = "nav"/>} 
         <div className = "main-div">
             <div className = "profile_img">
                 <img className = "profile_pic" src ="https://memes.tw/user-template/bee4c8f3cd6c4426c86a343e6b9a4ad3.png"></img>
@@ -41,8 +42,9 @@ const MainProfile = () =>
             
                 
             </div>
-            <div style ={{float: "left", width: "100%"}}>
-                <p style ={{float: "left", width: '120px', fontSize: "15px"}}>name:</p>
+            <div className = "profile">
+            <div style ={{ width: "100%"}}>
+                <p style ={{float: "left",width: '120px', fontSize: "15px"}}>name:</p>
                 
                 {name ?
                 (<>
@@ -58,6 +60,7 @@ const MainProfile = () =>
                 </>) 
                 }
             </div>
+
     
             <div style ={{float: "left", width: "100%"}}>
                 <p style ={{float: "left", width: '120px', fontSize: "15px"}}>age:</p>
@@ -90,10 +93,10 @@ const MainProfile = () =>
                 </>) 
                 }
             </div>
-         
-        </div>
+            </div>
+        </div>}
         
-        <MainNav className = "nav"/>
+        
         </>
     );
 }

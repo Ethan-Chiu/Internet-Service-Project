@@ -12,6 +12,7 @@ import useChat from '../../useChat'
 import GoogleMapReact from 'google-map-react';
 
 
+
 //SPA Navigation 
 import MainNav from './Nav'
 import Post from './Post'
@@ -30,30 +31,34 @@ import ExpandLess from '@material-ui/icons/ExpandLess';
 import ExpandMore from '@material-ui/icons/ExpandMore';
 import StarBorder from '@material-ui/icons/StarBorder';
 import Avatar from '@material-ui/core/Avatar';
+//bootstrap
+import "react-slideshow-image/dist/styles.css"
+import { Slide } from 'react-slideshow-image';
 
 const useStyles = makeStyles((theme) => ({
-	root: {
-	  width: '100%',
-	  maxWidth: 360,
-	  backgroundColor: theme.palette.background.paper,
-	},
-	nested: {
-	  paddingLeft: theme.spacing(4),
-	},
-  }));
+  root: {
+    width: '100%',
+    maxWidth: 360,
+    backgroundColor: theme.palette.background.paper,
+  },
+  nested: {
+    paddingLeft: theme.spacing(4),
+  },
+}));
 
 const sample = {
-    author:		'nigg',
-    location:	'somewhere',
-    type:		'post',
-    title:		'title',
-    text:		'I am poop 2ㄏ2ㄏ',
-    picture:	'https://truth.bahamut.com.tw/s01/201904/2020e6be121356d975aa1a51df35411c.JPG',
-    tags:		['#2ㄏ2ㄏ', '乳滑', 'shitpost'],
-    likes:		0,
-    comments:	[],
-    time:		Date.now
-  }
+  author: 'nigg',
+  location: 'somewhere',
+  type: 'post',
+  title: 'title',
+  text: 'I am poop 2ㄏ2ㄏ',
+  picture: 'https://truth.bahamut.com.tw/s01/201904/2020e6be121356d975aa1a51df35411c.JPG',
+  tags: ['#2ㄏ2ㄏ', '乳滑', 'shitpost'],
+  likes: 0,
+  comments: [],
+  time: Date.now
+}
+
 
 const Main = ()=>{
   const AnyReactComponent = ({ text }) => <div>{text}</div>;
@@ -63,14 +68,23 @@ const Main = ()=>{
 	const [open1, setOpen1] = React.useState(false);
 	const [open2, setOpen2] = React.useState(false);
   const [open3, setOpen3] = React.useState(false);
+  const [currentlat, SetLat] = useState(25.01);
+  const [currentlng, SetLng] = useState(121.53);
+
+
+  useEffect(() => {
+    navigator.geolocation.getCurrentPosition((pos)=>{
+      SetLat(pos.coords.latitude)
+      SetLng(pos.coords.longitude)})
+  })
   
   const handleClick0 = () => {
-      setOpen0(!open0);
-      setOpen1(false)
-      setOpen2(false)
-      setOpen3(false)
-    
-};
+    setOpen0(!open0);
+    setOpen1(false)
+    setOpen2(false)
+    setOpen3(false)
+
+  };
   const handleClick1 = () => {
       setOpen1(!open1);
       setOpen0(false)
@@ -91,6 +105,7 @@ const Main = ()=>{
   	};
 	return (
 		<>
+    
 		<div className = 'main'>
 			<div className = 'main-left'>
 				<MainNav/>
@@ -100,17 +115,18 @@ const Main = ()=>{
           <GoogleMapReact
             bootstrapURLKeys={{ key: "AIzaSyBES8rvsfwrOtLZ5S4EvedrOJ4OSIR49UY" }}
             defaultCenter={ {
-              lat: 25.01,
-              lng: 121.53
+              lat:  currentlat,
+              lng: currentlng
             }}
-            defaultZoom={15}
-          >
-            <AnyReactComponent
-              lat={59.955413}
-              lng={30.337844}
+            defaultZoom={20}
+          ><AnyReactComponent
+              lat={currentlat}
+              lng={currentlng}
               text="My Marker"
             />
           </GoogleMapReact>
+
+            
         </div>
       </div>
 			<div className = 'main-right'>
@@ -123,14 +139,14 @@ const Main = ()=>{
 				</GridListTile>
 					))}
 				</GridList>*/}
-  
-	<List
+
+	{/* <List
       component="nav"
       aria-labelledby="nested-list-subheader"
       className={classes.root}
     >
 
-      <ListItem button onClick={handleClick0}>
+      {<ListItem button onClick={handleClick0}>
         <ListItemIcon>
 		      <Avatar aria-label="recipe" className={classes.avatar}>
               {sample.author[0]}
@@ -171,28 +187,38 @@ const Main = ()=>{
         <List component="div" disablePadding>
           <Post title = {sample.title} author = {sample.author[0]} picture = {sample.picture} text = {sample.text} time = {sample.time()} id = {2} tags = {sample.tags}/>
         </List>
-      </Collapse>
+      </Collapse>} */}
+          {/* {<Carousel activeIndex={index} onSelect={handleSelect}>
+            <Carousel.Item>
+              <Post title={sample.title} author={sample.author[0]} picture={sample.picture} text={sample.text} time={sample.time()} id={0} tags={sample.tags} />
+            </Carousel.Item>
+            <Carousel.Item>
+              <Post title={sample.title} author={sample.author[0]} picture={sample.picture} text={sample.text} time={sample.time()} id={0} tags={sample.tags} />
+            </Carousel.Item>
+            <Carousel.Item>
+              <Post title={sample.title} author={sample.author[0]} picture={sample.picture} text={sample.text} time={sample.time()} id={0} tags={sample.tags} />
+            </Carousel.Item>
+          </Carousel>} */}
+          <div>
+            <Slide easing="ease">
+              <div className="each-slide">
+                <Post title={sample.title} author={sample.author[0]} picture={sample.picture} text={sample.text} time={sample.time()} id={0} tags={sample.tags} />
+              </div>
+              <div className="each-slide">
+                <Post title={sample.title} author={sample.author[0]} picture={sample.picture} text={sample.text} time={sample.time()} id={0} tags={sample.tags} />
+              </div>
+              <div className="each-slide">
+                <Post title={sample.title} author={sample.author[0]} picture={sample.picture} text={sample.text} time={sample.time()} id={0} tags={sample.tags} />
+              </div>
+            </Slide>
+          </div>
 
-      <ListItem button onClick={handleClick3}>
-        <ListItemIcon>
-			<Avatar aria-label="recipe" className={classes.avatar}>
-              V
-            </Avatar>
-        </ListItemIcon>
-        <ListItemText primary="post-title3" />
-        {open3 ? <ExpandLess /> : <ExpandMore />}
-      </ListItem>
-      <Collapse in={open3} timeout="auto" unmountOnExit>
-        <List component="div" disablePadding>
-          <Post title = {sample.title} author = {sample.author[0]} picture = {sample.picture} text = {sample.text} time = {sample.time()} id = {3} tags = {sample.tags}/>
-        </List>
-      </Collapse>
+          
+        </div>
+      </div>
 
-    </List>
-			</div>
-		</div>
-		</>
-	)
+    </>
+  )
 }
 
 export default Main

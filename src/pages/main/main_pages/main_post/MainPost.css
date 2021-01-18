@@ -1,5 +1,12 @@
+.nav{
+    position: relative;
+}
+.main-div {
+    position: relative;
+    left: 75px;
+    top: 30px;
+}
 .main-left {
-    background-color: red;
     position: absolute;
     left: 0;
     right: 5%;
@@ -7,7 +14,6 @@
     height: 100%;
 }
 .main-center {
-    background-color: burlywood;
     position: absolute;
     left: 6%;
     right: 66%;
