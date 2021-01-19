@@ -1,7 +1,7 @@
 const Post = require('../models/post')
 const User = require('../models/user')
 const Mutation = {
-	signup(parent, args, { db }, info) {
+	signup(parent, args, { db, pubsub }, info) {
 		var state = ""
 		const func = async() => {
 			await new Promise(resolve => {
@@ -23,7 +23,7 @@ const Mutation = {
 		}
 		return func()
 	},
-	editProfile(parent, args, { db }, info) {
+	editProfile(parent, args, { db, pubsub }, info) {
 		var state = ""
 		const func = async() => {
 			await new Promise(resolve => {
@@ -43,11 +43,19 @@ const Mutation = {
 		}
 		return func()
 	},
-	createPost(parent, args, { db }, info) {
-		Post.create(args.data)
-		return "create successfully"
+	createPost(parent, args, { db, pubsub }, info) {
+		var state = ""
+		const func = async () => {
+			await Post.create(args.data)
+			state = "create successfully"
+			await pubsub.publish("newSub", {
+				newSub: args.data
+			})
+			return state
+		}
+		return func()
 	},
-	deletePost(parent, args, { db }, info) {
+	deletePost(parent, args, { db, pubsub }, info) {
 		var state = ""
 		const func = async() => {
 			await new Promise(resolve => {
@@ -59,6 +67,12 @@ const Mutation = {
 						} else {
 							state = "delete"
 							await Post.deleteOne({ _id: args.id })
+							await pubsub.publish(`postSub${ args.id }`, {
+								postSub: {
+									mutation: "DELETED",
+									id: args.id
+								}
+							})
 						}
 						resolve()
 					})
@@ -67,7 +81,7 @@ const Mutation = {
 		}
 		return func()
 	},
-	like(parent, args, { db }, info) {
+	like(parent, args, { db, pubsub }, info) {
 		var state = ""
 		const func = async() => {
 			await new Promise(resolve => {
@@ -85,6 +99,12 @@ const Mutation = {
 							likers.push(args.user)
 							await Post.updateOne({_id: args.id }, { $set: { likes: likers }})
 							state = "like"
+							await pubsub.publish(`postSub${ args.id }`, {
+								postSub: {
+									mutation: "LIKED",
+									id: args.id
+								}
+							})
 						} else {
 							state = "already liked"
 						}
@@ -95,7 +115,7 @@ const Mutation = {
 		}
 		return func()
 	},
-	unlike(parent, args, { db }, info) {
+	unlike(parent, args, { db, pubsub }, info) {
 		var state = ""
 		const func = async() => {
 			await new Promise(resolve => {
@@ -108,21 +128,26 @@ const Mutation = {
 								likers.splice(i, 1)
 								await Post.updateOne({ _id: args.id }, { $set: { likes: likers }})
 								state = "unlike"
-								resolve()
+								await pubsub.publish(`postSub${ args.id }`, {
+									postSub: {
+										mutation: "UNLIKED",
+										id: args.id
+									}
+								})
 								break
 							}
 						}
 						if (state === "") {
 							state = "not liked"
-							resolve()
 						}
+						resolve()
 					})
 			})
 			return state
 		}
 		return func()
 	},
-	comment(parent, args, { db }, info) {
+	comment(parent, args, { db, pubsub }, info) {
 		var state = ""
 		const func = async() => {
 			await new Promise(resolve => {
@@ -133,6 +158,16 @@ const Mutation = {
 						texts.push({ user: args.user, text: args.text })
 						await Post.updateOne({ _id: args.id }, { $set: { comments: texts }})
 						state = "comment successfully"
+						await pubsub.publish(`postSub${ args.id }`, {
+							postSub: {
+								mutation: "COMMENTADDED",
+								id: args.id,
+								data: {
+									user: args.user,
+									text: args.text
+								}
+							}
+						})
 						resolve()
 					})
 			})
@@ -140,7 +175,7 @@ const Mutation = {
 		}
 		return func()
 	},
-	deleteComment(parent, args, { db }, info) {
+	deleteComment(parent, args, { db, pubsub }, info) {
 		var state = ""
 		const func = async() => {
 			await new Promise(resolve => {
@@ -153,14 +188,23 @@ const Mutation = {
 								texts.splice(i, 1)
 								await Post.updateOne({ _id: args.id }, { $set: { comments: texts }})
 								state = "deleted successfully"
-								resolve()
+								await pubsub.publish(`postSub${ args.id }`, {
+									postSub: {
+										mutation: "COMMENTDELETED",
+										id: args.id,
+										data: {
+											user: args.user,
+											text: args.text
+										}
+									}
+								})
 								break
 							}
 						}
 						if (state === "") {
 							state = "comment not found"
-							resolve()
 						}
+						resolve()
 					})
 			})
 			return state
