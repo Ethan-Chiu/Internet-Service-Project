@@ -6,8 +6,10 @@
     position: relative;
 }
 .main-div {
+    position:  relative;
     overflow-y: scroll;
     overflow-x: hidden;
+    left: 60px;
     top: -30px;
     padding: 20px;
 }
@@ -37,5 +39,6 @@
     border-radius:10px
 }
 .profile{
+    left:50px;
     padding: 20px;
 }

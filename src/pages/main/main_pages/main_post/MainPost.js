@@ -299,6 +299,7 @@ function post(){
 
     return (
         <>
+        <div id = "theme-controller">
         <MainNav className = "nav"/>
         <div className = "main-div">
             <div className = 'main-left'>
@@ -358,6 +359,7 @@ function post(){
                     <button id="recordButton"></button>
             </div>
 
+        </div>
         </div>
         </>
     );

@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect, useRef, useState, useMemo } from "react";
 //import { Button, Input, message, Tag } from 'antd'
 import GridList from '@material-ui/core/Gridlist'
 import GridListTile from '@material-ui/core/GridListTile';
@@ -12,7 +12,8 @@ import {
 	GET_POST,
 	CREATE_POST_MUTATION,
 	POSTS_SUBSCRIPTION,
-	DELETE_POST_MUTATION
+  COMMENT_MUTATION,
+  GET_ID
   } from '../../graphql'
 import { useQuery, useMutation } from 'react-apollo'
 //map
@@ -54,18 +55,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const sample = {
-  author: 'nigg',
-  location: 'somewhere',
-  type: 'post',
-  title: 'title',
-  text: 'I am poop 2ㄏ2ㄏ',
-  picture: 'https://truth.bahamut.com.tw/s01/201904/2020e6be121356d975aa1a51df35411c.JPG',
-  tags: ['#2ㄏ2ㄏ', '乳滑', 'shitpost'],
-  likes: 0,
-  comments: [],
-  time: Date.now
-}
+
 
 
 const Main = ()=>{
@@ -78,20 +68,40 @@ const Main = ()=>{
   const [open3, setOpen3] = React.useState(false);
   const [currentlat, SetLat] = useState(25.01);
   const [currentlng, SetLng] = useState(121.53);
-  const [posts, Setposts] = useState('')
-  let dataarr = [];
-  async function GETPOST(){
-    const {loading, error, data} = useQuery(GET_POST, { variables: { x: currentlat, y:  currentlng, s: 2000},})
-    if(loading) return "loading"
-    if(error) return "no"
-    if(posts !== "" || data == undefined) console.log("hi")
-    else{
-      dataarr = data.getPosts
-      console.log(dataarr)
-    }
-  }
-  
- GETPOST()
+  const [posts, Setposts] = useState([])
+  const { loading, error, data, subscribeToMore} = useQuery(GET_POST, {variables: {x: currentlat, y: currentlng, s: 2000}})
+  const cachedMutatedData = useMemo(() => {
+    if (loading || error) return null
+    Setposts(data.getPosts)
+    return data
+  }, [loading, error, data])
+
+  useEffect(() => {
+    subscribeToMore({
+      document: POSTS_SUBSCRIPTION,
+      updateQuery: (prev, { subscriptionData }) => {
+        if (!subscriptionData.data) return prev
+        console.log(subscriptionData.data.postSub)
+        if (subscriptionData.data.postSub.mutation === "COMMENTADDED") {
+          const newPost = subscriptionData.data.postSub.data
+          console.log(newPost)
+          return {
+            ...prev,
+            names: [...prev.names, newPost]
+          }
+        }
+        else {
+
+          console.log(subscriptionData.data.subscribeName)
+          return {
+            ...prev,
+            names: []
+          }
+        }
+      }
+    })
+  }, [subscribeToMore])
+
  setInterval(function(){
    navigator.geolocation.getCurrentPosition((pos)=>{
    SetLat(pos.coords.latitude)
@@ -130,14 +140,15 @@ const Main = ()=>{
         zoom = {15}
         center = {{lat: currentlat, lng: currentlng}}
       >
-        {dataarr? dataarr.map(({location}, i)=>{
-          <Marker 
-          key = {i}
+        
+          {posts !== undefined? posts.map(({location}, i)=>(<Marker 
           position = {{
-            lat: 25.01,
-            lng: 121
-          }}></Marker>
-        }): (<div></div>)}
+            lat: location.x,
+            lng: location.y
+          }}></Marker>)):(<Marker position = {{
+            lat: currentlat,
+            lng: currentlng}}></Marker>)}
+        
       </GoogleMap>
     )
   }
@@ -146,7 +157,7 @@ const Main = ()=>{
 
 	return (
 		<>
-    
+     <div id = 'theme-controller'>
 		<div className = 'main'>
 			<div className = 'main-left'>
 				<MainNav/>
@@ -167,9 +178,9 @@ const Main = ()=>{
 	
           <div>
             <Slide easing = "ease">
-            {dataarr? (dataarr.map(({author, title, picture, text, time, tags}, i)=>
+            {posts !== undefined? (posts.map(({author, title, picture, text, time, tags, id, comments}, i)=>
             (<div className="each-slide" key = {i}>
-              <Post title={title} author={author[0]} picture={picture} text={title} time={time} id={i} tags={tags} />
+              <Post title={title} author={author[0]} picture={picture} text={title} time={time} id={id} tags={tags} comments = {comments}/>
               </div>)
             )): (<div></div>)}
             </Slide>
@@ -178,7 +189,7 @@ const Main = ()=>{
 
         </div>
     </div>
-      
+    </div>
     </>
   )
 }

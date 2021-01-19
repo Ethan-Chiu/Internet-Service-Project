@@ -1,4 +1,7 @@
 export { GET_POST } from './get_post'
 export { CREATE_POST_MUTATION } from './ql_main/createPost'
 export { POSTS_SUBSCRIPTION } from './subscriptions'
-export { DELETE_POST_MUTATION } from './dmutations'
+export { COMMENT_MUTATION } from './comment'
+export {PROFILE_MUTATION} from './editFile'
+export {GET_PROFILE} from './getProfile'
+export {GET_ID} from './getID'

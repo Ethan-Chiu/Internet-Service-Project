@@ -1,12 +1,14 @@
 import { gql } from 'apollo-boost'
 
 export const POSTS_SUBSCRIPTION = gql`
-  subscription{
-    subscribeName{
+  subscription postSub($id: String!)
+  {
+    postSub(id: $id)
+    {
       mutation
       data{
-        name
-        body
+        user
+        text
       }
     }
   }

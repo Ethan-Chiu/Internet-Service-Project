@@ -18,6 +18,15 @@ import MoreVertIcon from '@material-ui/icons/MoreVert';
 import AddIcon from '@material-ui/icons/Add';
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
+//apollo
+import {
+	GET_POST,
+	CREATE_POST_MUTATION,
+	POSTS_SUBSCRIPTION,
+  COMMENT_MUTATION,
+  GET_ID
+  } from '../../graphql'
+import { useQuery, useMutation } from 'react-apollo'
 
 
 const useStyles = makeStyles((theme) => ({
@@ -44,16 +53,44 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 
-const Post = (props: { title: string, author: string, text: string, picture: string, tags: Array, time: Function, id: number, comments: Array }) => {
+
+const Post = (props: { title: string, author: string, text: string, picture: string, tags: Array, time: Function, id: String, comments: Array }) => {
   const classes = useStyles();
   const [expanded, setExpanded] = React.useState(false);
   const sendcontrol = useRef()
+  const [createComment] = useMutation(COMMENT_MUTATION)
+  const { loading, error, data, subscribeToMore } = useQuery(GET_ID, {variables: {id: props.id}})
   const handleExpandClick = () => {
     setExpanded(!expanded);
   };
 
+
+  useEffect(() => {
+    subscribeToMore({
+      document: POSTS_SUBSCRIPTION,
+      variables: {id: props.id},
+      updateQuery: (prev, { subscriptionData }) => {
+        if (!subscriptionData.data) return prev
+        
+        if (subscriptionData.data.postSub.mutation === "COMMENTADDED") {
+          const newPost = subscriptionData.data.postSub.data
+          return {
+            ...prev.getPostFromId,
+            comments: [...prev.getPostFromId.comments, newPost]
+          }
+        }
+      }
+    })
+  }, [subscribeToMore])
+  
   const sendComment = () => {
-    console.log(document.getElementById(props.id).value)
+    createComment({
+        variables: {
+          id: props.id,
+          user: props.author,
+          text: document.getElementById(props.id).value,
+        }
+    })
     document.getElementById(props.id).value = ''
   }
   return (
@@ -109,10 +146,29 @@ const Post = (props: { title: string, author: string, text: string, picture: str
       </CardActions>
 
       <Collapse in={expanded} timeout="auto" unmountOnExit>
-        {props.comme}
-        <div style = {{padding: "10px", height: "50px"}}>Comments: </div>
-        <TextField placeholder="Addcomment" multiline rows={1} rowsMax={2} id={props.id} ref={sendcontrol} />
-        <Button onClick={() => { sendComment() }} id={props.id}>Send</Button>
+        <div style = {{paddingLeft: "10px"}}>Comments: </div>
+        <div >
+          <Card>
+            <CardHeader avatar = 
+            {<Avatar aria-label="recipe" className={classes.avatar}>{props.author[0]}</Avatar>}
+            title = {
+              <>
+            <TextField style = {{borderRadius: "10", float: "left"}} placeholder="Addcomment" multiline rows={1} rowsMax={2} id={props.id} ref={sendcontrol} />
+            <Button onClick={() => { sendComment() }} id={props.id}>Send</Button>
+            </>}>
+            </CardHeader>
+          </Card>
+          {data? (data.getPostFromId.comments.map(({user, text}, i)=>(
+            <Card>
+            <CardHeader avatar = 
+            {<Avatar aria-label="recipe" className={classes.avatar}>{user[0]}</Avatar>}
+            title = {text}>
+            </CardHeader>
+          </Card>
+
+          ))): (<div></div>)}
+        </div>
+        
       </Collapse>
 
     </Card>

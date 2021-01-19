@@ -1,7 +1,7 @@
 type Query {
 	login(account: String!, password: String!): String!
-	getPost: [Post]!
 	getPosts(locale: LocationInput!): [Post]!
+	getPostFromId(id: String!): Post
 	search(text: String!): [Post]!
 	getProfile(account: String!): User
 }
@@ -66,6 +66,7 @@ type User {
 }
 
 type Post {
+	id:	String!
 	author: String!
 	location: Location!
 	type: String!
