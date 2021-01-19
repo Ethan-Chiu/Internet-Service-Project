@@ -55,8 +55,6 @@ const Login  = () => {
             } else {
                 setTheme('theme-light');
             }
-            // let socket = io('localhost:4000');
-            // console.log(socket);
         }
     );
 

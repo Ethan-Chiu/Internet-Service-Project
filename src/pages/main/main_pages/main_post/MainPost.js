@@ -15,6 +15,7 @@ import Button from '@material-ui/core/Button';
 // import { AirlineSeatIndividualSuiteSharp } from '@material-ui/icons';
 //antd
 import { Input } from 'antd'
+const { TextArea } = Input;
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -53,7 +54,8 @@ const MainPost = () =>
         console.log(user)
     }, []);
 
-//////////////
+
+//////////////////////////////////////////////////////////////////////////////
 //show media--
     const constraints = {
         audio: true,
@@ -85,12 +87,11 @@ const MainPost = () =>
         videoHolder.appendChild(rawVideo);
     }
 //--show media
-//////////////
+//////////////////////////////////////////////////////////////////////////////
 
 
-////////////////////
+//////////////////////////////////////////////////////////////////////////////
 //cancel show media--
-
     function confirm(){
         const videoHolder = document.getElementById("video-holder");
         videoHolder.innerHTML="";
@@ -98,33 +99,23 @@ const MainPost = () =>
         const b2 = document.getElementById("recordButton");
         b1.innerHTML = "";b2.innerHTML = "";
     }
-
 //--cancel show media
-////////////////////
+//////////////////////////////////////////////////////////////////////////////
 
 
-////////////////////
-//remove Pic--
+//////////////////////////////////////////////////////////////////////////////
+//remove Media--
 function removeMedia(){
     setPicture("");
     setVideo("");
     const mediaResult = document.getElementById("mediaResult")
     mediaResult.innerHTML = "";
 }
-//--remove Pic
-////////////////////
+//--remove Media
+//////////////////////////////////////////////////////////////////////////////
 
 
-////////////////////
-//remove Video--
-function removeVideo(){
-    setVideo("");
-}
-//--remove Video
-////////////////////
-
-
-//////////////
+//////////////////////////////////////////////////////////////////////////////
 //record--
     let mediaRecorder;
     let recordedBlobs;
@@ -141,10 +132,10 @@ function removeVideo(){
     
         const recordButton = document.getElementById("recordButton");
         recordButton.innerHTML = "Stop Recording"
-        mediaRecorder.onstop = (event) => {
-            console.log('Recorder stopped: ', event);
-            console.log('Recorded Blobs: ', recordedBlobs);
-        };
+        // mediaRecorder.onstop = (event) => {
+        //     console.log('Recorder stopped: ', event);
+        //     console.log('Recorded Blobs: ', recordedBlobs);
+        // };
         mediaRecorder.ondataavailable = handleDataAvailable;
         mediaRecorder.start();
         console.log('MediaRecorder started', mediaRecorder);
@@ -153,7 +144,15 @@ function removeVideo(){
     function handleDataAvailable(event) {
         console.log('handleDataAvailable', event);
         if (event.data && event.data.size > 0) {
-        recordedBlobs.push(event.data);
+            recordedBlobs.push(event.data);
+
+            const superBuffer = new Blob(recordedBlobs, {type: 'video/webm'});
+            var reader = new FileReader();
+            reader.readAsDataURL(superBuffer);
+            reader.onload = function() {
+                var base64data = reader.result;                
+                setVideo(base64data);
+            }
         }
     }
 
@@ -161,9 +160,10 @@ function removeVideo(){
         mediaRecorder.stop();
     }
 //--record
-//////////////
+//////////////////////////////////////////////////////////////////////////////
 
-////////////////
+
+//////////////////////////////////////////////////////////////////////////////
 //play recorded--
     function playRecorded() {
 
@@ -186,9 +186,10 @@ function removeVideo(){
         recordedVideo.play();
     };
 //--play recorded
-////////////////
+//////////////////////////////////////////////////////////////////////////////
 
-////////////////
+
+//////////////////////////////////////////////////////////////////////////////
 //download--
     function download(){
         const blob = new Blob(recordedBlobs, {type: 'video/mp4'});
@@ -205,28 +206,44 @@ function removeVideo(){
         }, 100);
     }
 //--download
-///////////////
+//////////////////////////////////////////////////////////////////////////////
 
-function post(){
-    if (!user || !location || !title || !type) return
 
-    createPost({
-        variables: {
-            author: user,
-            x: location.x,
-            y: location.y,
-            s: location.s,
-            title: title,
-            type: type,
-            text: text,
-            picture: picture,
-            video: video,
-            tags: tags
-        }
-    })
-    setTitle('')
-    setText('')
-}
+//////////////////////////////////////////////////////////////////////////////
+//set tags--
+    useEffect(()=>{
+        var [doncare, ...pretags] = text.replace(/\n/g, " ").split('#');
+        var temptags = [];
+        pretags.map(e=>{
+            temptags.push(e.split(' ')[0]);
+        })
+        setTags(temptags)
+    },[text])
+//--set tags
+//////////////////////////////////////////////////////////////////////////////
+
+
+//graphql
+    function post(){
+        if (!user || !location || !title || !type) return
+
+        createPost({
+            variables: {
+                author: user,
+                x: location.x,
+                y: location.y,
+                s: location.s,
+                title: title,
+                type: type,
+                text: text,
+                picture: picture,
+                video: video,
+                tags: tags
+            }
+        })
+        setTitle('')
+        setText('')
+    }
 
 //button function
     const addphoto = ()=>{
@@ -297,6 +314,8 @@ function post(){
         })
     }
 
+//////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////////
     return (
         <>
         <MainNav className = "nav"/>
@@ -318,13 +337,15 @@ function post(){
                         }
                     }}
                 ></Input>
-                <Input
+                <TextArea
                     rows={4}
                     placeholder="Type your text here..."
                     value={text}
                     ref={inputRef}
-                    onChange={(e) => setText(e.target.value)}
-                ></Input>
+                    onChange={(e) => {
+                        setText(e.target.value);
+                    }}
+                ></TextArea>
                 <div>
                     <IconButton onClick = {addvideo}><VideoCallOutlinedIcon /></IconButton>
                     <IconButton onClick = {addphoto}><AddAPhotoIcon /></IconButton>

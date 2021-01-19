@@ -9,6 +9,7 @@ import { faStreetView } from '@fortawesome/free-solid-svg-icons'
 import { faAddressCard } from '@fortawesome/free-solid-svg-icons'
 import { faSearch } from '@fortawesome/free-solid-svg-icons'
 import { faPlusSquare } from '@fortawesome/free-solid-svg-icons'
+import { faFilm } from '@fortawesome/free-solid-svg-icons'
 //import {  } from '@fortawesome/free-brands-svg-icons'
 //import {  } from '@fortawesome/free-brands-svg-icons'
 
@@ -212,7 +213,7 @@ const MainNav = () => {
 			</IconButton>
 			</div>
 			<Divider />
-				<StyledMenuItem>
+				<StyledMenuItem >
 				<IconButton href = "/#/main">
 					<ListItemIcon>
 						<FontAwesomeIcon icon={faStreetView} size="1x"/>
@@ -248,6 +249,15 @@ const MainNav = () => {
 				<Link to = "/main/profile">profile</Link>
 				</StyledMenuItem>
 				
+        <StyledMenuItem>
+				<IconButton href = "/#/main/videoEditor">
+				<ListItemIcon>
+					<FontAwesomeIcon icon={faFilm} size="1x"/>
+				</ListItemIcon>
+				</IconButton>
+				<Link to = "/main/videoEditor">edit video</Link>
+				</StyledMenuItem>
+
 		</Drawer>
 		<main className={classes.content}>
 			<div className={classes.toolbar} />

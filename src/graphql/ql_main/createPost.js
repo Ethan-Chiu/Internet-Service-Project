@@ -3,9 +3,9 @@ import { gql } from 'apollo-boost'
 export const CREATE_POST_MUTATION = gql`
   mutation createPost(
     $author: String!
-    $x: Int
-    $y: Int
-    $s: Int
+    $x: Float
+    $y: Float
+    $s: Float
     $title: String!
     $type: String!
     $text: String
