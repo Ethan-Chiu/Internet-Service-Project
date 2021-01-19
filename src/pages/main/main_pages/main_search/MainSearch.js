@@ -6,8 +6,10 @@ const MainSearch = () =>
 {
     return (
         <>
+        <div id = 'theme-controller'>
         <p>MainSearch</p>
         <MainNav/>
+        </div>
         </>
     );
 }

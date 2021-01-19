@@ -7,7 +7,7 @@ import { HashRouter as Router, Switch, Route} from "react-router-dom";
 
 //page component
 import { Home, Login, Main } from "./pages";
-import {MainSearch, MainPost, MainProfile} from "./pages/main/main_pages";
+import {MainSearch, MainPost, MainProfile, MainVideoEditor} from "./pages/main/main_pages";
 
 function App() {
 	return (
@@ -30,6 +30,9 @@ function App() {
 					</Route>
 					<Route path = "/main/profile">
 						<MainProfile/>
+					</Route>
+					<Route path = "/main/videoEditor">
+						<MainVideoEditor/>
 					</Route>
 				
 			</Switch>
