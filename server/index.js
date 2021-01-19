@@ -3,6 +3,7 @@ require("dotenv-defaults").config();
 const { GraphQLServer, PubSub } = require('graphql-yoga')
 const { Query } = require("./resolvers/Query")
 const { Mutation } = require("./resolvers/Mutation")
+const { Subscription } = require("./resolvers/Subscription")
 
 const http = require("http");
 const express = require("express");
@@ -12,6 +13,7 @@ const WebSocket = require("ws");
 const Post = require("./models/post")
 const User = require("./models/user")
 
+const pubsub = new PubSub()
 const app = express();
 
 if (!process.env.MONGO_URL) {
@@ -30,10 +32,12 @@ const server = new GraphQLServer({
 	typeDefs: "./server/schema.graphql",
 	resolvers: {
 		Query,
-		Mutation
+		Mutation,
+		Subscription
 	},
 	context: {
-		db
+		db,
+		pubsub
 	}
 })
 
@@ -44,7 +48,7 @@ db.on('error', (error) => {
 db.once('open', () => {
   console.log('MongoDB connected!')
 
-  server.start({ port: process.env.PORT | 4000 }, () => {
-		console.log(`The server is up on port ${process.env.PORT | 4000}!`)
-	})
+	server.start({ port: process.env.PORT | 4000 , bodyParserOptions: { limit: "64mb"}}, () => {
+        console.log(`The server is up on port ${process.env.PORT | 4000}!`)
+    })
 })
