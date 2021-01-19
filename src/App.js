@@ -1,7 +1,6 @@
 import "./App.css";
 import React from "react";
 import { Button, Input, message, Tag } from "antd";
-// import axios from 'axios'
 
 //react router
 import { HashRouter as Router, Switch, Route} from "react-router-dom";

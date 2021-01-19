@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 @import url('https://fonts.googleapis.com/css?family=Montserrat:400,800');
 
 .main-left {
@@ -56,3 +57,32 @@
 	font-family: "Montserrat", sans-serif;
 	height: 100%;
 }
+=======
+.nav{
+    position: relative;
+}
+.main-div {
+    position: relative;
+    left: 75px;
+    top: 30px;
+}
+.main-left {
+    position: absolute;
+    left: 0;
+    right: 5%;
+    width: 5%;
+    height: 100%;
+}
+.main-center {
+    position: absolute;
+    left: 6%;
+    right: 66%;
+    top: 10.5%;
+    width: 50%;
+    height:100%;
+}
+.main-right {
+    width: 33%;
+    float: right;
+}
+>>>>>>> c52385e5746c66963e0854577132e186011fa64e

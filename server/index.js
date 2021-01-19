@@ -1,13 +1,16 @@
 require("dotenv-defaults").config();
 
 const { GraphQLServer, PubSub } = require('graphql-yoga')
-import { Query } from "./resolvers/Query"
-import { Mutation } from "./resolvers/Mutation"
+const { Query } = require("./resolvers/Query")
+const { Mutation } = require("./resolvers/Mutation")
+const { Subscription } = require("./resolvers/Subscription")
 
 const mongoose = require("mongoose");
 
 const Post = require("./models/post")
 const User = require("./models/user")
+
+const pubsub = new PubSub()
 
 if (!process.env.MONGO_URL) {
 	console.error("Missing MONGO_URL!!!");
@@ -25,10 +28,12 @@ const server = new GraphQLServer({
 	typeDefs: "./server/schema.graphql",
 	resolvers: {
 		Query,
-		Mutation
+		Mutation,
+		Subscription
 	},
 	context: {
-		db
+		db,
+		pubsub
 	}
 })
 
@@ -39,7 +44,7 @@ db.on('error', (error) => {
 db.once('open', () => {
   console.log('MongoDB connected!')
 
-  server.start({ port: process.env.PORT | 4000 , bodyParserOptions: { limit: "64mb"}}, () => {
-		console.log(`The server is up on port ${process.env.PORT | 4000}!`)
-	})
+	server.start({ port: process.env.PORT | 4000 , bodyParserOptions: { limit: "64mb"}}, () => {
+        console.log(`The server is up on port ${process.env.PORT | 4000}!`)
+    })
 })

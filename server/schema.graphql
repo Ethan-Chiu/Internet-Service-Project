@@ -16,6 +16,11 @@ type Mutation {
 	deleteComment(id: String!, user: String!, text: String!): String!
 }
 
+type Subscription {
+	newSub: Post!
+	postSub(id: String): PostSubPayload!
+}
+
 input UserInput {
 	account: String!
 	password: String
@@ -40,9 +45,9 @@ input PostInput {
 }
 
 input LocationInput {
-	x: Int
-	y: Int
-	s: Int
+	x: Float
+	y: Float
+	s: Float
 }
 
 type User {
@@ -79,7 +84,21 @@ type Comment {
 }
 
 type Location {
-	x: Int
-	y: Int
-	s: Int
+	x: Float
+	y: Float
+	s: Float
+}
+
+type PostSubPayload {
+	mutation: MutationType!
+	id: String!
+	data: Comment
+}
+
+enum MutationType {
+	LIKED
+	UNLIKED
+	COMMENTADDED
+	COMMENTDELETED
+	DELETED
 }
