@@ -18,8 +18,12 @@ import {
 } from '../../graphql'
 
 const Login  = () => {
+    const [username, SetName] = useState('')
+    const [useremail, SetEmail] = useState('')
+    const [userpassword, SetPass] = useState('')
 
     // const [signedin, setSignedin] = useState(false);
+<<<<<<< HEAD
     const [user, setUser] = useState("aa");
 		const [account, setAccount] = useState("")
 		const [password, setPassword] = useState("")
@@ -36,6 +40,14 @@ const Login  = () => {
     //user
     //theme
     //signin
+=======
+    const handlesign = () =>{
+        if( username && useremail && userpassword)
+        {
+            
+        }
+    }
+>>>>>>> 02a630d6ff9bf3229df5236923482447777b1295
 
     const movePanel = ()=>
     {
@@ -72,6 +84,7 @@ const Login  = () => {
         }
     );
 
+<<<<<<< HEAD
 		function LOGIN() {
 			const { logincalled, loginloading, logindata } = useQuery(
 				LOGIN_QUERY, {
@@ -95,6 +108,13 @@ const Login  = () => {
 		
 		function signup() {
 		}
+=======
+    function signin() {
+        console.log("sign in");
+        localStorage.setItem('signin', true)
+        //localStorage.setItem('user', user)
+    }
+>>>>>>> 02a630d6ff9bf3229df5236923482447777b1295
 
     return(
         <div class = "theme-dark" id = "theme-controller">
@@ -109,6 +129,7 @@ const Login  = () => {
                             
                         </div>
                         <span>or use your email for registration</span>
+<<<<<<< HEAD
                         <input type="text" placeholder="Name"
 													onChange={(e) => setName(e.target.value)}/>
                         <input type="email" placeholder="Email"
@@ -118,6 +139,12 @@ const Login  = () => {
                         <input type="password" placeholder="Password"
 													onChange={(e) => setRPassword(e.target.value)}/>
                         <button onclick={signup}>Sign Up</button>
+=======
+                        <input type="text" placeholder="Name" onChange = {(e)=>{SetName(e.target.value)}}/>
+                        <input type="email" placeholder="Account" onChange = {(e)=>{SetEmail(e.target.value)}}/>
+                        <input type="password" placeholder="Password" onChange = {(e)=>{SetPass(e.target.value)}}/>
+                        <button onClick = {handlesign}>Sign Up</button>
+>>>>>>> 02a630d6ff9bf3229df5236923482447777b1295
                     </form>
                 </div>
                 <div class="form-container sign-in-container">
@@ -127,10 +154,15 @@ const Login  = () => {
                             <GoogleBtn/>
                         </div>
                         <span>or use your account</span>
+<<<<<<< HEAD
                         <input type="account" placeholder="Account"
 													onChange={(e) => setAccount(e.target.value)}/>
                         <input type="password" placeholder="Password"
 													onChange={(e) => setPassword(e.target.value)}/>
+=======
+                        <input type="email" placeholder="Account" />
+                        <input type="password" placeholder="Password" />
+>>>>>>> 02a630d6ff9bf3229df5236923482447777b1295
                         <a href="#/Main" >Forgot your password?</a>
                         <button onClick={signin}>Sign In</button>
                     </form>
