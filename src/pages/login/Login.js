@@ -12,8 +12,17 @@ import { faInstagram } from '@fortawesome/free-brands-svg-icons'
 import {faAdjust} from '@fortawesome/free-solid-svg-icons'
 
 const Login  = () => {
+    const [username, SetName] = useState('')
+    const [useremail, SetEmail] = useState('')
+    const [userpassword, SetPass] = useState('')
 
     // const [signedin, setSignedin] = useState(false);
+    const handlesign = () =>{
+        if( username && useremail && userpassword)
+        {
+            
+        }
+    }
 
     const movePanel = ()=>
     {
@@ -65,10 +74,10 @@ const Login  = () => {
                             <a href="#" class="social"><FontAwesomeIcon icon={faInstagram} size="2x"/></a>
                         </div>
                         <span>or use your email for registration</span>
-                        <input type="text" placeholder="Name" />
-                        <input type="email" placeholder="Email" />
-                        <input type="password" placeholder="Password" />
-                        <button>Sign Up</button>
+                        <input type="text" placeholder="Name" onChange = {(e)=>{SetName(e.target.value)}}/>
+                        <input type="email" placeholder="Account" onChange = {(e)=>{SetEmail(e.target.value)}}/>
+                        <input type="password" placeholder="Password" onChange = {(e)=>{SetPass(e.target.value)}}/>
+                        <button onClick = {handlesign}>Sign Up</button>
                     </form>
                 </div>
                 <div class="form-container sign-in-container">
@@ -80,7 +89,7 @@ const Login  = () => {
                             <a class="social"><FontAwesomeIcon icon={faInstagram} size="2x"/></a>
                         </div>
                         <span>or use your account</span>
-                        <input type="email" placeholder="Email" />
+                        <input type="email" placeholder="Account" />
                         <input type="password" placeholder="Password" />
                         <a href="#/Main" >Forgot your password?</a>
                         <button>Sign In</button>

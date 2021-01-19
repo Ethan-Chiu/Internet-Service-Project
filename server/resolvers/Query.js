@@ -90,7 +90,23 @@ const Query = {
 			}
 		}
 		return func()
+	},
+	getPost(parent, args, {db}, info){
+		const func = async() => {
+			var x
+			await new Promise(resolve => {
+				Post.find()
+					.exec((err, res) => {
+						if (err) throw err
+						x=res
+						resolve()
+					})
+			})
+			return x
+		}	
+		return func()
 	}
+	
 }
 
 module.exports = { Query }

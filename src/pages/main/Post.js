@@ -61,7 +61,7 @@ const Post = (props: { title: string, author: string, text: string, picture: str
       <CardHeader
         avatar={
           <Avatar aria-label="recipe" className={classes.avatar}>
-            R
+            {props.author[0]}
           </Avatar>
         }
         action={
@@ -69,8 +69,8 @@ const Post = (props: { title: string, author: string, text: string, picture: str
             <MoreVertIcon />
           </IconButton>
         }
-        title="Shrimp and Chorizo Paella"
-        subheader="September 14, 2016"
+        title={props.title}
+        subheader={props.time}
       />
       <CardMedia
         className={classes.media}

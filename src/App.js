@@ -3,12 +3,12 @@ import React from "react";
 import { Button, Input, message, Tag } from "antd";
 import axios from 'axios'
 import {
-	POSTS_QUERY,
+	GET_POST,
 	CREATE_POST_MUTATION,
 	POSTS_SUBSCRIPTION,
 	DELETE_POST_MUTATION
   } from './graphql'
-  import { useQuery, useMutation } from 'react-apollo'
+import { useQuery, useMutation } from 'react-apollo'
 
 //react router
 import { HashRouter as Router, Switch, Route} from "react-router-dom";

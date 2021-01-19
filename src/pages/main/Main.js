@@ -8,8 +8,16 @@ import Box from '@material-ui/core/Box';
 import './Main.css'
 import { Button, Input, message, Tag } from 'antd'
 import useChat from '../../useChat'
+import {
+	GET_POST,
+	CREATE_POST_MUTATION,
+	POSTS_SUBSCRIPTION,
+	DELETE_POST_MUTATION
+  } from '../../graphql'
+import { useQuery, useMutation } from 'react-apollo'
 //map
 import GoogleMapReact from 'google-map-react';
+import { GoogleMap, Marker, useJsApiLoader } from '@react-google-maps/api';
 
 
 
@@ -62,22 +70,33 @@ const sample = {
 
 const Main = ()=>{
   const AnyReactComponent = ({ text }) => <div>{text}</div>;
-  const { status, opened, messages, sendMessage, clearMessages } = useChat()
-	const classes = useStyles();
+  const classes = useStyles();
+  //const [user, Setuser] = useStyles(localStorage.getItem('user'));
 	const [open0, setOpen0] = React.useState(true);
 	const [open1, setOpen1] = React.useState(false);
 	const [open2, setOpen2] = React.useState(false);
   const [open3, setOpen3] = React.useState(false);
   const [currentlat, SetLat] = useState(25.01);
   const [currentlng, SetLng] = useState(121.53);
-
-
-  useEffect(() => {
-    navigator.geolocation.getCurrentPosition((pos)=>{
-      SetLat(pos.coords.latitude)
-      SetLng(pos.coords.longitude)})
-  })
-  
+  const [posts, Setposts] = useState('')
+  let dataarr = [];
+  async function GETPOST(){
+    console.log(currentlng, currentlat)
+    const {loading, error, data} = useQuery(GET_POST, { variables: { x: Math.floor(currentlat), y:  Math.floor(currentlng), s: 2000},})
+    if(loading) return "loading"
+    if(error) return "no"
+    if(posts ===true || data == undefined) return "ass"
+    else{
+      dataarr = data.getPosts
+    }
+  }
+ GETPOST()
+ setInterval(function(){
+   navigator.geolocation.getCurrentPosition((pos)=>{
+   SetLat(pos.coords.latitude)
+   SetLng(pos.coords.longitude)
+   
+ })}, 3000);
   const handleClick0 = () => {
     setOpen0(!open0);
     setOpen1(false)
@@ -110,8 +129,10 @@ const Main = ()=>{
 			<div className = 'main-left'>
 				<MainNav/>
 			</div>
+      <script defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBES8rvsfwrOtLZ5S4EvedrOJ4OSIR49UY&callback=initMap">
+      </script>
 			<div className = 'main-center'>
-        <div style={{ height: '100vh', width: '100%' }}>
+        <div style={{ height: '100vh', width: '100%' }} id = "map">
           <GoogleMapReact
             bootstrapURLKeys={{ key: "AIzaSyBES8rvsfwrOtLZ5S4EvedrOJ4OSIR49UY" }}
             defaultCenter={ {
@@ -125,98 +146,24 @@ const Main = ()=>{
               text="My Marker"
             />
           </GoogleMapReact>
-
-            
         </div>
       </div>
 			<div className = 'main-right'>
-							
-				{/*<GridList cellHeight={90} cols={1} >
-				{urls.map((title, index) => (
-				<GridListTile key={index} >
-					<img src={title} />
-					<GridListTileBar title = 'hi'/>
-				</GridListTile>
-					))}
-				</GridList>*/}
-
-	{/* <List
-      component="nav"
-      aria-labelledby="nested-list-subheader"
-      className={classes.root}
-    >
-
-      {<ListItem button onClick={handleClick0}>
-        <ListItemIcon>
-		      <Avatar aria-label="recipe" className={classes.avatar}>
-              {sample.author[0]}
-          </Avatar>
-        </ListItemIcon>
-        <ListItemText primary={sample.title} />
-        {open0 ? <ExpandLess />: <ExpandMore />}
-      </ListItem>
-      <Collapse in={open0} timeout="auto" unmountOnExit>
-        
-        <Post title = {sample.title} author = {sample.author[0]} picture = {sample.picture} text = {sample.text} time = {sample.time()} id = {0} tags = {sample.tags}/>
-      </Collapse>
-
-      <ListItem button onClick={handleClick1}>
-        <ListItemIcon>
-		      <Avatar aria-label="recipe" className={classes.avatar}>
-              {sample.author[0]}
-          </Avatar>
-        </ListItemIcon>
-        <ListItemText primary={sample.title} />
-        {open1 ? <ExpandLess /> : <ExpandMore />}
-      </ListItem>
-      <Collapse in={open1} timeout="auto" unmountOnExit>
-        
-      <Post title = {sample.title} author = {sample.author[0]} picture = {sample.picture} text = {sample.text} time = {sample.time()} id = {1} tags = {sample.tags}/>
-      </Collapse>
-
-	  <ListItem button onClick={handleClick2}>
-        <ListItemIcon>
-		<Avatar aria-label="recipe" className={classes.avatar}>
-              A
-            </Avatar>
-        </ListItemIcon>
-        <ListItemText primary="post-title2" />
-        {open2 ? <ExpandLess /> : <ExpandMore />}
-      </ListItem>
-      <Collapse in={open2} timeout="auto" unmountOnExit>
-        <List component="div" disablePadding>
-          <Post title = {sample.title} author = {sample.author[0]} picture = {sample.picture} text = {sample.text} time = {sample.time()} id = {2} tags = {sample.tags}/>
-        </List>
-      </Collapse>} */}
-          {/* {<Carousel activeIndex={index} onSelect={handleSelect}>
-            <Carousel.Item>
-              <Post title={sample.title} author={sample.author[0]} picture={sample.picture} text={sample.text} time={sample.time()} id={0} tags={sample.tags} />
-            </Carousel.Item>
-            <Carousel.Item>
-              <Post title={sample.title} author={sample.author[0]} picture={sample.picture} text={sample.text} time={sample.time()} id={0} tags={sample.tags} />
-            </Carousel.Item>
-            <Carousel.Item>
-              <Post title={sample.title} author={sample.author[0]} picture={sample.picture} text={sample.text} time={sample.time()} id={0} tags={sample.tags} />
-            </Carousel.Item>
-          </Carousel>} */}
+	
           <div>
-            <Slide easing="ease">
-              <div className="each-slide">
-                <Post title={sample.title} author={sample.author[0]} picture={sample.picture} text={sample.text} time={sample.time()} id={0} tags={sample.tags} />
-              </div>
-              <div className="each-slide">
-                <Post title={sample.title} author={sample.author[0]} picture={sample.picture} text={sample.text} time={sample.time()} id={0} tags={sample.tags} />
-              </div>
-              <div className="each-slide">
-                <Post title={sample.title} author={sample.author[0]} picture={sample.picture} text={sample.text} time={sample.time()} id={0} tags={sample.tags} />
-              </div>
+            <Slide easing = "ease">
+            {dataarr? (dataarr.map(({author, title, picture, text, time, tags}, i)=>
+            (<div className="each-slide" key = {i}>
+              <Post title={title} author={author[0]} picture={picture} text={title} time={time} id={i} tags={tags} />
+              </div>)
+            )): (<div></div>)}
             </Slide>
           </div>
-
           
-        </div>
-      </div>
 
+        </div>
+    </div>
+      
     </>
   )
 }
