@@ -1,0 +1,85 @@
+type Query {
+	login(account: String!, password: String!): String!
+	getPosts(locale: LocationInput!): [Post]!
+	search(text: String!): [Post]!
+	getProfile(account: String!): User
+}
+
+type Mutation {
+	signup(data: UserInput!): String!
+	editProfile(data: UserInput!): String!
+	createPost(data: PostInput!): String!
+	deletePost(id: String!): String!
+	like(id: String!, user: String!): String!
+	unlike(id: String!, user: String!): String!
+	comment(id: String!, user: String!, text: String!): String!
+	deleteComment(id: String!, user: String!, text: String!): String!
+}
+
+input UserInput {
+	account: String!
+	password: String
+	email: String
+	name: String
+	picture: String
+	age: Int
+	phone: String
+	address: String
+	introduction: String
+}
+
+input PostInput {
+	author: String!
+	location: LocationInput!
+	title: String!
+	type: String!
+	text: String
+	picture: String
+	video: String
+	tags: [String]
+}
+
+input LocationInput {
+	x: Int
+	y: Int
+	s: Int
+}
+
+type User {
+	usertype: String!
+	name: String!
+	account: String!
+	email: String!
+	password: String!
+	picture: String
+	age: Int
+	phone: String
+	address: String
+	introduction: String
+	lastappear: Location
+}
+
+type Post {
+	author: String!
+	location: Location!
+	type: String!
+	title: String!
+	text: String
+	picture: String
+	video: String
+	tags: [String]
+	likes: [String]!
+	comments: [Comment]!
+	time: String!
+}
+
+type Comment {
+	user: String!
+	text: String!
+}
+
+type Location {
+	x: Int
+	y: Int
+	s: Int
+}
