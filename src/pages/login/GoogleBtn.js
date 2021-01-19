@@ -49,9 +49,7 @@ class GoogleBtn extends Component {
 	getInformation() {
 		const Http = new XMLHttpRequest();
 		var url = "https://www.googleapis.com/oauth2/v3/userinfo?access_token="+this.state.accessToken;
-		console.log(url)
 		Http.open("Get", url);
-		Http.send();
 
 		Http.onreadystatechange = function() {
 			if(Http.readyState == 4 && Http.status == 200)

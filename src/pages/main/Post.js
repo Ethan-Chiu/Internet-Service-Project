@@ -44,7 +44,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 
-const Post = (props: { title: string, author: string, text: string, picture: string, tags: Array, time: Function, id: number }) => {
+const Post = (props: { title: string, author: string, text: string, picture: string, tags: Array, time: Function, id: number, comments: Array }) => {
   const classes = useStyles();
   const [expanded, setExpanded] = React.useState(false);
   const sendcontrol = useRef()
@@ -61,7 +61,7 @@ const Post = (props: { title: string, author: string, text: string, picture: str
       <CardHeader
         avatar={
           <Avatar aria-label="recipe" className={classes.avatar}>
-            R
+            {props.author[0]}
           </Avatar>
         }
         action={
@@ -69,8 +69,8 @@ const Post = (props: { title: string, author: string, text: string, picture: str
             <MoreVertIcon />
           </IconButton>
         }
-        title="Shrimp and Chorizo Paella"
-        subheader="September 14, 2016"
+        title={props.title}
+        subheader={props.time}
       />
       <CardMedia
         className={classes.media}
@@ -109,6 +109,8 @@ const Post = (props: { title: string, author: string, text: string, picture: str
       </CardActions>
 
       <Collapse in={expanded} timeout="auto" unmountOnExit>
+        {props.comme}
+        <div style = {{padding: "10px", height: "50px"}}>Comments: </div>
         <TextField placeholder="Addcomment" multiline rows={1} rowsMax={2} id={props.id} ref={sendcontrol} />
         <Button onClick={() => { sendComment() }} id={props.id}>Send</Button>
       </Collapse>
