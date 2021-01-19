@@ -44,6 +44,21 @@ const Query = {
 		}
 		return func()
 	},
+	getPostFromId(parent, args, { db }, info) {
+		const func = async() => {
+			var x
+			await new Promise(resolve => {
+				Post.find({ _id: args.id })
+					.exec((err, res) => {
+						if (err) throw err
+						x = res[0]
+						resolve()
+					})
+			})
+			return x
+		}
+		return func()
+	}
 	search(parent, args, { db }, info) {
 		var titlematch = []
 		var tagmatch = []
