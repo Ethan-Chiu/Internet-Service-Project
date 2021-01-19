@@ -8,6 +8,7 @@ const PostSchema = new Schema({
 	title:		{ type: String, required: true },
 	text:			{ type: String },
 	picture:	{ type: String },
+	video:		{ type: String },
 	tags:			{ type: Array },
 	likes:		{ type: [String], default: [] },
 	comments:	{ type: [{ user: String, text: String }], default: [] },
