@@ -17,7 +17,7 @@ import {
 import { useQuery, useMutation } from 'react-apollo'
 //map
 import GoogleMapReact from 'google-map-react';
-import { GoogleMap, Marker, useJsApiLoader } from '@react-google-maps/api';
+import { withScriptjs, withGoogleMap, GoogleMap, Marker } from "react-google-maps"
 
 
 
@@ -76,18 +76,19 @@ const Main = ()=>{
 	const [open1, setOpen1] = React.useState(false);
 	const [open2, setOpen2] = React.useState(false);
   const [open3, setOpen3] = React.useState(false);
+  const [currentzoom, SetZoom] = useState(1);
   const [currentlat, SetLat] = useState(25.01);
   const [currentlng, SetLng] = useState(121.53);
   const [posts, Setposts] = useState('')
   let dataarr = [];
   async function GETPOST(){
-    console.log(currentlng, currentlat)
     const {loading, error, data} = useQuery(GET_POST, { variables: { x: Math.floor(currentlat), y:  Math.floor(currentlng), s: 2000},})
     if(loading) return "loading"
     if(error) return "no"
-    if(posts ===true || data == undefined) return "ass"
+    if(posts !== "" || data == undefined) console.log("hi")
     else{
       dataarr = data.getPosts
+      console.log(data.getPosts)
     }
   }
  GETPOST()
@@ -95,6 +96,7 @@ const Main = ()=>{
    navigator.geolocation.getCurrentPosition((pos)=>{
    SetLat(pos.coords.latitude)
    SetLng(pos.coords.longitude)
+   console.log(currentzoom)
    
  })}, 3000);
   const handleClick0 = () => {
@@ -121,7 +123,19 @@ const Main = ()=>{
       setOpen0(false)
       setOpen2(false)
       setOpen1(false)
-  	};
+    };
+
+  function Map(){
+    return (
+      <GoogleMap
+        zoom = {20}
+        center = {{lat: currentlat, lng: currentlng}}
+      />
+    )
+  }
+
+  const WrappedMap = withScriptjs(withGoogleMap(Map))
+
 	return (
 		<>
     
@@ -133,7 +147,13 @@ const Main = ()=>{
       </script>
 			<div className = 'main-center'>
         <div style={{ height: '100vh', width: '100%' }} id = "map">
-          <GoogleMapReact
+          <WrappedMap 
+          googleMapURL={"https://maps.googleapis.com/maps/api/js?key=AIzaSyC4R6AN7SmujjPUIGKdyao2Kqitzr1kiRg&v=3.exp&libraries=geometry,drawing,places&key=AIzaSyBES8rvsfwrOtLZ5S4EvedrOJ4OSIR49UY"}
+          loadingElement = {<div style = {{height: '100%'}}/>}
+          containerElement = {<div style = {{height: '100%'}}/>}
+          mapElement = {<div style = {{height: '100%'}}/>}
+          />
+          {/* {<GoogleMapReact
             bootstrapURLKeys={{ key: "AIzaSyBES8rvsfwrOtLZ5S4EvedrOJ4OSIR49UY" }}
             defaultCenter={ {
               lat:  currentlat,
@@ -145,7 +165,7 @@ const Main = ()=>{
               lng={currentlng}
               text="My Marker"
             />
-          </GoogleMapReact>
+          </GoogleMapReact>} */}
         </div>
       </div>
 			<div className = 'main-right'>
