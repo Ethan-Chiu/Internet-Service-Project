@@ -1,5 +1,6 @@
 import React from 'react'
 import { useState, useEffect } from 'react'
+import { useQuery, useMutation } from "react-apollo"
 import GoogleBtn from './GoogleBtn';
 import InAppAccBtn from './InAppAccBtn'
 import './Login.css'
@@ -11,12 +12,25 @@ import { faGoogle } from '@fortawesome/free-brands-svg-icons'
 import { faInstagram } from '@fortawesome/free-brands-svg-icons'
 import {faAdjust} from '@fortawesome/free-solid-svg-icons'
 
-import io from "socket.io-client"
+import {
+	LOGIN_QUERY,
+	SIGNUP_MUTATION
+} from '../../graphql'
 
 const Login  = () => {
 
     // const [signedin, setSignedin] = useState(false);
     const [user, setUser] = useState("aa");
+		const [account, setAccount] = useState("")
+		const [password, setPassword] = useState("")
+		const [name, setName] = useState("")
+		const [email, setEmail] = useState("")
+		const [raccount, setRAccount] = useState("")
+		const [rpassword, setRPassword] = useState("")
+		const [result, setResult] = useState("")
+		const signup_mutation = useMutation(SIGNUP_MUTATION)
+		
+
 
     //localstorage
     //user
@@ -55,16 +69,32 @@ const Login  = () => {
             } else {
                 setTheme('theme-light');
             }
-            // let socket = io('localhost:4000');
-            // console.log(socket);
         }
     );
 
-    function signin() {
-        console.log("sign in");
-        localStorage.setItem('signin', true)
-        localStorage.setItem('user', user)
-    }
+		function LOGIN() {
+			const { logincalled, loginloading, logindata } = useQuery(
+				LOGIN_QUERY, {
+					variables: {
+						account:	account,
+						password:	password
+				}
+			})
+			if (result !== logindata) {
+				setResult(logindata)
+			}
+			return
+		}
+		LOGIN()
+
+		const signin = async() => {
+			console.log(result)
+			localStorage.setItem('signin', true)
+			localStorage.setItem('user', user)
+		}
+		
+		function signup() {
+		}
 
     return(
         <div class = "theme-dark" id = "theme-controller">
@@ -73,29 +103,36 @@ const Login  = () => {
             </div>
             <div class="container" id="container">
                 <div class="form-container sign-up-container">
-                    <form action="#">
+                    <form>
                         <h1>Create Account</h1>
                         <div class="social-container">
                             
                         </div>
                         <span>or use your email for registration</span>
-                        <input type="text" placeholder="Name" />
-                        <input type="email" placeholder="Email" />
-                        <input type="password" placeholder="Password" />
-                        <button>Sign Up</button>
+                        <input type="text" placeholder="Name"
+													onChange={(e) => setName(e.target.value)}/>
+                        <input type="email" placeholder="Email"
+													onChange={(e) => setEmail(e.target.value)}/>
+												<input type="text" placeholder="Account"
+													onChange={(e) => setRAccount(e.target.value)}/>
+                        <input type="password" placeholder="Password"
+													onChange={(e) => setRPassword(e.target.value)}/>
+                        <button onclick={signup}>Sign Up</button>
                     </form>
                 </div>
                 <div class="form-container sign-in-container">
-                    <form action="#">
+                    <form>
                         <h1>Sign in</h1>
                         <div class="social-container">
                             <GoogleBtn/>
                         </div>
                         <span>or use your account</span>
-                        <input type="email" placeholder="Email" />
-                        <input type="password" placeholder="Password" />
+                        <input type="account" placeholder="Account"
+													onChange={(e) => setAccount(e.target.value)}/>
+                        <input type="password" placeholder="Password"
+													onChange={(e) => setPassword(e.target.value)}/>
                         <a href="#/Main" >Forgot your password?</a>
-                        <button onClick= {signin}>Sign In</button>
+                        <button onClick={signin}>Sign In</button>
                     </form>
                 </div>
                 <div class="overlay-container">

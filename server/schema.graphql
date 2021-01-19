@@ -65,6 +65,7 @@ type User {
 }
 
 type Post {
+	id:	String!
 	author: String!
 	location: Location!
 	type: String!
