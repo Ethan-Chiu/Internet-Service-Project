@@ -9,6 +9,7 @@ type Mutation {
 	signup(data: UserInput!): String!
 	editProfile(data: UserInput!): String!
 	createPost(data: PostInput!): String!
+	deletePost(id: String!): String!
 	like(id: String!, user: String!): String!
 	unlike(id: String!, user: String!): String!
 	comment(id: String!, user: String!, text: String!): String!
