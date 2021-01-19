@@ -76,27 +76,26 @@ const Main = ()=>{
 	const [open1, setOpen1] = React.useState(false);
 	const [open2, setOpen2] = React.useState(false);
   const [open3, setOpen3] = React.useState(false);
-  const [currentzoom, SetZoom] = useState(1);
   const [currentlat, SetLat] = useState(25.01);
   const [currentlng, SetLng] = useState(121.53);
   const [posts, Setposts] = useState('')
   let dataarr = [];
   async function GETPOST(){
-    const {loading, error, data} = useQuery(GET_POST, { variables: { x: Math.floor(currentlat), y:  Math.floor(currentlng), s: 2000},})
+    const {loading, error, data} = useQuery(GET_POST, { variables: { x: currentlat, y:  currentlng, s: 2000},})
     if(loading) return "loading"
     if(error) return "no"
     if(posts !== "" || data == undefined) console.log("hi")
     else{
       dataarr = data.getPosts
-      console.log(data.getPosts)
+      console.log(dataarr)
     }
   }
+  
  GETPOST()
  setInterval(function(){
    navigator.geolocation.getCurrentPosition((pos)=>{
    SetLat(pos.coords.latitude)
    SetLng(pos.coords.longitude)
-   console.log(currentzoom)
    
  })}, 3000);
   const handleClick0 = () => {
@@ -128,9 +127,18 @@ const Main = ()=>{
   function Map(){
     return (
       <GoogleMap
-        zoom = {20}
+        zoom = {15}
         center = {{lat: currentlat, lng: currentlng}}
-      />
+      >
+        {dataarr? dataarr.map(({location}, i)=>{
+          <Marker 
+          key = {i}
+          position = {{
+            lat: 25.01,
+            lng: 121
+          }}></Marker>
+        }): (<div></div>)}
+      </GoogleMap>
     )
   }
 
@@ -153,19 +161,6 @@ const Main = ()=>{
           containerElement = {<div style = {{height: '100%'}}/>}
           mapElement = {<div style = {{height: '100%'}}/>}
           />
-          {/* {<GoogleMapReact
-            bootstrapURLKeys={{ key: "AIzaSyBES8rvsfwrOtLZ5S4EvedrOJ4OSIR49UY" }}
-            defaultCenter={ {
-              lat:  currentlat,
-              lng: currentlng
-            }}
-            defaultZoom={20}
-          ><AnyReactComponent
-              lat={currentlat}
-              lng={currentlng}
-              text="My Marker"
-            />
-          </GoogleMapReact>} */}
         </div>
       </div>
 			<div className = 'main-right'>

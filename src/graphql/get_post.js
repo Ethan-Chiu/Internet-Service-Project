@@ -2,9 +2,9 @@ import { gql } from 'apollo-boost'
 
 export const GET_POST = gql`
   query getPosts(
-    $x: Int!
-    $y: Int!
-    $s: Int
+    $x: Float!
+    $y: Float!
+    $s: Float
     ){
     getPosts(locale: {
       x: $x
@@ -22,6 +22,7 @@ export const GET_POST = gql`
       title
       text
       picture
+      video
       tags
       likes
       comments
