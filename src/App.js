@@ -1,21 +1,13 @@
 import "./App.css";
 import React from "react";
 import { Button, Input, message, Tag } from "antd";
-import axios from 'axios'
-import {
-	GET_POST,
-	CREATE_POST_MUTATION,
-	POSTS_SUBSCRIPTION,
-	DELETE_POST_MUTATION
-  } from './graphql'
-import { useQuery, useMutation } from 'react-apollo'
 
 //react router
 import { HashRouter as Router, Switch, Route} from "react-router-dom";
 
 //page component
 import { Home, Login, Main } from "./pages";
-import {MainHome, MainSearch, MainPost, MainProfile} from "./pages/main/main_pages";
+import {MainSearch, MainPost, MainProfile} from "./pages/main/main_pages";
 
 function App() {
 	return (
@@ -30,9 +22,6 @@ function App() {
 				<Route exact path = "/main">
 					<Main />
 				</Route>
-					<Route path="/main/home">
-						<MainHome/>
-					</Route>
 					<Route path = "/main/search">
 						<MainSearch/>
 					</Route>

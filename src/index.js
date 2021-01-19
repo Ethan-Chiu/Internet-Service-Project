@@ -43,7 +43,6 @@ const client = new ApolloClient({
   cache: new InMemoryCache().restore({})
 })
 
-
 ReactDOM.render(
   <ApolloProvider client={client}>
     {/* <div class="g-signin2" data-onsuccess="onSignIn"></div> */}

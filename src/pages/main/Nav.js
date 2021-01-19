@@ -1,5 +1,6 @@
 import React from 'react'
-import { Link } from "react-router-dom";
+import { useEffect } from 'react'
+import {Link} from "react-router-dom";
 import './Nav.css'
 
 //font awesome
@@ -12,7 +13,7 @@ import { faPlusSquare } from '@fortawesome/free-solid-svg-icons'
 //import {  } from '@fortawesome/free-brands-svg-icons'
 
 //material ui
-import { withStyles, makeStyles, styled, useTheme } from '@material-ui/core/styles';
+import {withStyles, makeStyles, styled ,useTheme} from '@material-ui/core/styles';
 import BottomNavigation from '@material-ui/core/BottomNavigation';
 import BottomNavigationAction from '@material-ui/core/BottomNavigationAction';
 //menu
@@ -39,6 +40,7 @@ import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
 import ChevronRightIcon from '@material-ui/icons/ChevronRight';
 import MailIcon from '@material-ui/icons/Mail';
 import ListItem from '@material-ui/core/ListItem';
+import { dark } from '@material-ui/core/styles/createPalette';
 
 const drawerWidth = 240;
 
@@ -105,50 +107,50 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const StyledMenu = withStyles({
-  paper: {
-    border: '1px solid #d3d4d5',
-  },
-})((props) => (
-  <Menu
-    elevation={0}
-    getContentAnchorEl={null}
-    anchorOrigin={{
-      vertical: 'bottom',
-      horizontal: 'center',
-    }}
-    transformOrigin={{
-      vertical: 'top',
-      horizontal: 'center',
-    }}
-    {...props}
-  />
-));
-
+    paper: {
+      border: '1px solid #d3d4d5',
+    },
+  })((props) => (
+    <Menu
+      elevation={0}
+      getContentAnchorEl={null}
+      anchorOrigin={{
+        vertical: 'bottom',
+        horizontal: 'center',
+      }}
+      transformOrigin={{
+        vertical: 'top',
+        horizontal: 'center',
+      }}
+      {...props}
+    />
+  ));
+  
 const StyledMenuItem = withStyles((theme) => ({
-  root: {
-    '&:focus': {
-      backgroundColor: theme.palette.primary.main,
-      '& .MuiListItemIcon-root, & .MuiListItemText-primary': {
-        color: theme.palette.common.white,
+    root: {
+      '&:focus': {
+        backgroundColor: theme.palette.primary.main,
+        '& .MuiListItemIcon-root, & .MuiListItemText-primary': {
+          color: theme.palette.common.white,
+        },
       },
     },
-  },
-}))(MenuItem);
+  }))(MenuItem);
 
 const MainNav = () => {
 
-  const classes = useStyles();
-  const [value, setValue] = React.useState(0);
+    const classes = useStyles();
+    const [value, setValue] = React.useState(0);
 
-  const handleChange = (event, newValue) => {
-    setValue(newValue);
-  };
+    const handleChange = (event, newValue) => {
+        setValue(newValue);
+    };
 
-  const [anchorEl, setAnchorEl] = React.useState(null);
+    const [anchorEl, setAnchorEl] = React.useState(null);
 
-  const handleClick = (event) => {
-    setAnchorEl(event.currentTarget);
-  };
+    const handleClick = (event) => {
+        setAnchorEl(event.currentTarget);
+    };
 
     const handleClose = () => {
         setAnchorEl(null);
@@ -162,159 +164,97 @@ const MainNav = () => {
   
     const handleDrawerClose = () => {
       setOpen(false);
-    };
-    return (
-        <>
-    <div className={classes.root}>
-      <CssBaseline />
-      <AppBar
-        position="fixed"
-        className={clsx(classes.appBar, {
-          [classes.appBarShift]: open,
-        })}
-      >
-        <Toolbar>
-          <IconButton
-            color="inherit"
-            aria-label="open drawer"
-            onClick={handleDrawerOpen}
-            edge="start"
-            className={clsx(classes.menuButton, {
-              [classes.hide]: open,
-            })}
-          >
-            <MenuIcon />
-          </IconButton>
-          <Typography variant="h6" noWrap>
-            Near To U
-          </Typography>
-          </Toolbar>
-        </AppBar>
-        <Drawer
-          variant="permanent"
-          className={clsx(classes.drawer, {
-            [classes.drawerOpen]: open,
-            [classes.drawerClose]: !open,
-          })}
-          classes={{
-            paper: clsx({
-            [classes.drawerOpen]: open,
-            [classes.drawerClose]: !open,
-          }),
-        }}
-        
-      >
-        <div className={classes.toolbar}>
-          <IconButton onClick={handleDrawerClose}>
-            {theme.direction === 'rtl' ? <ChevronRightIcon /> : <ChevronLeftIcon />}
-          </IconButton>
-        </div>
-        <Divider />
-            <StyledMenuItem>
-            <IconButton href = "/#/main">
-              <ListItemIcon>
-                <FontAwesomeIcon icon={faStreetView} size="1x"/>
-              </ListItemIcon>
-            </IconButton>
-            <Link to = "/main">main</Link>
-            </StyledMenuItem>
-            <StyledMenuItem>
-            <IconButton href = "/#/main/search">
-              <ListItemIcon>
-                <FontAwesomeIcon icon={faSearch} size="1x"/>
-              </ListItemIcon>
-            </IconButton>
-            <Link to = "/main/search">search</Link>
-            </StyledMenuItem>
-            <StyledMenuItem>
-            <IconButton href = "/#/main/post">
-              <ListItemIcon>
-                <FontAwesomeIcon icon={faPlusSquare} size="1x"/>
-              </ListItemIcon>
-            </IconButton>
-            <Link to = "/main/post">post</Link>
-            </StyledMenuItem>
-            <StyledMenuItem>
-            <IconButton href = "/#/main/profile">
-              <ListItemIcon>
-                <FontAwesomeIcon icon={faAddressCard} size="1x"/>
-              </ListItemIcon>
-            </IconButton>
-            <Link to = "/main/profile">profile</Link>
-            </StyledMenuItem>
-      </Drawer>
-      <main className={classes.content}>
-        <div className={classes.toolbar} />
-      </main>
-    </div>
-    {/*<div>
-      <Button
-        aria-controls="customized-menu"
-        aria-haspopup="true"
-        variant="contained"
-        color="primary"
-        onClick={handleClick}
-      >
-        Main
-      </Button>
-      <StyledMenu
-        id="customized-menu"
-        anchorEl={anchorEl}
-        keepMounted
-        open={Boolean(anchorEl)}
-        onClose={handleClose}
-      >
-        <StyledMenuItem>
-          <ListItemIcon>
-            <FontAwesomeIcon icon={faStreetView} size="1x"/>
-          </ListItemIcon>
-          <Link to = "/main">main</Link>
-        </StyledMenuItem>
-        <StyledMenuItem>
-          <ListItemIcon>
-            <FontAwesomeIcon icon={faSearch} size="1x"/>
-          </ListItemIcon>
-          <Link to = "/main/search">search</Link>
-        </StyledMenuItem>
-        <StyledMenuItem>
-          <ListItemIcon>
-            <FontAwesomeIcon icon={faPlusSquare} size="1x"/>
-          </ListItemIcon>
-          <Link to = "/main/post">post</Link>
-        </StyledMenuItem>
-        <StyledMenuItem>
-          <ListItemIcon>
-            <FontAwesomeIcon icon={faAddressCard} size="1x"/>
-          </ListItemIcon>
-          <Link to = "/main/profile">profile</Link>
-        </StyledMenuItem>
-      </StyledMenu>
-    </div>*/}
-      { /*<BottomNavigation value={value} onChange={handleChange} className={classes.root}>
-                    <Link to = "/main"><BottomNavigationAction  icon={<FontAwesomeIcon icon={faStreetView} size="2x"/>} /></Link>
-                    <Link to = "/main/search"><BottomNavigationAction  icon={<FontAwesomeIcon icon={faSearch} size="2x"/>} /></Link>
-                    <Link to = "/main/post"><BottomNavigationAction icon={<FontAwesomeIcon icon={faPlusSquare} size="2x"/>} /></Link>
-                    <Link to = "/main/profile"><BottomNavigationAction icon={<FontAwesomeIcon icon={faAddressCard} size="2x"/>} /></Link>
-                </BottomNavigation>*/}
+	};
 
-      {/*<nav>
-                <ul>
-                    <li>
-                        <Link to = "/main">main<FontAwesomeIcon icon={faStreetView} size="2x"/></Link>
-                    </li>
-                    <li>
-                        <Link to = "/main/search">search<FontAwesomeIcon icon={faSearch} size="2x"/></Link>
-                    </li>
-                    <li>
-                        <Link to = "/main/post">post<FontAwesomeIcon icon={faPlusSquare} size="2x"/></Link>
-                    </li>
-                    <li>
-                        <Link to = "/main/profile">profile<FontAwesomeIcon icon={faAddressCard} size="2x"/></Link>
-                    </li>
-                </ul>
-            </nav>*/}
+    return (
+	<>
+		<div className={classes.root}>
+		<CssBaseline />
+		<AppBar
+			position="fixed"
+			className={clsx(classes.appBar, {
+			[classes.appBarShift]: open,
+			})}
+		>
+			<Toolbar>
+			<IconButton
+				color="inherit"
+				aria-label="open drawer"
+				onClick={handleDrawerOpen}
+				edge="start"
+				className={clsx(classes.menuButton, {
+				[classes.hide]: open,
+				})}
+			>
+				<MenuIcon />
+			</IconButton>
+			<Typography variant="h6" noWrap>
+				Near To U
+			</Typography>
+			</Toolbar>
+		</AppBar>
+		<Drawer
+			variant="permanent"
+			className={clsx(classes.drawer, {
+			[classes.drawerOpen]: open,
+			[classes.drawerClose]: !open,
+			})}
+			classes={{
+			paper: clsx({
+				[classes.drawerOpen]: open,
+				[classes.drawerClose]: !open,
+			}),
+			}}
+		>
+			<div className={classes.toolbar}>
+			<IconButton onClick={handleDrawerClose}>
+				{theme.direction === 'rtl' ? <ChevronRightIcon /> : <ChevronLeftIcon />}
+			</IconButton>
+			</div>
+			<Divider />
+				<StyledMenuItem>
+				<IconButton href = "/#/main">
+					<ListItemIcon>
+						<FontAwesomeIcon icon={faStreetView} size="1x"/>
+					</ListItemIcon>
+				</IconButton>
+					<Link to = "/main">main</Link>
+				</StyledMenuItem>
+
+				<StyledMenuItem>
+					<IconButton href = "/#/main/search">
+				<ListItemIcon>
+					<FontAwesomeIcon icon={faSearch} size="1x"/>
+				</ListItemIcon>
+				</IconButton>
+					<Link to = "/main/search">search</Link>
+				</StyledMenuItem>
+
+				<StyledMenuItem>
+					<IconButton href = "/#/main/post">
+				<ListItemIcon>
+					<FontAwesomeIcon icon={faPlusSquare} size="1x"/>
+				</ListItemIcon>
+				</IconButton>
+					<Link to = "/main/post">post</Link>
+				</StyledMenuItem>
+
+				<StyledMenuItem>
+				<IconButton href = "/#/main/profile">
+				<ListItemIcon>
+					<FontAwesomeIcon icon={faAddressCard} size="1x"/>
+				</ListItemIcon>
+				</IconButton>
+				<Link to = "/main/profile">profile</Link>
+				</StyledMenuItem>
+				
+		</Drawer>
+		<main className={classes.content}>
+			<div className={classes.toolbar} />
+		</main>
+		</div>	
     </>
-  );
+    );
 
 }
 

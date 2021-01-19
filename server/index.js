@@ -5,16 +5,12 @@ const { Query } = require("./resolvers/Query")
 const { Mutation } = require("./resolvers/Mutation")
 const { Subscription } = require("./resolvers/Subscription")
 
-const http = require("http");
-const express = require("express");
 const mongoose = require("mongoose");
-const WebSocket = require("ws");
 
 const Post = require("./models/post")
 const User = require("./models/user")
 
 const pubsub = new PubSub()
-const app = express();
 
 if (!process.env.MONGO_URL) {
 	console.error("Missing MONGO_URL!!!");

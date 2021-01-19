@@ -11,6 +11,8 @@ import { faGoogle } from '@fortawesome/free-brands-svg-icons'
 import { faInstagram } from '@fortawesome/free-brands-svg-icons'
 import {faAdjust} from '@fortawesome/free-solid-svg-icons'
 
+import io from "socket.io-client"
+
 const Login  = () => {
     const [username, SetName] = useState('')
     const [useremail, SetEmail] = useState('')
@@ -56,8 +58,16 @@ const Login  = () => {
             } else {
                 setTheme('theme-light');
             }
+            // let socket = io('localhost:4000');
+            // console.log(socket);
         }
     );
+
+    function signin() {
+        console.log("sign in");
+        localStorage.setItem('signin', true)
+        //localStorage.setItem('user', user)
+    }
 
     return(
         <div class = "theme-dark" id = "theme-controller">
@@ -69,9 +79,7 @@ const Login  = () => {
                     <form action="#">
                         <h1>Create Account</h1>
                         <div class="social-container">
-                            <a class="social"><FontAwesomeIcon icon={faFacebook} size="2x"/></a>
-                            <a href="#" class="social"><FontAwesomeIcon icon={faGoogle} size="2x"/></a>
-                            <a href="#" class="social"><FontAwesomeIcon icon={faInstagram} size="2x"/></a>
+                            
                         </div>
                         <span>or use your email for registration</span>
                         <input type="text" placeholder="Name" onChange = {(e)=>{SetName(e.target.value)}}/>
@@ -84,15 +92,13 @@ const Login  = () => {
                     <form action="#">
                         <h1>Sign in</h1>
                         <div class="social-container">
-                            <a class="social"><FontAwesomeIcon icon={faFacebook} size="2x"/></a>
                             <GoogleBtn/>
-                            <a class="social"><FontAwesomeIcon icon={faInstagram} size="2x"/></a>
                         </div>
                         <span>or use your account</span>
                         <input type="email" placeholder="Account" />
                         <input type="password" placeholder="Password" />
                         <a href="#/Main" >Forgot your password?</a>
-                        <button>Sign In</button>
+                        <button onClick= {signin}>Sign In</button>
                     </form>
                 </div>
                 <div class="overlay-container">

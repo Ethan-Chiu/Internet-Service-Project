@@ -23,8 +23,8 @@
 	--color-highlight: #ebf0f6;
 	/* additional color */
 	--font-color: #ebf0f6;
-	--shadow1: rgba(178, 208, 226, 0.25);
-	--shadow2: rgba(178, 208, 226, 0.22);
+	--shadow1: rgba(72, 100, 104, 0.25);
+	--shadow2: rgba(72, 100, 104, 0.22);
  }
 
  .theme-dark{

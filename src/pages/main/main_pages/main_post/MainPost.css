@@ -1,27 +1,56 @@
-.nav{
-    position: relative;
-}
-.main-div {
-    position: relative;
-    left: 75px;
-    top: 30px;
-}
+@import url('https://fonts.googleapis.com/css?family=Montserrat:400,800');
+
 .main-left {
-    position: absolute;
-    left: 0;
-    right: 5%;
-    width: 5%;
-    height: 100%;
+	position: absolute;
+	left: 0;
+	right: 5%;
+	width: 5%;
+	height: 100%;
 }
 .main-center {
-    position: absolute;
-    left: 6%;
-    right: 66%;
-    top: 10.5%;
-    width: 50%;
-    height:100%;
+	position: absolute;
+	left: 6%;
+	right: 66%;
+	top: 10.5%;
+	width: 50%;
+	height: 100%;
 }
 .main-right {
-    width: 33%;
-    float: right;
+	width: 33%;
+	float: right;
+}
+
+.theme-light {
+	/*base color*/
+	--color-primary: #ebf0f6;
+	--color-secondary: #98ccd3;
+	--color-accent: #364e68;
+	--color-highlight: #132238;
+	/* additional color */
+	--font-color: #132238;
+	--shadow1: rgba(0, 0, 0, 0.25);
+	--shadow2: rgba(0, 0, 0, 0.22);
+}
+.theme-dark {
+	/*base color*/
+	--color-primary: #132238;
+	--color-secondary: #364e68;
+	--color-accent: #98ccd3;
+	--color-highlight: #ebf0f6;
+	/* additional color */
+	--font-color: #ebf0f6;
+	--shadow1: rgba(72, 100, 104, 0.25);
+	--shadow2: rgba(72, 100, 104, 0.22);
+}
+
+.theme-dark {
+    background-color: var(--color-primary);
+    font-family: "Montserrat", sans-serif;
+	height: 100%;
+}
+
+.theme-light {
+	background-color: var(--color-primary);
+	font-family: "Montserrat", sans-serif;
+	height: 100%;
 }
