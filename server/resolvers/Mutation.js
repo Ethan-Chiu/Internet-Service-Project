@@ -11,7 +11,7 @@ const Mutation = {
 						if (res.length !== 0) {
 							state = "account already exist"
 						} else {
-							userdata = args.data
+							var userdata = args.data
 							userdata.usertype = "normal"
 							await User.create(userdata)
 							state = "success"
