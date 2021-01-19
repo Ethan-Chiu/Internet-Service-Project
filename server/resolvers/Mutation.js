@@ -6,7 +6,7 @@ const Mutation = {
 		const func = async() => {
 			await new Promise(resolve => {
 				User.find({ account: args.data.account })
-					.exec( async (err, res) => {
+					.exec( async(err, res) => {
 						if (err) throw err
 						if (res.length !== 0) {
 							state = "account already exist"
@@ -28,7 +28,7 @@ const Mutation = {
 		const func = async() => {
 			await new Promise(resolve => {
 				User.find({ account: args.data.account })
-					.exec( async (err, res) => {
+					.exec( async(err, res) => {
 						if (err) throw err
 						if (res.length !== 0) {
 						await User.updateOne({ account: args.data.account }, { $set: args.data })
@@ -47,12 +47,32 @@ const Mutation = {
 		Post.create(args.data)
 		return "create successfully"
 	},
+	deletePost(parent, args, { db }, info) {
+		var state = ""
+		const func = async() => {
+			await new Promise(resolve => {
+				Post.find({ _id: args.id })
+					.exec( async(err, res) => {
+						if (err) throw err
+						if (res.length !== 1) {
+							state = "post not found"
+						} else {
+							state = "delete"
+							await Post.deleteOne({ _id: args.id })
+						}
+						resolve()
+					})
+			})
+			return state
+		}
+		return func()
+	},
 	like(parent, args, { db }, info) {
 		var state = ""
 		const func = async() => {
 			await new Promise(resolve => {
 				Post.find({ _id: args.id })
-					.exec(async (err, res) => {
+					.exec( async(err, res) => {
 						if (err) throw err
 						var likers = res[0].likes
 						var isin = false
@@ -80,7 +100,7 @@ const Mutation = {
 		const func = async() => {
 			await new Promise(resolve => {
 				Post.find({ _id: args.id })
-					.exec(async (err, res) => {
+					.exec( async(err, res) => {
 						if (err) throw err
 						var likers = res[0].likes
 						for (var i=0; i<likers.length; i++) {
@@ -107,7 +127,7 @@ const Mutation = {
 		const func = async() => {
 			await new Promise(resolve => {
 				Post.find({ _id: args.id })
-					.exec(async (err, res) => {
+					.exec( async(err, res) => {
 						if (err) throw err
 						var texts = res[0].comments
 						texts.push({ user: args.user, text: args.text })
@@ -125,7 +145,7 @@ const Mutation = {
 		const func = async() => {
 			await new Promise(resolve => {
 				Post.find({ _id: args.id })
-					.exec(async (err, res) => {
+					.exec( async(err, res) => {
 						if (err) throw err
 						var texts = res[0].comments
 						for (var i=0; i<texts.length; i++) {
@@ -136,6 +156,10 @@ const Mutation = {
 								resolve()
 								break
 							}
+						}
+						if (state === "") {
+							state = "comment not found"
+							resolve()
 						}
 					})
 			})
