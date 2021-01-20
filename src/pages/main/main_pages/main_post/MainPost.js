@@ -276,9 +276,11 @@ function removeMedia(){
         const captureButton = document.getElementById("captureButton");
         
         playButton.innerHTML = ""
+        playButton.dispaly = "inline-block"
         recordButton.innerHTML = ""
+        recordButton.dispaly = "inline-block"
         captureButton.innerHTML = "Captuer Image"
-        
+        captureButton.dispaly = "inline-block"
 
         captureButton.addEventListener("click",function(){
             // reset display
@@ -352,7 +354,7 @@ function removeMedia(){
 		const theme = localStorage.getItem('theme')
     return (
         <>
-						<div className = { theme } id = "theme-controller">
+			<div className = { theme } id = "theme-controller">
                 <MainNav className = "nav"/>
                 <div className = "main-div-post">
                     <div className = 'main-left-post'>
@@ -382,8 +384,8 @@ function removeMedia(){
                             }}
                         ></TextArea>
                         <div>
-                            <label htmlFor="type">Select a type: </label>
-                            <select name="type" onChange={(e)=>{
+                            <label htmlFor="type" style = {{fontSize: "20px"}}>Select a type: </label>
+                            <select style = {{fontSize: "20px", color :"black"}} name="type" onChange={(e)=>{
                                 setType(e.target.value)
                             }}>
                                 <option value="">-- --</option>
@@ -412,24 +414,28 @@ function removeMedia(){
                         
                         <button id="removePicture" onClick = {removeMedia} className="contexts"> Remove Picture Or Video</button>
 
-                        <div id="mediaResult">
-                            
+                        <div id="mediaResult">    
                         </div>
+
                         <button id="cancelButton" onClick = {confirm} className="contexts"> Confirm(close camera view) </button>
                         <button id="downloadButton" onClick = {download} className="contexts">Download</button>
+                        <div id="mediaResult">
+                        </div>
+                        
                     </div>
 
                     <div className = 'main-right-post' id="mainCam">
                             Camera View
                             <div className = "video-holder" id = "video-holder">
                             </div>
-
-                            <button id="captureButton"></button>
-                            <button id="recordButton"></button>
+                        <div style = {{margin: "0 auto", textAlign:"center"}}>
+                            <button id="captureButton" style = {{display: "none" }}></button>
+                            <button id="recordButton" style = {{display: "none" }}></button>
+                        </div>
                     </div>
 
                 </div>
-						</div>
+			</div>
         </>
     );
 }

@@ -26,15 +26,15 @@ const MainProfile = () => {
     const [editp] = useMutation(PROFILE_MUTATION)
     const cachedMutatedData = useMemo(() => {
         if (loading || error) return null
-        SetAcc(data.getProfile ? data.getProfile.account : '')
-        SetPass(data.getProfile ? data.getProfile.password : '')
-        setEMail(data.getProfile ? data.getProfile.email : '')
-        SetName(data.getProfile ? data.getProfile.name : '')
-        SetPic(data.getProfile ? data.getProfile.picture : '')
-        SetAge(data.getProfile ? data.getProfile.age : '')
-        SetPhone(data.getProfile ? data.getProfile.phone : '')
-        SetAddress(data.getProfile ? data.getProfile.address : '')
-        SetIntro(data.getProfile ? data.getProfile.introduction : '')
+        SetAcc(data.getProfile? data.getProfile.account: '')
+        SetPass(data.getProfile? data.getProfile.password: '')
+        setEMail(data.getProfile? data.getProfile.email: '')
+        SetName(data.getProfile? data.getProfile.name: '')
+        SetPic(data.getProfile? data.getProfile.picture: '')
+        SetAge(data.getProfile? data.getProfile.age: '')
+        SetPhone(data.getProfile? data.getProfile.phone: '')
+        SetAddress(data.getProfile? data.getProfile.address: '')
+        SetIntro(data.getProfile? data.getProfile.introduction: '')
         return data
     }, [loading, error, data])
 
@@ -235,7 +235,7 @@ const MainProfile = () => {
                                         editp({
                                             variables: {
                                                 account: account,
-                                                age: document.getElementById("age").value
+                                                age: parseInt(document.getElementById("age").value)
                                             }
                                         })
                                         SetAge(document.getElementById("age").value)
