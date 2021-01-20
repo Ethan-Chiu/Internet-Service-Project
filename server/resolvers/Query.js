@@ -11,10 +11,8 @@ const Query = {
 						if (res.length === 0) {
 							state = "account not found"
 						} else if (args.password === res[0].password) {
-							console.log("success")
-							state = "login success"
+							state = res[0].name
 						} else {
-							console.log("wrong")
 							state = "wrong password"
 						}
 						resolve()
