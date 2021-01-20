@@ -251,7 +251,7 @@ const MainProfile = () =>
                 }
             </div>
             </div>
-        </div>}
+        </div>
         </div>
         
         </>
