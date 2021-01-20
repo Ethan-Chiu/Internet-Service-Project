@@ -6,6 +6,12 @@ const Post = (props) => {
   return (
 		<div>
 			<p>{ p.title }</p>
+			<p>{ p.author }</p>
+			<p>{ p.text }</p>
+			<p>{ p.likes.length }</p>
+			<div>{ p.comments.map((c)=>{
+				return <p>{c.user} {c.text}</p>
+			}) }</div>
 		</div>
   );
 };
