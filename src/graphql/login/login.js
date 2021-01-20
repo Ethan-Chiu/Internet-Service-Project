@@ -1,9 +1,9 @@
 import { gql } from 'apollo-boost'
 
 export const LOGIN_QUERY = gql`
-  query login(
+  	query login(
 		$account:		String!
-		$password:	String!
+		$password:		String!
 	) {
 		login(
 			account:	$account

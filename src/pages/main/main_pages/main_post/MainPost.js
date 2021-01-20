@@ -227,6 +227,7 @@ function removeMedia(){
     function post(){
         if (!user || !location || !title || !type) return
 
+        console.log("post")
         createPost({
             variables: {
                 author: user,
@@ -319,7 +320,7 @@ function removeMedia(){
 //////////////////////////////////////////////////////////////////////////////
     return (
         <>
-            <div class = "theme-dark" id = "theme-controller">
+            {/* <div class = "theme-dark" id = "theme-controller"> */}
                 <MainNav className = "nav"/>
                 <div className = "main-div-post">
                     <div className = 'main-left-post'>
@@ -382,7 +383,7 @@ function removeMedia(){
                     </div>
 
                 </div>
-            </div>
+            {/* </div> */}
         </>
     );
 }
