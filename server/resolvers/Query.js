@@ -60,32 +60,32 @@ const Query = {
 		return func()
 	},
 	search(parent, args, { db }, info) {
-		var titlematch = []
-		var tagmatch = []
-		var titlefit = []
-		var contentfit = []
+		var matchingposts = []
 		const func = async() => {
 			await new Promise(resolve => {
 				Post.find().exec((err, res) => {
 					if (err) throw err
 					for (var i=0; i<res.length; i++) {
-						if (res[i].title == args.text) {
-							titlematch.push(res[i])
-						} else if (res[i].tags.includes(args.text)) {
-							tagmatch.push(res[i])
-						} else if (res[i].title.search(args.text) !== -1) {
-							titlefit.push(res[i])
-						} else if (res[i].text.search(args.text) !== -1) {
-							contentfit.push(res[i])
+						if (args.type.length === 0){
+							matchingposts.push(res[i])
+						} else if (args.type.includes("TITLE") && 
+							res[i].title.search(args.text) !== -1) {
+								matchingposts.push(res[i])
+						} else if (args.type.includes("TAG") &&
+							res[i].tags.includes(args.text)) {
+								matchingposts.push(res[i])
+						} else if (args.type.includes("CONTENT") &&
+							res[i].text !== undefined) {
+								if (res[i].text.search(args.text) !== -1) {
+									matchingposts.push(res[i])
+								}
 						}
 						resolve()
 					}
 				})
 			})
-			matchingposts = contentfit.concat(titlefit)
-				.concat(tagmatch).concat(titlematch)
-			matchingposts.reverse()
-			return matchingposts
+			matchingposts.sort((a, b)=>{return b.likes.length-a.likes.length})
+			return matchingposts.slice(0, args.limit)
 		}
 		return func()
 	},
