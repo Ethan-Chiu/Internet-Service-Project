@@ -244,6 +244,7 @@ function removeMedia(){
         setTitle('')
         setText('')
     }
+    
 
 //button function
     const addphoto = ()=>{
