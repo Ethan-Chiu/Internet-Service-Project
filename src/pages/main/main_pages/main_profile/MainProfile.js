@@ -14,7 +14,7 @@ import {faAdjust} from '@fortawesome/free-solid-svg-icons'
 
 const MainProfile = () =>
 {
-    const [account, SetAcc] = useState('stanley')
+    const [account, SetAcc] = useState(localStorage.getItem("account"))
     const [password, SetPass] = useState('')
     const [email, setEMail] = useState('')
     const [name, SetName] = useState('')
@@ -27,15 +27,15 @@ const MainProfile = () =>
     const [editp] = useMutation(PROFILE_MUTATION)
     const cachedMutatedData = useMemo(() => {
         if (loading || error) return null
-        SetAcc(data.getProfile.account)
-        SetPass(data.getProfile.password)
-        setEMail(data.getProfile.email)
-        SetName(data.getProfile.name)
-        SetPic(data.getProfile.picture)
-        SetAge(data.getProfile.age)
-        SetPhone(data.getProfile.phone)
-        SetAddress(data.getProfile.address)
-        SetIntro(data.getProfile.introduction)
+        SetAcc(data.getProfile? data.getProfile.account: '')
+        SetPass(data.getProfile? data.getProfile.password: '')
+        setEMail(data.getProfile? data.getProfile.email: '')
+        SetName(data.getProfile? data.getProfile.name: '')
+        SetPic(data.getProfile? data.getProfile.picture: '')
+        SetAge(data.getProfile? data.getProfile.age: '')
+        SetPhone(data.getProfile? data.getProfile.phone: '')
+        SetAddress(data.getProfile? data.getProfile.address: '')
+        SetIntro(data.getProfile? data.getProfile.introduction: '')
         return data
       }, [loading, error, data])
     

@@ -190,7 +190,7 @@ const Post = (props: { title: string, type: string, author: string, text: string
         image = {props.picture}
         controls
         title="Paella dish"></CardMedia>): 
-        (<ReactPlayer url={props.video} playing = {true} controls style = {{margin: "0px auto"}}></ReactPlayer>)}
+        (<ReactPlayer url={props.video} playing = {true} controls height = "100%" width = "100%" style = {{margin: "0px auto"}}></ReactPlayer>)}
         
       <CardContent>
         <Typography variant="body1" color={postColor2} component="p">
