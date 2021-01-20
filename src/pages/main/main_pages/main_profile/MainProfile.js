@@ -113,13 +113,13 @@ const MainProfile = () =>
                 {name ?
                 (<>
                 <p style ={{float: "left", width: "200px", fontSize: "15px"}}>{name}</p>
-                <Button onClick = {()=>{
+                <Button id = "button" onClick = {()=>{
                     SetName('')}}>reset</Button>
                 </>)
                 :(<>
                 <input id = 'name' className = 'name' style ={{float: "left", width: "200px"}}></input>
                 <label htmlFor = 'name'>
-                    <Button onClick = {(e)=>{
+                    <Button  id = "button" onClick = {(e)=>{
                         editp({variables: {
                             account: account,
                             name: document.getElementById("name").value
@@ -137,11 +137,11 @@ const MainProfile = () =>
                 {phone ?
                 (<>
                 <p style ={{float: "left", width: "200px", fontSize: "15px"}}>{phone}</p>
-                <Button onClick = {()=>{SetPhone('')}}>reset</Button>
+                <Button id = "button" onClick = {()=>{SetPhone('')}}>reset</Button>
                 </>)
                 :(<>
                 <input id = 'phone'  style ={{float: "left", width: "200px"}}></input>
-                <Button onClick = {(e)=>{
+                <Button id = "button" onClick = {(e)=>{
                     editp({variables: {
                         account: account,
                         phone: document.getElementById("phone").value
@@ -157,11 +157,11 @@ const MainProfile = () =>
                 {address ?
                 (<>
                 <p style ={{float: "left", width: "200px", fontSize: "15px"}}>{address}</p>
-                <Button onClick = {()=>{SetAddress('')}}>reset</Button>
+                <Button id = "button" onClick = {()=>{SetAddress('')}}>reset</Button>
                 </>)
                 :(<>
                 <input id = 'address'  style ={{float: "left", width: "200px"}}></input>
-                <Button onClick = {(e)=>{
+                <Button id = "button" onClick = {(e)=>{
                     editp({variables: {
                         account: account,
                         address: document.getElementById("address").value
@@ -176,11 +176,11 @@ const MainProfile = () =>
                 {email ?
                 (<>
                 <p style ={{float: "left", width: "200px", fontSize: "15px"}}>{email}</p>
-                <Button onClick = {()=>{setEMail('')}}>reset</Button>
+                <Button id = "button" onClick = {()=>{setEMail('')}}>reset</Button>
                 </>)
                 :(<>
                 <input id = 'email'  style ={{float: "left", width: "200px"}}></input>
-                <Button onClick = {(e)=>{
+                <Button id = "button" onClick = {(e)=>{
                     editp({variables: {
                         account: account,
                         email: document.getElementById("email").value
@@ -196,11 +196,11 @@ const MainProfile = () =>
                 {password ?
                 (<>
                 <p style ={{float: "left", width: "200px", fontSize: "15px"}}>{password}</p>
-                <Button onClick = {()=>{SetPass('')}}>reset</Button>
+                <Button id = "button" onClick = {()=>{SetPass('')}}>reset</Button>
                 </>)
                 :(<>
                 <input id = 'password'  style ={{float: "left", width: "200px"}}></input>
-                <Button onClick = {(e)=>{
+                <Button id = "button" onClick = {(e)=>{
                     editp({variables: {
                         account: account,
                         password: document.getElementById("password").value
@@ -216,11 +216,11 @@ const MainProfile = () =>
                 {age ?
                 (<>
                 <p style ={{float: "left", width: "200px", fontSize: "15px"}}>{age}</p>
-                <Button onClick = {()=>{SetAge('')}}>reset</Button>
+                <Button id = "button" onClick = {()=>{SetAge('')}}>reset</Button>
                 </>)
                 :(<>
                 <input id = 'age'  style ={{float: "left", width: "200px"}}></input>
-                <Button onClick = {(e)=>{
+                <Button id = "button" onClick = {(e)=>{
                     editp({variables: {
                         account: account,
                         age: document.getElementById("age").value
@@ -236,11 +236,11 @@ const MainProfile = () =>
                 {introduction ?
                 (<>
                 <p style ={{float: "left", width: "200px", fontSize: "15px"}}>{introduction}</p>
-                <Button onClick = {()=>{SetIntro('')}}>reset</Button>
+                <Button id = "button" onClick = {()=>{SetIntro('')}}>reset</Button>
                 </>)
                 :(<>
                 <input id = 'introduction'  style ={{float: "left", width: "200px"}}></input>
-                <Button onClick = {(e)=>{
+                <Button id = "button" onClick = {(e)=>{
                     editp({variables: {
                         account: account,
                         introduction: document.getElementById("introduction").value

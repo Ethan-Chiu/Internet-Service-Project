@@ -24,7 +24,7 @@
 .theme-dark {
 	background-color: var(--color-primary);
 	height: 100%;
-    font-family: "Montserrat", sans-serif;
+	font-family: "Montserrat", sans-serif;
 }
 
 .theme-light {
@@ -53,4 +53,10 @@
 .main-right-post {
 	width: 33%;
 	float: right;
+}
+.contexts {
+	color: var(--color-accent) !important
+}
+.main-right-post {
+	color: var(--color-accent) !important
 }

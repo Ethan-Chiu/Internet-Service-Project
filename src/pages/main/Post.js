@@ -54,7 +54,7 @@ const useStyles = makeStyles((theme) => ({
 
 
 
-const Post = (props: { title: string, author: string, text: string, picture: string, tags: Array, time: Function, id: String, comments: Array }) => {
+const Post = (props: { title: string, type: string, author: string, text: string, picture: string, tags: Array, time: Function, id: String, comments: Array, video: String}) => {
   const classes = useStyles();
   const [expanded, setExpanded] = React.useState(false);
   const sendcontrol = useRef()
@@ -63,7 +63,35 @@ const Post = (props: { title: string, author: string, text: string, picture: str
   const handleExpandClick = () => {
     setExpanded(!expanded);
   };
-
+	var postColor1 = "white"
+	var postColor2 = "black"
+	switch(props.type) {
+		case "red":
+			postColor1 = "red"
+			postColor2 = "black"
+			break;
+		case "orange":
+			postColor1 = "orange"
+			postColor2 = "black"
+			break;
+		case "yellow":
+			postColor1 = "yellow"
+			postColor2 = "black"
+			break;
+		case "green":
+			postColor1 = "green"
+			postColor2 = "white"
+			break;
+		case "blue":
+			postColor1 = "blue"
+			postColor2 = "white"
+			break;
+		case "purple":
+			postColor1 = "purple"
+			postColor2 = "white"
+			break;
+		default:
+	}
 
   useEffect(() => {
     subscribeToMore({
@@ -74,14 +102,17 @@ const Post = (props: { title: string, author: string, text: string, picture: str
         
         if (subscriptionData.data.postSub.mutation === "COMMENTADDED") {
           const newPost = subscriptionData.data.postSub.data
-          return {
+          return { getPostFromId: {
+            _typename: prev.getPostFromId._typename,
             ...prev.getPostFromId,
             comments: [...prev.getPostFromId.comments, newPost]
+          }
           }
         }
       }
     })
   }, [subscribeToMore])
+
   
   const sendComment = () => {
     createComment({
@@ -94,7 +125,7 @@ const Post = (props: { title: string, author: string, text: string, picture: str
     document.getElementById(props.id).value = ''
   }
   return (
-    <Card className={classes.root}>
+    <Card className={classes.root} style={{background: postColor1, color: postColor2}}>
       <CardHeader
         avatar={
           <Avatar aria-label="recipe" className={classes.avatar}>
@@ -115,10 +146,10 @@ const Post = (props: { title: string, author: string, text: string, picture: str
         title="Paella dish"
       />
       <CardContent>
-        <Typography variant="body1" color="textSecondary" component="p">
+        <Typography variant="body1" color={postColor2} component="p">
           {props.text}
         </Typography>
-        <Typography variant="body2" color="textSecondary" component="p">
+        <Typography variant="body2" color={postColor2} component="p">
           tags: {props.tags.map((tags, i) => (
           <>
             <span style={{ color: 'blue', textDecoration: 'underline' }}>{tags}</span>
@@ -145,9 +176,9 @@ const Post = (props: { title: string, author: string, text: string, picture: str
         </IconButton>
       </CardActions>
 
-      <Collapse in={expanded} timeout="auto" unmountOnExit>
+      <Collapse style = {{maxHeight: "300px", overflow: "scroll"}} in={expanded} timeout="auto" unmountOnExit>
         <div style = {{paddingLeft: "10px"}}>Comments: </div>
-        <div >
+        <div>
           <Card>
             <CardHeader avatar = 
             {<Avatar aria-label="recipe" className={classes.avatar}>{props.author[0]}</Avatar>}
