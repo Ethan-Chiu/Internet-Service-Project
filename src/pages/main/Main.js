@@ -155,11 +155,6 @@ const Main = ()=>{
 	
           <div>
             <Slide easing = "ease">
-<<<<<<< HEAD
-            {posts !== undefined? (posts.map(({author, title, picture, text, time, tags, id, comments, video, likes}, i)=>
-            (<div className="each-slide" key = {i}>
-              <Post title={title} author={author} picture={picture} text={text} time={time} id={id} tags={tags} comments = {comments} video = {video} likes = {likes}/>
-=======
             {posts !== undefined? (posts.map(({
 							author,
 							title,
@@ -183,7 +178,6 @@ const Main = ()=>{
 								tags={tags}
 								comments={comments}
 								video={video}/>
->>>>>>> beb139eac609142d2b974401d155c3cb43251252
               </div>)
             )): (<div></div>)}
             </Slide>

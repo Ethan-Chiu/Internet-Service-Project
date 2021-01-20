@@ -59,11 +59,7 @@ const useStyles = makeStyles((theme) => ({
 
 
 
-<<<<<<< HEAD
-const Post = (props: { title: string, author: string, text: string, picture: string, tags: Array, time: Function, id: String, comments: Array, video: String, likes: Array }) => {
-=======
-const Post = (props: { title: string, type: string, author: string, text: string, picture: string, tags: Array, time: Function, id: String, comments: Array, video: String}) => {
->>>>>>> beb139eac609142d2b974401d155c3cb43251252
+const Post = (props: { title: string, type: string, author: string, text: string, picture: string, tags: Array, time: Function, id: String, comments: Array, video: String, likes: Array }) => {
   const classes = useStyles();
   const [expanded, setExpanded] = React.useState(false);
   const [user, SetUser] = useState(localStorage.getItem("user"))
@@ -76,9 +72,7 @@ const Post = (props: { title: string, type: string, author: string, text: string
   const handleExpandClick = () => {
     setExpanded(!expanded);
   };
-<<<<<<< HEAD
   
-=======
 	var postColor1 = "white"
 	var postColor2 = "black"
 	switch(props.type) {
@@ -108,14 +102,16 @@ const Post = (props: { title: string, type: string, author: string, text: string
 			break;
 		default:
 	}
->>>>>>> beb139eac609142d2b974401d155c3cb43251252
 
   useEffect(() => {
-    props.likes.filter(name=> { 
+    if(props.likes !== undefined)
+    {
+      props.likes.filter(name=> { 
       if( name === user)
     {
       Setliked(true)
     }} )
+  }
     subscribeToMore({
       document: POSTS_SUBSCRIPTION,
       variables: {id: props.id},
@@ -173,8 +169,9 @@ const Post = (props: { title: string, type: string, author: string, text: string
     document.getElementById(props.id).value = ''
   }
   return (
-    <Card className={classes.root} style={{background: postColor1, color: postColor2}}>
+    <Card className={classes.root} >
       <CardHeader
+      style={{background: postColor1, color: postColor2}}
         avatar={
           <Avatar aria-label="recipe" className={classes.avatar}>
             {props.author[0]}
