@@ -106,14 +106,13 @@ const Post = (props: { title: string, type: string, author: string, text: string
 	}
 
   useEffect(() => {
-    if(props.likes !== undefined)
-    {
-      props.likes.filter(name=> { 
-      if( name === user)
-    {
-      Setliked(true)
-    }} )
-  }
+    props.likes.filter((name)=>{
+      if(name == user)
+      {
+        Setliked(true)
+      }
+    })
+  
     subscribeToMore({
       document: POSTS_SUBSCRIPTION,
       variables: {id: props.id},

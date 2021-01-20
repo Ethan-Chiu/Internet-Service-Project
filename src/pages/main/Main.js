@@ -180,7 +180,8 @@ const Main = ()=>{
 							tags,
 							id,
 							comments,
-							video}, i) =>
+              video, 
+              likes}, i) =>
             (<div className="each-slide" key = {i}>
               <Post
 								title={title}
@@ -193,7 +194,8 @@ const Main = ()=>{
 								tags={tags}
 								comments={comments}
 								video={video}
-                Ctheme={localStorage.getItem('theme')}/>
+                Ctheme={localStorage.getItem('theme')}
+                likes = {likes}/>
               </div>)
             )): (<div></div>)}
             </Slide>
