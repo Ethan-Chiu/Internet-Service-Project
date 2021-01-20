@@ -54,18 +54,19 @@
 }
 .main-center {
     position: absolute;
-    left: 15%;
-    right: 65%;
+    left: 6% !important;
+    top: 10% !important;
     width: 50%;
     height:75%;
 }
 .main-right {
     background-color: var(--color-primary);
     position: absolute;
-    top: 15%;
-    left: 65%;
-    right: 98%;
-    width: 33%;
+    top: 10%;
+    right: 2%;
+    width: 40%;
+    max-height: 150vh;
+    overflow: scroll !important;
 }
 #map {
     height: 400px;

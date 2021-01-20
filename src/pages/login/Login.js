@@ -8,9 +8,6 @@ import './Login.css'
 
 //font awesome
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faFacebook } from '@fortawesome/free-brands-svg-icons'
-import { faGoogle } from '@fortawesome/free-brands-svg-icons'
-import { faInstagram } from '@fortawesome/free-brands-svg-icons'
 import {faAdjust} from '@fortawesome/free-solid-svg-icons'
 
 import {

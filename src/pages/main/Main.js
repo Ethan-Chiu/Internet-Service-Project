@@ -159,17 +159,17 @@ const Main = ()=>{
 		<>
      <div id = 'theme-controller'>
 		<div className = 'main'>
-			<div className = 'main-left'>
+			{/* <div className = 'main-left'> */}
 				<MainNav/>
-			</div>
+			{/* </div> */}
       <script defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBES8rvsfwrOtLZ5S4EvedrOJ4OSIR49UY&callback=initMap">
       </script>
 			<div className = 'main-center'>
-        <div style={{ height: '100vh', width: '100%' }} id = "map">
+        <div style={{ height: '100vh', width: '100vh', margin:0, padding:0 }} id = "map">
           <WrappedMap 
           googleMapURL={"https://maps.googleapis.com/maps/api/js?key=AIzaSyC4R6AN7SmujjPUIGKdyao2Kqitzr1kiRg&v=3.exp&libraries=geometry,drawing,places&key=AIzaSyBES8rvsfwrOtLZ5S4EvedrOJ4OSIR49UY"}
-          loadingElement = {<div style = {{height: '100%'}}/>}
-          containerElement = {<div style = {{height: '100%'}}/>}
+          loadingElement = {<div style = {{height: '80vh', width: '80vh'}}/>}
+          containerElement = {<div style = {{height: '85vh', width: '85vh'}}/>}
           mapElement = {<div style = {{height: '100%'}}/>}
           />
         </div>

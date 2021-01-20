@@ -28,11 +28,6 @@ const useStyles = makeStyles((theme) => ({
     },
 }));
 
-//utility
-// function insertAfter(newNode, existingNode) {
-//     existingNode.parentNode.insertBefore(newNode, existingNode.nextSibling);
-// }
-
 const MainPost = () =>
 {  
     const classes = useStyles();
@@ -83,6 +78,7 @@ const MainPost = () =>
         rawVideo.setAttribute('id', "raw-video");
         rawVideo.setAttribute('playsInline', null);
         rawVideo.setAttribute('autoPlay', null);
+        rawVideo.muted = true;
         rawVideo.srcObject = stream;
         videoHolder.appendChild(rawVideo);
     }
@@ -351,18 +347,18 @@ function removeMedia(){
                             }}
                         ></TextArea>
                         <div>
-														<label htmlFor="type">Select a type: </label>
-														<select name="type" onChange={(e)=>{
-															setType(e.target.value)
-														}}>
-															<option value="">-- --</option>
-															<option value="red">Emergency</option>
-															<option value="orange">Activity</option>
-															<option value="yellow">Course</option>
-															<option value="green">Share</option>
-															<option value="blue">Mood</option>
-															<option value="purple">Things lost</option>
-														</select>
+                            <label htmlFor="type">Select a type: </label>
+                            <select name="type" onChange={(e)=>{
+                                setType(e.target.value)
+                            }}>
+                                <option value="">-- --</option>
+                                <option value="red">Emergency</option>
+                                <option value="orange">Activity</option>
+                                <option value="yellow">Course</option>
+                                <option value="green">Share</option>
+                                <option value="blue">Mood</option>
+                                <option value="purple">Things lost</option>
+                            </select>
                             <IconButton onClick = {addvideo} className="contexts"><VideoCallOutlinedIcon /></IconButton>
                             <IconButton onClick = {addphoto} className="contexts"><AddAPhotoIcon /></IconButton>
                             <input accept="image/*" className={classes.input} id="icon-button-file" type="file" name = 'file' />
