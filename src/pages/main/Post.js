@@ -37,7 +37,7 @@ import { useQuery, useMutation } from 'react-apollo'
 const useStyles = makeStyles((theme) => ({
   root: {
     maxWidth: "100%",
-    
+    background: "#364e68"
   },
   media: {
     height: 0,
@@ -60,7 +60,7 @@ const useStyles = makeStyles((theme) => ({
 
 
 
-const Post = (props: { title: string, type: string, author: string, text: string, picture: string, tags: Array, time: Function, id: String, comments: Array, video: String, likes: Array }) => {
+const Post = (props: { title: string, type: string, author: string, text: string, picture: string, tags: Array, time: Function, id: String, comments: Array, video: String, likes: Array, Ctheme:String }) => {
   const classes = useStyles();
   const [expanded, setExpanded] = React.useState(false);
   const [user, SetUser] = useState(localStorage.getItem("user"))
@@ -74,31 +74,32 @@ const Post = (props: { title: string, type: string, author: string, text: string
     setExpanded(!expanded);
   };
   
-	var postColor1 = "white"
+
+	var postColor1 = "#f7f7e8"
 	var postColor2 = "black"
 	switch(props.type) {
 		case "red":
-			postColor1 = "red"
+			postColor1 = "#ff577f"
 			postColor2 = "black"
 			break;
 		case "orange":
-			postColor1 = "orange"
+			postColor1 = "#c24914"
 			postColor2 = "black"
 			break;
 		case "yellow":
-			postColor1 = "yellow"
+			postColor1 = "#fc8621"
 			postColor2 = "black"
 			break;
 		case "green":
-			postColor1 = "green"
+			postColor1 = "#9dad7f"
 			postColor2 = "white"
 			break;
 		case "blue":
-			postColor1 = "blue"
+			postColor1 = "#557174"
 			postColor2 = "white"
 			break;
 		case "purple":
-			postColor1 = "purple"
+			postColor1 = "#c1a1d3"
 			postColor2 = "white"
 			break;
 		default:
@@ -170,11 +171,7 @@ const Post = (props: { title: string, type: string, author: string, text: string
     document.getElementById(props.id).value = ''
   }
   return (
-    <Card className={classes.root} >
-      <div style={{maxHeight: "500px", overflowY: "scroll", width:"100%",display:'flex',
-    flexDirection:"column",
-    alignItems:"center",
-    justifyContent:'center'}}>
+    <Card className={classes.root} style={{background: props.Ctheme==='theme-dark'?("#364e68"):("#98ccd3")}}>
         <CardHeader
         style={{background: postColor1, color: postColor2, width: "100%"}}
           avatar={
@@ -186,6 +183,10 @@ const Post = (props: { title: string, type: string, author: string, text: string
           title={props.title}
           subheader={props.time}
         />
+        <div style={{maxHeight: "37vh", overflowY: "scroll", overflowX:"hidden", width:"100%",display:'flex',
+          flexDirection:"column", alignItems:"center", justifyContent:'space-around'}}>
+
+          <br/><br/><br/><br/><br/><br/><br/>
           {props.picture? (<CardMedia
           className={classes.media}
           image = {props.picture}
@@ -197,6 +198,7 @@ const Post = (props: { title: string, type: string, author: string, text: string
           (<ReactPlayer url={props.video} playing = {true} controls width="360px" height="360px"
           style = {{margin: "0px auto"}}></ReactPlayer>):(<></>)}
           
+        
         <CardContent>
           <Typography variant="body1" color={postColor2} component="p">
             {props.text}
@@ -209,6 +211,7 @@ const Post = (props: { title: string, type: string, author: string, text: string
             </>))}
           </Typography>
         </CardContent>
+        </div>
 
         <CardActions  justify="space-between" container spacing={50}>
           <IconButton aria-label="add to favorites" style={{float:"left"}}>
@@ -241,9 +244,8 @@ const Post = (props: { title: string, type: string, author: string, text: string
           </IconButton>
 
         </CardActions>
-      </div>
 
-      <Collapse style = {{maxHeight: "150px", overflowY: "scroll", width:"100%"}} in={expanded} timeout="auto" unmountOnExit>
+      <Collapse style = {{maxHeight: "37vh", overflowY: "scroll",overflowX:"hidden", width:"100%"}} in={expanded} timeout="auto" unmountOnExit>
         <div style = {{paddingLeft: "10px"}}>Comments: </div>
         <div>
           <Card>

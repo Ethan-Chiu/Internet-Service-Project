@@ -78,6 +78,21 @@ const Main = ()=>{
   }, [loading, error, data])
 
  
+  function setTheme(themeName) {
+    localStorage.setItem('theme', themeName);
+    document.getElementById("theme-controller").className = themeName;
+  }
+  useEffect(
+    // Immediately invoked function to set the theme on initial load
+    () => {
+        if (localStorage.getItem('theme') === 'theme-dark') {
+            setTheme('theme-dark');
+        } else {
+            setTheme('theme-light');
+        }
+      }
+  );
+
 
  setInterval(function(){
    navigator.geolocation.getCurrentPosition((pos)=>{
@@ -134,7 +149,7 @@ const Main = ()=>{
 
 	return (
 		<>
-     <div id = 'theme-controller'>
+     <div className="theme-dark" id = 'theme-controller'>
 		<div className = 'main'>
 			{/* <div className = 'main-left'> */}
 				<MainNav/>
@@ -177,7 +192,8 @@ const Main = ()=>{
 								id={id}
 								tags={tags}
 								comments={comments}
-								video={video}/>
+								video={video}
+                Ctheme={localStorage.getItem('theme')}/>
               </div>)
             )): (<div></div>)}
             </Slide>

@@ -29,14 +29,16 @@
 
 .theme-dark{
     background-color: var(--color-primary);
-    height: 1000px;
-	font-family: 'Montserrat', sans-serif;
+    height: 110vh !important;
+    font-family: 'Montserrat', sans-serif;
+    color: black !important;
 }
 
 .theme-light{
     background-color: var(--color-primary);
-    height: 1000px;
-	font-family: 'Montserrat', sans-serif;
+    height: 110vh !important;
+    font-family: 'Montserrat', sans-serif;
+    color: var(--font-color) !important;
 }
 
 
@@ -62,7 +64,7 @@
 .main-right {
     background-color: var(--color-primary);
     position: absolute;
-    top: 10%;
+    top: 8%;
     right: 2%;
     width: 40%;
     max-height: 150vh;
