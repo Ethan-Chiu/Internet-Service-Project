@@ -100,15 +100,15 @@ const Login  = () => {
 		}
 
     return(
-        <div class = "theme-dark" id = "theme-controller">
-            <div class = "top">
-                <button id = "themeswitch" onClick = {toggleTheme}><FontAwesomeIcon icon={faAdjust}/></button>
+        <div className="theme-dark" id="theme-controller">
+            <div className="top">
+                <button id="themeswitch" onClick={toggleTheme}><FontAwesomeIcon icon={faAdjust}/></button>
             </div>
-            <div class="container" id="container">
-                <div class="form-container sign-up-container">
+            <div className="container" id="container">
+                <div className="form-container sign-up-container">
                     <form>
                         <h1>Create Account</h1>
-                        <div class="social-container">
+                        <div className="social-container">
                             
                         </div>
                         <span>or use your email for registration</span>
@@ -120,13 +120,13 @@ const Login  = () => {
 													onChange={(e) => setRAccount(e.target.value)}/>
                         <input type="password" placeholder="Password"
 													onChange={(e) => setRPassword(e.target.value)}/>
-                        <button onclick={signup}>Sign Up</button>
+                        <button onClick={signup}>Sign Up</button>
                     </form>
                 </div>
-                <div class="form-container sign-in-container">
+                <div className="form-container sign-in-container">
                     <form>
                         <h1>Sign in</h1>
-                        <div class="social-container">
+                        <div className="social-container">
                             <GoogleBtn/>
                         </div>
                         <span>or use your account</span>
@@ -138,17 +138,17 @@ const Login  = () => {
                         <button onClick={signin}>Sign In</button>
                     </form>
                 </div>
-                <div class="overlay-container">
-                    <div class="overlay">
-                        <div class="overlay-panel overlay-left">
+                <div className="overlay-container">
+                    <div className="overlay">
+                        <div className="overlay-panel overlay-left">
                             <h1>Welcome Back!</h1>
                             <p>Already have an account?</p>
-                            <button class="ghost" id="signIn" onClick = {undomovePanel}>Sign In</button>
+                            <button className="ghost" id="signIn" onClick = {undomovePanel}>Sign In</button>
                         </div>
-                        <div class="overlay-panel overlay-right">
+                        <div className="overlay-panel overlay-right">
                             <h1>Hello, Friend!</h1>
                             <p>Enter your personal details and start journey with us</p>
-                            <button class="ghost" id="signUp" onClick = {movePanel}>Sign Up</button>
+                            <button className="ghost" id="signUp" onClick = {movePanel}>Sign Up</button>
                         </div>
                     </div>
                 </div>

@@ -52,7 +52,7 @@ class GoogleBtn extends Component {
 		Http.open("Get", url);
 
 		Http.onreadystatechange = function() {
-			if(Http.readyState == 4 && Http.status == 200)
+			if(Http.readyState === 4 && Http.status === 200)
 			{
 				console.log(Http.responseText);
 			}
@@ -63,7 +63,7 @@ class GoogleBtn extends Component {
 		return (
 			<>
 				{this.state.isLogined ? (
-					<div class="g-signin2" data-onsuccess="onSignIn">
+					<div className="g-signin2" data-onsuccess="onSignIn">
 						<GoogleLogout
 							icon = {false}
 							clientId={CLIENT_ID}
@@ -71,7 +71,7 @@ class GoogleBtn extends Component {
 							onLogoutSuccess={this.logout}
 							onFailure={this.handleLogoutFailure}
 							render={renderProps => (
-								<a class="social" onClick={renderProps.onClick} disabled={renderProps.disabled}><FontAwesomeIcon icon={faGoogle} size="2x"/></a>
+								<a className="social" onClick={renderProps.onClick} disabled={renderProps.disabled}><FontAwesomeIcon icon={faGoogle} size="2x"/></a>
 							  )}
 						></GoogleLogout>
 					</div>
@@ -85,7 +85,7 @@ class GoogleBtn extends Component {
 						cookiePolicy={"single_host_origin"}
 						responseType="code,token"
 						render={renderProps => (
-							<a class="social" onClick={renderProps.onClick} disabled={renderProps.disabled}><FontAwesomeIcon icon={faGoogle} size="2x"/></a>
+							<a className="social" onClick={renderProps.onClick} disabled={renderProps.disabled}><FontAwesomeIcon icon={faGoogle} size="2x"/></a>
 						  )}
 					></GoogleLogin>
 				)}
