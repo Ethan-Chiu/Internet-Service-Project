@@ -58,7 +58,7 @@ const Query = {
 			return x
 		}
 		return func()
-	}
+	},
 	search(parent, args, { db }, info) {
 		var titlematch = []
 		var tagmatch = []

@@ -3,7 +3,7 @@ import React from "react";
 import { Button, Input, message, Tag } from "antd";
 
 //react router
-import { HashRouter as Router, Switch, Route} from "react-router-dom";
+import { HashRouter as Router, Switch, Route, Redirect} from "react-router-dom";
 
 //page component
 import { Home, Login, Main } from "./pages";
@@ -14,7 +14,7 @@ function App() {
 		<Router>
 			<Switch>
 				<Route exact path="/">
-					<Home />
+					<Redirect to="/login" />
 				</Route>
 				<Route path="/login">
 					<Login />

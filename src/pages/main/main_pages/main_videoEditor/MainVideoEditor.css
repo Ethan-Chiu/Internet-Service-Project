@@ -78,9 +78,9 @@
 .main-center {
 	background-color: var(--color-secondary);
 	position: absolute;
-	left: 6%;
+	left: 10%;
 	right: 46%;
-	top: 10.5%;
+	top: 15%;
 	width: 50%;
 	height: 100%;
 	margin: 0px;
@@ -90,7 +90,7 @@
   background-color: var(--color-secondary);
   position: absolute;
 	right: 30%;
-	top: 10.5%;
+	top: 15%;
 	width: 30%;
   height: 100%;
 	margin: 0px;

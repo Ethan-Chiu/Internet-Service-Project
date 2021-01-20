@@ -1,13 +1,17 @@
-import React, { Component } from "react";
+import React, { PureComponent } from "react";
 import { GoogleLogin, GoogleLogout } from "react-google-login";
-
+import { useQuery, useMutation } from "react-apollo"
 //fontawesome
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faGoogle } from '@fortawesome/free-brands-svg-icons'
 
+import {
+	SIGNUP_MUTATION
+} from '../../graphql'
+
 const CLIENT_ID = "731618628480-i8dpp2um5acq3te2kb2gaaic8i4vsq28";
 
-class GoogleBtn extends Component {
+class GoogleBtn extends PureComponent {
 	constructor(props) {
 		super(props);
 
@@ -50,11 +54,12 @@ class GoogleBtn extends Component {
 		const Http = new XMLHttpRequest();
 		var url = "https://www.googleapis.com/oauth2/v3/userinfo?access_token="+this.state.accessToken;
 		Http.open("Get", url);
-
+		Http.send();
 		Http.onreadystatechange = function() {
 			if(Http.readyState == 4 && Http.status == 200)
 			{
 				console.log(Http.responseText);
+
 			}
 		};
 	}
