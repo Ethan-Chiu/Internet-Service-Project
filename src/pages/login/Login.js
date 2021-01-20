@@ -12,10 +12,10 @@ import { faGoogle } from '@fortawesome/free-brands-svg-icons'
 import { faInstagram } from '@fortawesome/free-brands-svg-icons'
 import {faAdjust} from '@fortawesome/free-solid-svg-icons'
 
-import {
-	LOGIN_QUERY,
-	SIGNUP_MUTATION
-} from '../../graphql'
+// import {
+//     LOGIN_QUERY ,
+// 	SIGNUP_MUTATION
+// } from '../../graphql'
 
 const Login  = () => {
     const [username, SetName] = useState('')
