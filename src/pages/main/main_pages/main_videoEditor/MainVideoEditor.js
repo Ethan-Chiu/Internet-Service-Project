@@ -197,7 +197,7 @@ const changeSaturation = (e) => { setSaturation((e.target.value-50)/50); }
 		<div class = "theme-dark" id = "theme-controller">
 			<MainNav className = "nav"/>
 			<div className="App">
-				<div className = 'main-center' id="main">
+				<div className = 'main-center-v' id="main">
 					{ video?<PureVideoComp videoSrc = {video}/>:<></>}
 
 					<input
@@ -215,7 +215,7 @@ const changeSaturation = (e) => { setSaturation((e.target.value-50)/50); }
 					</>}
 				</div>
 
-				<div className = 'main-right' id="main">
+				<div className = 'main-right-v' id="main">
 				{video?<>
 					{gif?<>
 						<h2>Select one filter</h2>

@@ -28,11 +28,6 @@ const useStyles = makeStyles((theme) => ({
     },
 }));
 
-//utility
-// function insertAfter(newNode, existingNode) {
-//     existingNode.parentNode.insertBefore(newNode, existingNode.nextSibling);
-// }
-
 const MainPost = () =>
 {  
     const classes = useStyles();
@@ -88,6 +83,7 @@ const MainPost = () =>
         rawVideo.setAttribute('id', "raw-video");
         rawVideo.setAttribute('playsInline', null);
         rawVideo.setAttribute('autoPlay', null);
+        rawVideo.muted = true;
         rawVideo.srcObject = stream;
         videoHolder.appendChild(rawVideo);
     }
@@ -266,9 +262,11 @@ function removeMedia(){
         const captureButton = document.getElementById("captureButton");
         
         playButton.innerHTML = ""
+        playButton.dispaly = "inline-block"
         recordButton.innerHTML = ""
+        recordButton.dispaly = "inline-block"
         captureButton.innerHTML = "Captuer Image"
-        
+        captureButton.dispaly = "inline-block"
 
         captureButton.addEventListener("click",function(){
             // reset display
@@ -356,48 +354,48 @@ function removeMedia(){
                             }}
                         ></TextArea>
                         <div>
-														<label htmlFor="type">Select a type: </label>
-														<select name="type" onChange={(e)=>{
-															setType(e.target.value)
-														}}>
-															<option value="">-- --</option>
-															<option value="red">Emergency</option>
-															<option value="orange">Activity</option>
-															<option value="yellow">Course</option>
-															<option value="green">Share</option>
-															<option value="blue">Mood</option>
-															<option value="purple">Things lost</option>
-														</select>
+                            <label htmlFor="type" style = {{fontSize: "20px"}}>Select a type: </label>
+                            <select style = {{fontSize: "20px", color :"black"}} name="type" onChange={(e)=>{
+                                setType(e.target.value)
+                            }}>
+                                <option value="">-- --</option>
+                                <option value="red">Emergency</option>
+                                <option value="orange">Activity</option>
+                                <option value="yellow">Course</option>
+                                <option value="green">Share</option>
+                                <option value="blue">Mood</option>
+                                <option value="purple">Things lost</option>
+                            </select>
                             <IconButton onClick = {addvideo} className="contexts"><VideoCallOutlinedIcon /></IconButton>
                             <IconButton onClick = {addphoto} className="contexts"><AddAPhotoIcon /></IconButton>
                             <input accept="image/*" className={classes.input} id="icon-button-file" type="file" name = 'file' />
                             <label htmlFor="icon-button-file">
-                                <IconButton color="primary" aria-label="upload picture" component="span" onClick = {addpic}>
+                                <IconButton style = {{color: "rgb(54, 78, 106)"}} aria-label="upload picture" component="span" onClick = {addpic}>
                                 <AddPhotoAlternateIcon />
                                 </IconButton>
                             </label>
                             <Button onClick = {post} className="contexts">post</Button>
                         </div>
 
-                        
-                        <button id="playButton" onClick={playRecorded} className="contexts"></button>
-                        
-                        <button id="removePicture" onClick = {removeMedia} className="contexts"> Remove Picture Or Video</button>
-
-                        <div id="mediaResult">
-                            
-                        </div>
+                        <div style = {{textAlign: "center"}}>
+                        <button id="playButton" onClick={playRecorded} className="contexts" style = {{display: "none" }}></button>
+                        <button id="removePicture" onClick = {removeMedia} className="contexts" > Remove Picture Or Video</button>
                         <button id="cancelButton" onClick = {confirm} className="contexts"> Confirm(close camera view) </button>
                         <button id="downloadButton" onClick = {download} className="contexts">Download</button>
+                        <div id="mediaResult">
+                        </div>
+                        </div>
+                        
                     </div>
 
                     <div className = 'main-right-post' id="mainCam">
                             Camera View
                             <div className = "video-holder" id = "video-holder">
                             </div>
-
-                            <button id="captureButton"></button>
-                            <button id="recordButton"></button>
+                        <div style = {{margin: "0 auto", textAlign:"center"}}>
+                            <button id="captureButton" style = {{display: "none" }}></button>
+                            <button id="recordButton" style = {{display: "none" }}></button>
+                        </div>
                     </div>
 
                 </div>

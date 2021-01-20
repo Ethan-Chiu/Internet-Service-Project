@@ -1,16 +1,13 @@
 import React from 'react'
 import { useState, useEffect } from 'react'
 import { useLazyQuery, useMutation } from "react-apollo"
-import { useHistory, useLocation } from "react-router-dom";
+import { useHistory } from "react-router-dom";
 import GoogleBtn from './GoogleBtn';
 // import InAppAccBtn from './InAppAccBtn'
 import './Login.css'
 
 //font awesome
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faFacebook } from '@fortawesome/free-brands-svg-icons'
-import { faGoogle } from '@fortawesome/free-brands-svg-icons'
-import { faInstagram } from '@fortawesome/free-brands-svg-icons'
 import {faAdjust} from '@fortawesome/free-solid-svg-icons'
 
 import {
@@ -126,6 +123,7 @@ const Login  = () => {
             })
             if (res.data.signup === "success") {
                 localStorage.setItem('user', GName)
+                localStorage.setItem('account', GAccount)
                 history.replace("/main")
             } else if (res.data.signup === "account already exist") {
                 alert("This email account has already been used");
@@ -139,13 +137,12 @@ const Login  = () => {
             else
                 return ;
         }
-        else if(data.login === "login success")
-        {
+        else
+				{
             localStorage.setItem("account",account);
+            localStorage.setItem("user", data.login);
             history.replace("/main");
         }
-        else
-            return ;
     },[data])
 // -- google sign in
 //////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -176,13 +173,12 @@ const Login  = () => {
             setAccount("");
             setPassword("");
         }
-        else if(data.login === "login success")
-        {
+        else
+				{
             localStorage.setItem("account",account);
+            localStorage.setItem("user", data.login);
             history.replace("/main");
         }
-        else
-            return ;
     }
 // -- to sign in
 //////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -201,6 +197,7 @@ const Login  = () => {
             }
         })
         if (res.data.signup === "success") {
+            localStorage.setItem('account',raccount)
             localStorage.setItem('user', name)
             history.replace("/main")
         } else if (res.data.signup === "account already exist") {

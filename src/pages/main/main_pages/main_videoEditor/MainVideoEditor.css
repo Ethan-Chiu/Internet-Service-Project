@@ -75,7 +75,7 @@
   }
 }
 
-.main-center {
+.main-center-v {
 	background-color: var(--color-secondary);
 	position: absolute;
 	left: 10%;
@@ -86,10 +86,10 @@
 	margin: 0px;
 	padding: 50px;
 }
-.main-right {
+.main-right-v {
   background-color: var(--color-secondary);
   position: absolute;
-	right: 30%;
+	right: 5%;
 	top: 15%;
 	width: 30%;
   height: 100%;

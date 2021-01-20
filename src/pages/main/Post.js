@@ -37,6 +37,7 @@ import { useQuery, useMutation } from 'react-apollo'
 const useStyles = makeStyles((theme) => ({
   root: {
     maxWidth: "100%",
+    
   },
   media: {
     height: 0,
@@ -170,72 +171,79 @@ const Post = (props: { title: string, type: string, author: string, text: string
   }
   return (
     <Card className={classes.root} >
-      <CardHeader
-      style={{background: postColor1, color: postColor2}}
-        avatar={
-          <Avatar aria-label="recipe" className={classes.avatar}>
-            {props.author[0]}
-          </Avatar>
-        }
-        action={
-          <IconButton aria-label="settings">
-            <MoreVertIcon />
-          </IconButton>
-        }
-        title={props.title}
-        subheader={props.time}
-      />
-        {props.picture? (<CardMedia
-        className={classes.media}
-        image = {props.picture}
-        controls
-        title="Paella dish"></CardMedia>): 
-        (<ReactPlayer url={props.video} playing = {true} controls height = "100%" width = "100%" style = {{margin: "0px auto"}}></ReactPlayer>)}
-        
-      <CardContent>
-        <Typography variant="body1" color={postColor2} component="p">
-          {props.text}
-        </Typography>
-        <Typography variant="body2" color={postColor2} component="p">
-          tags: {props.tags.map((tags, i) => (
-          <>
-            <span style={{ color: 'blue', textDecoration: 'underline' }}>{tags}</span>
-            <span> </span>
-          </>))}
-        </Typography>
-      </CardContent>
-      <CardActions disableSpacing>
-        <IconButton aria-label="add to favorites" >
-          <FavoriteIcon color = {liked? ("secondary"):("default")} onClick = {()=>{
-            Setliked(!liked)
-            if(liked)
-            {
-              handleUnlike({variables : {
+      <div style={{maxHeight: "500px", overflowY: "scroll", width:"100%",display:'flex',
+    flexDirection:"column",
+    alignItems:"center",
+    justifyContent:'center'}}>
+        <CardHeader
+        style={{background: postColor1, color: postColor2, width: "100%"}}
+          avatar={
+            <Avatar aria-label="recipe" className={classes.avatar}>
+              {props.author[0]}
+            </Avatar>
+          }
+          
+          title={props.title}
+          subheader={props.time}
+        />
+          {props.picture? (<CardMedia
+          className={classes.media}
+          image = {props.picture}
+          style={{width:"360px", height:"360px"}}
+          controls 
+          title="Paella dish"></CardMedia>):(<></>)}
+
+          {props.video? 
+          (<ReactPlayer url={props.video} playing = {true} controls width="360px" height="360px"
+          style = {{margin: "0px auto"}}></ReactPlayer>):(<></>)}
+          
+        <CardContent>
+          <Typography variant="body1" color={postColor2} component="p">
+            {props.text}
+          </Typography>
+          <Typography variant="body2" color={postColor2} component="p">
+            {props.tags.length>0?(<>tags:</>):(<></>)} {props.tags.map((tags, i) => (
+            <>
+              <span style={{ color: 'blue', textDecoration: 'underline' }}>{tags}</span>
+              <span> </span>
+            </>))}
+          </Typography>
+        </CardContent>
+
+        <CardActions  justify="space-between" container spacing={50}>
+          <IconButton aria-label="add to favorites" style={{float:"left"}}>
+            <FavoriteIcon color = {liked? ("secondary"):("default")} onClick = {()=>{
+              Setliked(!liked)
+              if(liked)
+              {
+                handleUnlike({variables : {
+                  id: props.id, 
+                  user: user}})
+              }
+              else if(liked === false)
+              {
+                handleLike({variables : {
                 id: props.id, 
                 user: user}})
-            }
-            else if(liked === false)
-            {
-              handleLike({variables : {
-              id: props.id, 
-              user: user}})
-            }
-              }}/>
-        </IconButton>
-        <p>{data? data.getPostFromId.likes.length: 0}</p>
-        <IconButton
-          className={clsx(classes.expand, {
-            [classes.expandOpen]: expanded,
-          })}
-          onClick={handleExpandClick}
-          aria-expanded={expanded}
-          aria-label="show more"
-        >
-          <AddIcon />
-        </IconButton>
-      </CardActions>
+              }
+                }}/>
+          </IconButton>
+          <p>{data? data.getPostFromId.likes.length: 0}</p>
+          <IconButton
+            className={clsx(classes.expand, {
+              [classes.expandOpen]: expanded,
+            })}
+            onClick={handleExpandClick}
+            aria-expanded={expanded}
+            aria-label="show more"
+          >
+            <AddIcon />
+          </IconButton>
 
-      <Collapse style = {{maxHeight: "300px", overflowY: "scroll"}} in={expanded} timeout="auto" unmountOnExit>
+        </CardActions>
+      </div>
+
+      <Collapse style = {{maxHeight: "150px", overflowY: "scroll", width:"100%"}} in={expanded} timeout="auto" unmountOnExit>
         <div style = {{paddingLeft: "10px"}}>Comments: </div>
         <div>
           <Card>
@@ -266,3 +274,10 @@ const Post = (props: { title: string, type: string, author: string, text: string
 }
 
 export default Post;
+
+
+// action={
+//   <IconButton aria-label="settings">
+//     <MoreVertIcon />
+//   </IconButton>
+// }
