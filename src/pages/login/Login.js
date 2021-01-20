@@ -139,13 +139,12 @@ const Login  = () => {
             else
                 return ;
         }
-        else if(data.login === "login success")
-        {
+        else
+				{
             localStorage.setItem("account",account);
+            localStorage.setItem("user", data.login);
             history.replace("/main");
         }
-        else
-            return ;
     },[data])
 // -- google sign in
 //////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -176,13 +175,12 @@ const Login  = () => {
             setAccount("");
             setPassword("");
         }
-        else if(data.login === "login success")
-        {
+        else
+				{
             localStorage.setItem("account",account);
+            localStorage.setItem("user", data.login);
             history.replace("/main");
         }
-        else
-            return ;
     }
 // -- to sign in
 //////////////////////////////////////////////////////////////////////////////////////////////////////////
