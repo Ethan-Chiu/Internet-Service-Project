@@ -244,6 +244,7 @@ function removeMedia(){
         setTitle('')
         setText('')
     }
+    
 
 //button function
     const addphoto = ()=>{
@@ -318,70 +319,70 @@ function removeMedia(){
 //////////////////////////////////////////////////////////////////////////////
     return (
         <>
-        <div id = "theme-controller">
-        <MainNav className = "nav"/>
-        <div className = "main-div">
-            <div className = 'main-left'>
-                
-            </div>
-                
-            <div className = 'main-center' id="main">
-                <img id="showimg" src="" />
-                <Input
-                    placeholder="Title"
-                    value={title}
-                    onChange={(e) => setTitle(e.target.value)}
-                    style={{ marginBottom: 10 }}
-                    onKeyDown={(e) => {
-                        if (e.key === 'Enter') {
-                            inputRef.current.focus()
-                        }
-                    }}
-                ></Input>
-                <TextArea
-                    rows={4}
-                    placeholder="Type your text here..."
-                    value={text}
-                    ref={inputRef}
-                    onChange={(e) => {
-                        setText(e.target.value);
-                    }}
-                ></TextArea>
-                <div>
-                    <IconButton onClick = {addvideo}><VideoCallOutlinedIcon /></IconButton>
-                    <IconButton onClick = {addphoto}><AddAPhotoIcon /></IconButton>
-                    <input accept="image/*" className={classes.input} id="icon-button-file" type="file" name = 'file' />
-                    <label htmlFor="icon-button-file">
-                        <IconButton color="primary" aria-label="upload picture" component="span" onClick = {addpic}>
-                        <AddPhotoAlternateIcon />
-                        </IconButton>
-                    </label>
-                    <Button onClick = {post}>post</Button>
-                </div>
+            <div class = "theme-dark" id = "theme-controller">
+                <MainNav className = "nav"/>
+                <div className = "main-div-post">
+                    <div className = 'main-left-post'>
+                        
+                    </div>
+                        
+                    <div className = 'main-center-post' id="mainPost">
+                        {/* <img id="showimg" src="" /> */}
+                        <Input
+                            placeholder="Title"
+                            value={title}
+                            onChange={(e) => setTitle(e.target.value)}
+                            style={{ marginBottom: 10 }}
+                            onKeyDown={(e) => {
+                                if (e.key === 'Enter') {
+                                    inputRef.current.focus()
+                                }
+                            }}
+                        ></Input>
+                        <TextArea
+                            rows={4}
+                            placeholder="Type your text here..."
+                            value={text}
+                            ref={inputRef}
+                            onChange={(e) => {
+                                setText(e.target.value);
+                            }}
+                        ></TextArea>
+                        <div>
+                            <IconButton onClick = {addvideo}><VideoCallOutlinedIcon /></IconButton>
+                            <IconButton onClick = {addphoto}><AddAPhotoIcon /></IconButton>
+                            <input accept="image/*" className={classes.input} id="icon-button-file" type="file" name = 'file' />
+                            <label htmlFor="icon-button-file">
+                                <IconButton color="primary" aria-label="upload picture" component="span" onClick = {addpic}>
+                                <AddPhotoAlternateIcon />
+                                </IconButton>
+                            </label>
+                            <Button onClick = {post}>post</Button>
+                        </div>
 
-                
-                <button id="playButton" onClick={playRecorded}></button>
-                
-                <button id="removePicture" onClick = {removeMedia}> Remove Picture Or Video</button>
+                        
+                        <button id="playButton" onClick={playRecorded}></button>
+                        
+                        <button id="removePicture" onClick = {removeMedia}> Remove Picture Or Video</button>
 
-                <div id="mediaResult">
-                    
-                </div>
-                <button id="cancelButton" onClick = {confirm}> Confirm(close camera view) </button>
-                <button id="downloadButton" onClick = {download}>Download</button>
-            </div>
-
-            <div className = 'main-right' id="main">
-                    Camera View
-                    <div className = "video-holder" id = "video-holder">
+                        <div id="mediaResult">
+                            
+                        </div>
+                        <button id="cancelButton" onClick = {confirm}> Confirm(close camera view) </button>
+                        <button id="downloadButton" onClick = {download}>Download</button>
                     </div>
 
-                    <button id="captureButton"></button>
-                    <button id="recordButton"></button>
-            </div>
+                    <div className = 'main-right-post' id="mainCam">
+                            Camera View
+                            <div className = "video-holder" id = "video-holder">
+                            </div>
 
-        </div>
-        </div>
+                            <button id="captureButton"></button>
+                            <button id="recordButton"></button>
+                    </div>
+
+                </div>
+            </div>
         </>
     );
 }

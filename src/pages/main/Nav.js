@@ -5,14 +5,10 @@ import './Nav.css'
 
 //font awesome
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faStreetView } from '@fortawesome/free-solid-svg-icons'
+import { faFilm, faStreetView } from '@fortawesome/free-solid-svg-icons'
 import { faAddressCard } from '@fortawesome/free-solid-svg-icons'
 import { faSearch } from '@fortawesome/free-solid-svg-icons'
 import { faPlusSquare } from '@fortawesome/free-solid-svg-icons'
-import {faAdjust} from '@fortawesome/free-solid-svg-icons'
-import { faFilm } from '@fortawesome/free-solid-svg-icons'
-//import {  } from '@fortawesome/free-brands-svg-icons'
-//import {  } from '@fortawesome/free-brands-svg-icons'
 
 //material ui
 import {withStyles, makeStyles, styled ,useTheme} from '@material-ui/core/styles';

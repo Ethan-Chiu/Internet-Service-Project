@@ -1,27 +1,3 @@
-@import url('https://fonts.googleapis.com/css?family=Montserrat:400,800');
-
-.main-left {
-	position: absolute;
-	left: 0;
-	right: 5%;
-	width: 5%;
-	height: 100%;
-}
-.main-center {
-	position: absolute;
-	left: 6%;
-	right: 66%;
-	top: 10.5%;
-	width: 50%;
-	height: 100%;
-	margin: 50px;
-	padding: 50px;
-}
-.main-right {
-	width: 33%;
-	float: right;
-}
-
 .theme-light {
 	/*base color*/
 	--color-primary: #ebf0f6;
@@ -46,13 +22,35 @@
 }
 
 .theme-dark {
-    background-color: var(--color-primary);
-    font-family: "Montserrat", sans-serif;
+	background-color: var(--color-primary);
 	height: 100%;
+    font-family: "Montserrat", sans-serif;
 }
 
 .theme-light {
 	background-color: var(--color-primary);
 	font-family: "Montserrat", sans-serif;
+}
+
+.main-left-post {
+	position: absolute;
+	left: 0;
+	right: 5%;
+	width: 5%;
 	height: 100%;
+}
+.main-center-post {
+	background-color: var(--color-primary) ;
+	position: absolute;
+	left: 6%;
+	right: 66%;
+	top: 10.5%;
+	width: 50%;
+	height: 100%;
+	margin: 50px;
+	padding: 50px;
+}
+.main-right-post {
+	width: 33%;
+	float: right;
 }

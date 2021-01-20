@@ -1,8 +1,9 @@
 import React from 'react'
 import { useState, useEffect } from 'react'
 import { useQuery, useMutation } from "react-apollo"
+import { useHistory } from "react-router-dom";
 import GoogleBtn from './GoogleBtn';
-import InAppAccBtn from './InAppAccBtn'
+// import InAppAccBtn from './InAppAccBtn'
 import './Login.css'
 
 //font awesome
@@ -12,33 +13,33 @@ import { faGoogle } from '@fortawesome/free-brands-svg-icons'
 import { faInstagram } from '@fortawesome/free-brands-svg-icons'
 import {faAdjust} from '@fortawesome/free-solid-svg-icons'
 
-// import {
-//     LOGIN_QUERY ,
-// 	SIGNUP_MUTATION
-// } from '../../graphql'
+import {
+    LOGIN_QUERY ,
+	SIGNUP_MUTATION
+} from '../../graphql'
 
 const Login  = () => {
-    const [username, SetName] = useState('')
-    const [useremail, SetEmail] = useState('')
-    const [userpassword, SetPass] = useState('')
-
     // const [signedin, setSignedin] = useState(false);
-    const [user, setUser] = useState("aa");
-		const [account, setAccount] = useState("")
-		const [password, setPassword] = useState("")
-		const [name, setName] = useState("")
-		const [email, setEmail] = useState("")
-		const [raccount, setRAccount] = useState("")
-		const [rpassword, setRPassword] = useState("")
-		const [result, setResult] = useState("")
-		const signup_mutation = useMutation(SIGNUP_MUTATION)
+    // const [userpassword, setPass] = useState('')
+    // const [user, setUser] = useState("aa");
+    const [account, setAccount] = useState("")
+    const [password, setPassword] = useState("")
+
+    const [name, setName] = useState("")
+    const [email, setEmail] = useState("")
+    const [raccount, setRAccount] = useState("")
+    const [rpassword, setRPassword] = useState("")
+
+		const [movement, setMovement] = useState("")
+    const [signup_mutation] = useMutation(SIGNUP_MUTATION)
 		
+//localstorage
+//name
+//theme
+//signin
 
-
-    //localstorage
-    //user
-    //theme
-    //signin
+//use to route
+    let history = useHistory();
 
     const movePanel = ()=>
     {
@@ -75,80 +76,82 @@ const Login  = () => {
         }
     );
 
-		function LOGIN() {
-			const { logincalled, loginloading, logindata } = useQuery(
-				LOGIN_QUERY, {
-					variables: {
-						account:	account,
-						password:	password
+    const signin = async() => {
+        // localStorage.setItem('signin', true)
+        localStorage.setItem('user', name)
+    }
+    
+    const signup = async() => {
+				if (!name || !email || !raccount || !rpassword) return
+        const res = await signup_mutation({
+            variables: {
+                name:			name,
+                email:		email,
+                account:	raccount,
+                password:	rpassword
+            }
+        })
+				if (res.data.signup === "success") {
+					localStorage.setItem('user', name)
+					setName("")
+					setEmail("")
+					setRAccount("")
+					setRPassword("")
+					history.push("/main")
+				} else if (res.data.signup === "account already exist") {
+					alert("account already exist")
+					setRAccount("")
+					return
 				}
-			})
-			if (result !== logindata) {
-				setResult(logindata)
-			}
-			return
-		}
-		LOGIN()
-
-		const signin = async() => {
-			console.log(result)
-			localStorage.setItem('signin', true)
-			localStorage.setItem('user', user)
-		}
-		
-		function signup() {
-		}
+    }
 
     return(
-        <div class = "theme-dark" id = "theme-controller">
-            <div class = "top">
-                <button id = "themeswitch" onClick = {toggleTheme}><FontAwesomeIcon icon={faAdjust}/></button>
+        <div className="theme-dark" id="theme-controller">
+            <div className="top">
+                <button id="themeswitch" onClick={toggleTheme}><FontAwesomeIcon icon={faAdjust}/></button>
             </div>
-            <div class="container" id="container">
-                <div class="form-container sign-up-container">
-                    <form>
+            <div className="container" id="container">
+                <div className="form-container sign-up-container">
+										<form>
                         <h1>Create Account</h1>
-                        <div class="social-container">
-                            
-                        </div>
                         <span>or use your email for registration</span>
-                        <input type="text" placeholder="Name"
+                        <input type="text" placeholder="Name" value={name} required 
 													onChange={(e) => setName(e.target.value)}/>
-                        <input type="email" placeholder="Email"
+                        <input type="email" placeholder="Email" value={email} required 
 													onChange={(e) => setEmail(e.target.value)}/>
-												<input type="text" placeholder="Account"
-													onChange={(e) => setRAccount(e.target.value)}/>
-                        <input type="password" placeholder="Password"
+                        <input type="text" placeholder="Account" value={raccount} required 
+                                                    onChange={(e) => setRAccount(e.target.value)}/>
+                        <input type="password" placeholder="Password" value={rpassword} required 
 													onChange={(e) => setRPassword(e.target.value)}/>
-                        <button onclick={signup}>Sign Up</button>
-                    </form>
+                        <button type="submit" onClick={signup} id="signupBtn">Sign Up</button>
+										</form>
                 </div>
-                <div class="form-container sign-in-container">
+                <div className="form-container sign-in-container">
                     <form>
                         <h1>Sign in</h1>
-                        <div class="social-container">
+                        <div className="social-container">
                             <GoogleBtn/>
                         </div>
                         <span>or use your account</span>
-                        <input type="account" placeholder="Account"
+                        <input type="account" placeholder="Account" required 
 													onChange={(e) => setAccount(e.target.value)}/>
-                        <input type="password" placeholder="Password"
+                        <input type="password" placeholder="Password" required 
 													onChange={(e) => setPassword(e.target.value)}/>
                         <a href="#/Main" >Forgot your password?</a>
-                        <button onClick={signin}>Sign In</button>
+                        <button type="submit" onClick={signin} id="signinBtn">Sign In</button>
                     </form>
                 </div>
-                <div class="overlay-container">
-                    <div class="overlay">
-                        <div class="overlay-panel overlay-left">
+                <div className="overlay-container">
+                    <div className="overlay">
+                        <div className="overlay-panel overlay-left">
                             <h1>Welcome Back!</h1>
                             <p>Already have an account?</p>
-                            <button class="ghost" id="signIn" onClick = {undomovePanel}>Sign In</button>
+                            <button className="ghost" id="signIn" onClick = {undomovePanel}>Sign In</button>
                         </div>
-                        <div class="overlay-panel overlay-right">
+                        <div className="overlay-panel overlay-right">
                             <h1>Hello, Friend!</h1>
                             <p>Enter your personal details and start journey with us</p>
-                            <button class="ghost" id="signUp" onClick = {movePanel}>Sign Up</button>
+                            <button className="ghost" id="signUp" onClick = {movePanel}>Sign Up</button>
                         </div>
                     </div>
                 </div>

@@ -1,13 +1,17 @@
-import React, { Component } from "react";
+import React, { PureComponent } from "react";
 import { GoogleLogin, GoogleLogout } from "react-google-login";
-
+import { useQuery, useMutation } from "react-apollo"
 //fontawesome
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faGoogle } from '@fortawesome/free-brands-svg-icons'
 
+import {
+	SIGNUP_MUTATION
+} from '../../graphql'
+
 const CLIENT_ID = "731618628480-i8dpp2um5acq3te2kb2gaaic8i4vsq28";
 
-class GoogleBtn extends Component {
+class GoogleBtn extends PureComponent {
 	constructor(props) {
 		super(props);
 
@@ -50,11 +54,12 @@ class GoogleBtn extends Component {
 		const Http = new XMLHttpRequest();
 		var url = "https://www.googleapis.com/oauth2/v3/userinfo?access_token="+this.state.accessToken;
 		Http.open("Get", url);
-
+		Http.send();
 		Http.onreadystatechange = function() {
-			if(Http.readyState == 4 && Http.status == 200)
+			if(Http.readyState === 4 && Http.status === 200)
 			{
 				console.log(Http.responseText);
+
 			}
 		};
 	}
@@ -63,7 +68,7 @@ class GoogleBtn extends Component {
 		return (
 			<>
 				{this.state.isLogined ? (
-					<div class="g-signin2" data-onsuccess="onSignIn">
+					<div className="g-signin2" data-onsuccess="onSignIn">
 						<GoogleLogout
 							icon = {false}
 							clientId={CLIENT_ID}
@@ -71,7 +76,7 @@ class GoogleBtn extends Component {
 							onLogoutSuccess={this.logout}
 							onFailure={this.handleLogoutFailure}
 							render={renderProps => (
-								<a class="social" onClick={renderProps.onClick} disabled={renderProps.disabled}><FontAwesomeIcon icon={faGoogle} size="2x"/></a>
+								<a className="social" onClick={renderProps.onClick} disabled={renderProps.disabled}><FontAwesomeIcon icon={faGoogle} size="2x"/></a>
 							  )}
 						></GoogleLogout>
 					</div>
@@ -85,7 +90,7 @@ class GoogleBtn extends Component {
 						cookiePolicy={"single_host_origin"}
 						responseType="code,token"
 						render={renderProps => (
-							<a class="social" onClick={renderProps.onClick} disabled={renderProps.disabled}><FontAwesomeIcon icon={faGoogle} size="2x"/></a>
+							<a className="social" onClick={renderProps.onClick} disabled={renderProps.disabled}><FontAwesomeIcon icon={faGoogle} size="2x"/></a>
 						  )}
 					></GoogleLogin>
 				)}
