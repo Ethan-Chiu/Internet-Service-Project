@@ -1,16 +1,10 @@
 import { gql } from 'apollo-boost'
 
-export const GET_POST = gql`
-  query getPosts(
-    $x: Float!
-    $y: Float!
-    $s: Float
+export const GET_ID = gql`
+  query getPostFromId(
+    $id: String!
     ){
-    getPosts(locale: {
-      x: $x
-      y: $y
-      s: $s
-    }){
+    getPostFromId(id: $id){
       author
       location
       {

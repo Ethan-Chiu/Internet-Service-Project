@@ -9,7 +9,11 @@ import { faStreetView } from '@fortawesome/free-solid-svg-icons'
 import { faAddressCard } from '@fortawesome/free-solid-svg-icons'
 import { faSearch } from '@fortawesome/free-solid-svg-icons'
 import { faPlusSquare } from '@fortawesome/free-solid-svg-icons'
+<<<<<<< HEAD
+import {faAdjust} from '@fortawesome/free-solid-svg-icons'
+=======
 import { faFilm } from '@fortawesome/free-solid-svg-icons'
+>>>>>>> e15c933ecfa34b9d1aa00a5ca7b8c03ad92f5abf
 //import {  } from '@fortawesome/free-brands-svg-icons'
 //import {  } from '@fortawesome/free-brands-svg-icons'
 
@@ -146,6 +150,10 @@ const MainNav = () => {
     const handleChange = (event, newValue) => {
         setValue(newValue);
     };
+    function setTheme(themeName) {
+      localStorage.setItem('theme', themeName);
+      document.getElementById("theme-controller").className = themeName;
+  }
 
     const [anchorEl, setAnchorEl] = React.useState(null);
 
@@ -189,10 +197,12 @@ const MainNav = () => {
 			>
 				<MenuIcon />
 			</IconButton>
+     
 			<Typography variant="h6" noWrap>
 				Near To U
 			</Typography>
 			</Toolbar>
+      
 		</AppBar>
 		<Drawer
 			variant="permanent"

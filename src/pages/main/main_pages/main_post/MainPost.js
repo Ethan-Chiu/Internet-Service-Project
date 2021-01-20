@@ -319,6 +319,7 @@ function removeMedia(){
 //////////////////////////////////////////////////////////////////////////////
     return (
         <>
+        <div id = "theme-controller">
         <MainNav className = "nav"/>
         <div className = "main-div">
             <div className = 'main-left'>
@@ -380,6 +381,7 @@ function removeMedia(){
                     <button id="recordButton"></button>
             </div>
 
+        </div>
         </div>
         </>
     );
