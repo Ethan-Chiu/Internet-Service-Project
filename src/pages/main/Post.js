@@ -171,7 +171,7 @@ const Post = (props: { title: string, type: string, author: string, text: string
     document.getElementById(props.id).value = ''
   }
   return (
-    <Card className={classes.root} style={{background: props.Ctheme==='theme-dark'?("#364e68"):("#98ccd3")}}>
+    <Card className={classes.root} style={{background: props.Ctheme==='theme-dark'?("#364e68"):("#98ccd3"), borderRadius:"10px"}}>
         <CardHeader
         style={{background: postColor1, color: postColor2, width: "100%"}}
           avatar={

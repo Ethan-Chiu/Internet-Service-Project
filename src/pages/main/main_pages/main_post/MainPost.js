@@ -89,6 +89,16 @@ const MainPost = () =>
         rawVideo.srcObject = stream;
         videoHolder.appendChild(rawVideo);
     }
+
+    function handleImageUpload(stream){
+        const videoHolder = document.getElementById("video-holder");
+        videoHolder.innerHTML="";
+        const rawImg = document.createElement("img");
+        rawImg.setAttribute('id', "raw-img");
+        rawImg.setAttribute('height', "360");
+        rawImg.setAttribute('src', stream);
+        videoHolder.appendChild(rawImg);
+    }
 //--show media
 //////////////////////////////////////////////////////////////////////////////
 
@@ -135,10 +145,10 @@ function removeMedia(){
     
         const recordButton = document.getElementById("recordButton");
         recordButton.innerHTML = "Stop Recording"
-        // mediaRecorder.onstop = (event) => {
-        //     console.log('Recorder stopped: ', event);
-        //     console.log('Recorded Blobs: ', recordedBlobs);
-        // };
+        mediaRecorder.onstop = (event) => {
+            console.log('Recorder stopped: ', event);
+            console.log('Recorded Blobs: ', recordedBlobs);
+        };
         mediaRecorder.ondataavailable = handleDataAvailable;
         mediaRecorder.start();
         console.log('MediaRecorder started', mediaRecorder);
@@ -148,7 +158,7 @@ function removeMedia(){
         console.log('handleDataAvailable', event);
         if (event.data && event.data.size > 0) {
             recordedBlobs.push(event.data);
-
+            console.log(recordedBlobs);
             const superBuffer = new Blob(recordedBlobs, {type: 'video/webm'});
             var reader = new FileReader();
             reader.readAsDataURL(superBuffer);
@@ -179,13 +189,14 @@ function removeMedia(){
         recordedVideo.setAttribute('height', "360");
         mediaResult.appendChild(recordedVideo);
         // reset screen done
-
-        const superBuffer = new Blob(recordedBlobs, {type: 'video/webm'});
-        console.log(recordedBlobs)
-        recordedVideo.src = null;
-        recordedVideo.srcObject = null;
-        recordedVideo.src = window.URL.createObjectURL(superBuffer);
+        // const superBuffer = new Blob(recordedBlobs, {type: 'video/webm'});
+        // console.log(recordedBlobs)
+        // recordedVideo.src = null;
+        // recordedVideo.srcObject = null;
+        // recordedVideo.src = window.URL.createObjectURL(superBuffer);
+        // recordedVideo.play();
         recordedVideo.controls = true;
+        recordedVideo.src = video;
         recordedVideo.play();
     };
 //--play recorded
@@ -195,8 +206,9 @@ function removeMedia(){
 //////////////////////////////////////////////////////////////////////////////
 //download--
     function download(){
-        const blob = new Blob(recordedBlobs, {type: 'video/mp4'});
-        const url = window.URL.createObjectURL(blob);
+        // const blob = new Blob(recordedBlobs, {type: 'video/mp4'});
+        // const url = window.URL.createObjectURL(blob);
+        const url = video;
         const a = document.createElement('a');
         a.style.display = 'none';
         a.href = url;
@@ -289,6 +301,22 @@ function removeMedia(){
 
     const addpic = ()=>{
         console.log('hi')
+        // reset display
+        const mediaResult = document.getElementById("mediaResult")
+        mediaResult.innerHTML = "";
+        var newCanvas = document.createElement("canvas");
+        newCanvas.setAttribute('id', "canvas");
+        // newCanvas.setAttribute('width', "360");
+        newCanvas.setAttribute('height', "360");
+        mediaResult.appendChild(newCanvas);
+        // reset done (append canvas)
+
+        var context = newCanvas.getContext('2d');
+
+        const rawImg = document.getElementById("raw-img");
+        context.drawImage(rawImg, 0, 0, 360, 360);
+        setPicture(newCanvas.toDataURL("image/png"));
+        // console.log(newCanvas.toDataURL("image/png"))
     }
 
     const addvideo = ()=>{
@@ -368,17 +396,16 @@ function removeMedia(){
                             </select>
                             <IconButton onClick = {addvideo} className="contexts"><VideoCallOutlinedIcon /></IconButton>
                             <IconButton onClick = {addphoto} className="contexts"><AddAPhotoIcon /></IconButton>
-                            <input accept="image/*" className={classes.input} id="icon-button-file" type="file" name = 'file' />
-                            <label htmlFor="icon-button-file">
-                                <IconButton color="primary" aria-label="upload picture" component="span" onClick = {addpic} onChange={(e)=>{setTempPic(e.target.file)}}>
-                                <AddPhotoAlternateIcon />
-                                </IconButton>
-                            </label>
+                            <Button  component="label"><AddPhotoAlternateIcon /><input type="file" 
+                                onChange={(e)=>{setTempPic( e.target.files?.item(0) );
+                                                handleImageUpload(URL.createObjectURL(e.target.files?.item(0)));
+                                                addpic();}}
+                                 hidden /></Button>
                             <Button onClick = {post} className="contexts">post</Button>
                         </div>
 
                         
-                        {/* <img src = {tempPic}></img> */}
+                        {/* {tempPic&&<img src = {URL.createObjectURL(tempPic)}/>}sdfaf */}
 
 
                         <button id="playButton" onClick={playRecorded} className="contexts"></button>
@@ -408,3 +435,11 @@ function removeMedia(){
 }
 
 export default MainPost;
+
+
+// <input accept="image/*" className={classes.input} id="icon-button-file" type="file" name = 'file' />
+//                             <label htmlFor="icon-button-file">
+//                                 <IconButton color="primary" aria-label="upload picture" component="span"  onChange={(e)=>{setTempPic(e.target.file); console.log(e.target.file); console.log("asd")}}>
+//                                 <AddPhotoAlternateIcon />
+//                                 </IconButton>
+//                             </label>
