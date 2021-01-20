@@ -30,8 +30,7 @@ const Login  = () => {
     const [raccount, setRAccount] = useState("")
     const [rpassword, setRPassword] = useState("")
 
-    const [result, setResult] = useState("")
-
+		const [movement, setMovement] = useState("")
     const [signup_mutation] = useMutation(SIGNUP_MUTATION)
 		
 //localstorage
@@ -77,47 +76,33 @@ const Login  = () => {
         }
     );
 
-    function LOGIN() {
-        const { logincalled, loginloading, logindata } = useQuery(
-            LOGIN_QUERY, {
-                variables: {
-                    account:	account,
-                    password:	password
-            }
-        })
-        if (result !== logindata) {
-            setResult(logindata)
-        }
-        return
-    }
-    LOGIN()
-
     const signin = async() => {
-        console.log(result)
-
         // localStorage.setItem('signin', true)
         localStorage.setItem('user', name)
     }
     
     const signup = async() => {
-        if (!name || !email || !account || !password) return
-
-        await signup_mutation({
+				if (!name || !email || !raccount || !rpassword) return
+        const res = await signup_mutation({
             variables: {
-                name:		name,
+                name:			name,
                 email:		email,
-                account:	account,
-                password:	password
+                account:	raccount,
+                password:	rpassword
             }
         })
-
-        console.log("sign up")
-        localStorage.setItem('user', name)
-        setName("")
-        setEmail("")
-        setRAccount("")
-        setRPassword("")
-        history.push("/main");
+				if (res.data.signup === "success") {
+					localStorage.setItem('user', name)
+					setName("")
+					setEmail("")
+					setRAccount("")
+					setRPassword("")
+					history.push("/main")
+				} else if (res.data.signup === "account already exist") {
+					alert("account already exist")
+					setRAccount("")
+					return
+				}
     }
 
     return(
@@ -125,9 +110,9 @@ const Login  = () => {
             <div className="top">
                 <button id="themeswitch" onClick={toggleTheme}><FontAwesomeIcon icon={faAdjust}/></button>
             </div>
-            <div class="container" id="container">
-                <div class="form-container sign-up-container">
-                    <form action="#/main">
+            <div className="container" id="container">
+                <div className="form-container sign-up-container">
+										<form>
                         <h1>Create Account</h1>
                         <span>or use your email for registration</span>
                         <input type="text" placeholder="Name" value={name} required 
@@ -139,7 +124,7 @@ const Login  = () => {
                         <input type="password" placeholder="Password" value={rpassword} required 
 													onChange={(e) => setRPassword(e.target.value)}/>
                         <button type="submit" onClick={signup} id="signupBtn">Sign Up</button>
-                    </form>
+										</form>
                 </div>
                 <div className="form-container sign-in-container">
                     <form>
