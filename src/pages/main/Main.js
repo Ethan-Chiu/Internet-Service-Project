@@ -66,6 +66,7 @@ const Main = ()=>{
 	const [open1, setOpen1] = React.useState(false);
 	const [open2, setOpen2] = React.useState(false);
   const [open3, setOpen3] = React.useState(false);
+  const [user, SetUser] = useState(localStorage.getItem("user"))
   const [currentlat, SetLat] = useState(25.01);
   const [currentlng, SetLng] = useState(121.53);
   const [posts, Setposts] = useState([])
@@ -76,31 +77,7 @@ const Main = ()=>{
     return data
   }, [loading, error, data])
 
-  useEffect(() => {
-    subscribeToMore({
-      document: POSTS_SUBSCRIPTION,
-      updateQuery: (prev, { subscriptionData }) => {
-        if (!subscriptionData.data) return prev
-        console.log(subscriptionData.data.postSub)
-        if (subscriptionData.data.postSub.mutation === "COMMENTADDED") {
-          const newPost = subscriptionData.data.postSub.data
-          console.log(newPost)
-          return {
-            ...prev,
-            names: [...prev.names, newPost]
-          }
-        }
-        else {
-
-          console.log(subscriptionData.data.subscribeName)
-          return {
-            ...prev,
-            names: []
-          }
-        }
-      }
-    })
-  }, [subscribeToMore])
+ 
 
  setInterval(function(){
    navigator.geolocation.getCurrentPosition((pos)=>{

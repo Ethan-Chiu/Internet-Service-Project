@@ -17,7 +17,7 @@ const MainProfile = () =>
     const [account, SetAcc] = useState('stanley')
     const [password, SetPass] = useState('')
     const [email, setEMail] = useState('')
-    const [name, SetName] = useState('ROV')
+    const [name, SetName] = useState('')
     const [picture, SetPic] = useState('')
     const [age, SetAge] = useState('')
     const [phone, SetPhone] = useState('')
