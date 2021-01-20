@@ -29,9 +29,16 @@ const Login  = () => {
     const [raccount, setRAccount] = useState("")
     const [rpassword, setRPassword] = useState("")
 
-    const [signup_mutation] = useMutation(SIGNUP_MUTATION)
+    const [GName, setGName] = useState("")
+    const [GEmail, setGEmail] = useState("")
+    const [GAccount, setGAccount] = useState("")
+    const [GPassword, setGPassword] = useState("")
+    const [GPic, setGPic] = useState("")
+    const [Glogin, setGlogin] = useState(false)
+
+    const [signup_mutation] = useMutation(SIGNUP_MUTATION);
     const [getData, { loading, data }] = useLazyQuery(LOGIN_QUERY);
-        
+
     useEffect(()=>{
         if(localStorage.getItem("account")!=null){
             setAccount(localStorage.getItem("account"));
@@ -82,9 +89,72 @@ const Login  = () => {
         }
     );
 
+
+//////////////////////////////////////////////////////////////////////////////////////////////////////////
+// google sign in --
+    useEffect(()=>{
+        if(!GAccount|| !GPassword) return ;
+        getData({
+            variables: {
+                account:	GAccount,
+                password:	GPassword
+            }
+        })
+    },[GAccount,GPassword,GPic])
+
+    useEffect(async()=>{
+        if(!data || !Glogin || loading) return;
+        if(data.login === "wrong password")
+        {
+            alert("This email account has already been used");
+            setGName("")
+            setGEmail("")
+            setGAccount("")
+            setGPassword("")
+            setGPic("")
+        }
+        else if(data.login === "account not found")
+        {
+            const res = await signup_mutation({
+                variables: {
+                    name:		GName,
+                    email:		GEmail,
+                    account:	GAccount,
+                    password:	GPassword,
+                    picture:    GPic
+                }
+            })
+            if (res.data.signup === "success") {
+                localStorage.setItem('user', GName)
+                history.replace("/main")
+            } else if (res.data.signup === "account already exist") {
+                alert("This email account has already been used");
+                setGName("")
+                setGEmail("")
+                setGAccount("")
+                setGPassword("")
+                setGPic("")
+                return
+            }
+            else
+                return ;
+        }
+        else if(data.login === "login success")
+        {
+            localStorage.setItem("account",account);
+            history.replace("/main");
+        }
+        else
+            return ;
+    },[data])
+// -- google sign in
+//////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+
 //////////////////////////////////////////////////////////////////////////////////////////////////////////
 // to sign in --
     useEffect(()=>{
+        if(!account || !password) return ;
         getData({
             variables: {
                 account:	account,
@@ -92,6 +162,7 @@ const Login  = () => {
             }
         })
     },[account, password])
+
     const signin = async() => {
 		if (!account || !password) return;
         if(data.login === "wrong password")
@@ -112,7 +183,6 @@ const Login  = () => {
         }
         else
             return ;
-        // history.replace("/main")
     }
 // -- to sign in
 //////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -132,10 +202,6 @@ const Login  = () => {
         })
         if (res.data.signup === "success") {
             localStorage.setItem('user', name)
-            setName("")
-            setEmail("")
-            setRAccount("")
-            setRPassword("")
             history.replace("/main")
         } else if (res.data.signup === "account already exist") {
             alert("account already exist")
@@ -174,7 +240,8 @@ const Login  = () => {
                     <form>
                         <h1>Sign in</h1>
                         <div className="social-container">
-                            <GoogleBtn/>
+                            <GoogleBtn setname={(a)=>setGName(a)} setemail={(a)=>setGEmail(a)} setpic={(a)=>setGPic(a)}
+                             setaccount={(a)=>setGAccount(a)} setpassword={(a)=>setGPassword(a)} setglogin={(a)=>setGlogin(a)}/>
                         </div>
                         <span>or use your account</span>
                         <input type="account" placeholder="Account" value={account} required 
@@ -216,3 +283,7 @@ const Login  = () => {
 
 export default Login;
 
+// setName("")
+// setEmail("")
+// setRAccount("")
+// setRPassword("")
