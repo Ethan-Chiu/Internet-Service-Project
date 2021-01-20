@@ -66,15 +66,15 @@ const Query = {
 				Post.find().exec((err, res) => {
 					if (err) throw err
 					for (var i=0; i<res.length; i++) {
-						if (args.type.length === 0){
+						if (args.type === 0){
 							matchingposts.push(res[i])
-						} else if (args.type.includes("TITLE") && 
+						} else if (args.type>=4 && 
 							res[i].title.search(args.text) !== -1) {
 								matchingposts.push(res[i])
-						} else if (args.type.includes("TAG") &&
+						} else if (args.type%4>=2 &&
 							res[i].tags.includes(args.text)) {
 								matchingposts.push(res[i])
-						} else if (args.type.includes("CONTENT") &&
+						} else if (args.type%2===1 &&
 							res[i].text !== undefined) {
 								if (res[i].text.search(args.text) !== -1) {
 									matchingposts.push(res[i])
