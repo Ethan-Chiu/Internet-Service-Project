@@ -42,7 +42,7 @@ const MainPost = () =>
     const [user, setUser] = useState(localStorage.getItem('user')); 
     const [location, setLocation] = useState({ x: 23, y: 4, s:20});
     const [title, setTitle] = useState("");
-    const [type, setType] = useState("blue");
+    const [type, setType] = useState("white");
     const [text, setText] = useState("");
     const [picture, setPicture] = useState("");
     const [video, setVideo] = useState("");
@@ -350,6 +350,18 @@ function removeMedia(){
                             }}
                         ></TextArea>
                         <div>
+														<label htmlFor="type">Select a type: </label>
+														<select name="type" onChange={(e)=>{
+															setType(e.target.value)
+														}}>
+															<option value="">-- --</option>
+															<option value="red">Emergency</option>
+															<option value="orange">Activity</option>
+															<option value="yellow">Course</option>
+															<option value="green">Share</option>
+															<option value="blue">Mood</option>
+															<option value="purple">Things lost</option>
+														</select>
                             <IconButton onClick = {addvideo} className="contexts"><VideoCallOutlinedIcon /></IconButton>
                             <IconButton onClick = {addphoto} className="contexts"><AddAPhotoIcon /></IconButton>
                             <input accept="image/*" className={classes.input} id="icon-button-file" type="file" name = 'file' />
