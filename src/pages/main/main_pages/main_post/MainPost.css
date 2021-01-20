@@ -48,11 +48,9 @@
 .theme-dark {
     background-color: var(--color-primary);
     font-family: "Montserrat", sans-serif;
-	height: 100%;
 }
 
 .theme-light {
 	background-color: var(--color-primary);
 	font-family: "Montserrat", sans-serif;
-	height: 100%;
 }
