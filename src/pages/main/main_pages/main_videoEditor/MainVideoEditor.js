@@ -65,7 +65,6 @@ function MainVideoEditor() {
 
 		await ffmpeg.load();
 		setReady(true);
-		// console.log("dsafsf");
 	};
 
 	useEffect(() => {

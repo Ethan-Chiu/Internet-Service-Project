@@ -41,7 +41,9 @@ const MainPost = () =>
     const [text, setText] = useState("");
     const [picture, setPicture] = useState("");
     const [video, setVideo] = useState("");
-	const [tags, setTags] = useState([]);
+    const [tags, setTags] = useState([]);
+    
+    const [tempPic, setTempPic] =useState("")
 
     const [createPost] = useMutation(CREATE_POST_MUTATION)
 
@@ -370,7 +372,7 @@ function removeMedia(){
                             <IconButton onClick = {addphoto} className="contexts"><AddAPhotoIcon /></IconButton>
                             <input accept="image/*" className={classes.input} id="icon-button-file" type="file" name = 'file' />
                             <label htmlFor="icon-button-file">
-                                <IconButton style = {{color: "rgb(54, 78, 106)"}} aria-label="upload picture" component="span" onClick = {addpic}>
+                                <IconButton color="primary" style = {{color: "rgb(54, 78, 106)"}} aria-label="upload picture" component="span" onClick = {addpic} onChange={(e)=>{setTempPic(e.target.file)}}>
                                 <AddPhotoAlternateIcon />
                                 </IconButton>
                             </label>
