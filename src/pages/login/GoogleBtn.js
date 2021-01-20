@@ -18,6 +18,7 @@ class GoogleBtn extends PureComponent {
 		this.state = {
 			isLogined: false,
 			accessToken: "",
+			getdata: false
 		};
 
 		this.login = this.login.bind(this);
@@ -50,18 +51,27 @@ class GoogleBtn extends PureComponent {
 		alert("Failed to log out");
 	}
 
-	getInformation() {
+	getInformation = () => {
 		const Http = new XMLHttpRequest();
-		var url = "https://www.googleapis.com/oauth2/v3/userinfo?access_token="+this.state.accessToken;
-		Http.open("Get", url);
-		Http.send();
-		Http.onreadystatechange = function() {
-			if(Http.readyState === 4 && Http.status === 200)
-			{
-				console.log(Http.responseText);
-
-			}
-		};
+		if(this.state.accessToken!==""){
+			var url = "https://www.googleapis.com/oauth2/v3/userinfo?access_token="+this.state.accessToken;
+			Http.open("Get", url);
+			Http.send();
+			Http.onreadystatechange = () => {
+				if(Http.readyState === 4 && Http.status === 200 && !this.state.getdata)
+				{
+					var dataobj = JSON.parse(Http.responseText);
+					this.props.setpic(dataobj.picture)
+					this.props.setname(dataobj.name);
+					this.props.setemail(dataobj.email);
+					this.props.setaccount(dataobj.email);
+					this.props.setpassword(dataobj.sub);
+					
+					this.props.setglogin(true);
+					this.state.getdata = true;
+				}
+			};
+		}
 	}
 
 	render() {

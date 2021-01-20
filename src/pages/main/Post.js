@@ -59,7 +59,11 @@ const useStyles = makeStyles((theme) => ({
 
 
 
+<<<<<<< HEAD
 const Post = (props: { title: string, author: string, text: string, picture: string, tags: Array, time: Function, id: String, comments: Array, video: String, likes: Array }) => {
+=======
+const Post = (props: { title: string, type: string, author: string, text: string, picture: string, tags: Array, time: Function, id: String, comments: Array, video: String}) => {
+>>>>>>> beb139eac609142d2b974401d155c3cb43251252
   const classes = useStyles();
   const [expanded, setExpanded] = React.useState(false);
   const [user, SetUser] = useState(localStorage.getItem("user"))
@@ -72,7 +76,39 @@ const Post = (props: { title: string, author: string, text: string, picture: str
   const handleExpandClick = () => {
     setExpanded(!expanded);
   };
+<<<<<<< HEAD
   
+=======
+	var postColor1 = "white"
+	var postColor2 = "black"
+	switch(props.type) {
+		case "red":
+			postColor1 = "red"
+			postColor2 = "black"
+			break;
+		case "orange":
+			postColor1 = "orange"
+			postColor2 = "black"
+			break;
+		case "yellow":
+			postColor1 = "yellow"
+			postColor2 = "black"
+			break;
+		case "green":
+			postColor1 = "green"
+			postColor2 = "white"
+			break;
+		case "blue":
+			postColor1 = "blue"
+			postColor2 = "white"
+			break;
+		case "purple":
+			postColor1 = "purple"
+			postColor2 = "white"
+			break;
+		default:
+	}
+>>>>>>> beb139eac609142d2b974401d155c3cb43251252
 
   useEffect(() => {
     props.likes.filter(name=> { 
@@ -137,7 +173,7 @@ const Post = (props: { title: string, author: string, text: string, picture: str
     document.getElementById(props.id).value = ''
   }
   return (
-    <Card className={classes.root}>
+    <Card className={classes.root} style={{background: postColor1, color: postColor2}}>
       <CardHeader
         avatar={
           <Avatar aria-label="recipe" className={classes.avatar}>
@@ -160,10 +196,10 @@ const Post = (props: { title: string, author: string, text: string, picture: str
         (<ReactPlayer url={props.video} playing = {true} controls style = {{margin: "0px auto"}}></ReactPlayer>)}
         
       <CardContent>
-        <Typography variant="body1" color="textSecondary" component="p">
+        <Typography variant="body1" color={postColor2} component="p">
           {props.text}
         </Typography>
-        <Typography variant="body2" color="textSecondary" component="p">
+        <Typography variant="body2" color={postColor2} component="p">
           tags: {props.tags.map((tags, i) => (
           <>
             <span style={{ color: 'blue', textDecoration: 'underline' }}>{tags}</span>

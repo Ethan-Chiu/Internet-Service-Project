@@ -2,7 +2,7 @@ type Query {
 	login(account: String!, password: String!): String!
 	getPosts(locale: LocationInput!): [Post]!
 	getPostFromId(id: String!): Post
-	search(text: String!): [Post]!
+	search(text: String, type: [SearchType]!, limit: Int!): [Post]!
 	getProfile(account: String!): User
 }
 
@@ -103,4 +103,10 @@ enum MutationType {
 	COMMENTADDED
 	COMMENTDELETED
 	DELETED
+}
+
+enum SearchType {
+	TITLE
+	TAG
+	CONTENT
 }

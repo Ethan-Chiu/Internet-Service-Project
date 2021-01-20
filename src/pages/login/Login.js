@@ -1,7 +1,7 @@
 import React from 'react'
 import { useState, useEffect } from 'react'
-import { useQuery, useMutation } from "react-apollo"
-import { useHistory } from "react-router-dom";
+import { useLazyQuery, useMutation } from "react-apollo"
+import { useHistory, useLocation } from "react-router-dom";
 import GoogleBtn from './GoogleBtn';
 // import InAppAccBtn from './InAppAccBtn'
 import './Login.css'
@@ -20,8 +20,7 @@ import {
 
 const Login  = () => {
     // const [signedin, setSignedin] = useState(false);
-    // const [userpassword, setPass] = useState('')
-    // const [user, setUser] = useState("aa");
+
     const [account, setAccount] = useState("")
     const [password, setPassword] = useState("")
 
@@ -30,16 +29,30 @@ const Login  = () => {
     const [raccount, setRAccount] = useState("")
     const [rpassword, setRPassword] = useState("")
 
-		const [movement, setMovement] = useState("")
-    const [signup_mutation] = useMutation(SIGNUP_MUTATION)
-		
+    const [GName, setGName] = useState("")
+    const [GEmail, setGEmail] = useState("")
+    const [GAccount, setGAccount] = useState("")
+    const [GPassword, setGPassword] = useState("")
+    const [GPic, setGPic] = useState("")
+    const [Glogin, setGlogin] = useState(false)
+
+    const [signup_mutation] = useMutation(SIGNUP_MUTATION);
+    const [getData, { loading, data }] = useLazyQuery(LOGIN_QUERY);
+
+    useEffect(()=>{
+        if(localStorage.getItem("account")!=null){
+            setAccount(localStorage.getItem("account"));
+        }
+    },[])
+    
 //localstorage
+//account
 //name
 //theme
-//signin
 
 //use to route
     let history = useHistory();
+    // let location = useLocation();
 
     const movePanel = ()=>
     {
@@ -76,34 +89,131 @@ const Login  = () => {
         }
     );
 
+
+//////////////////////////////////////////////////////////////////////////////////////////////////////////
+// google sign in --
+    useEffect(()=>{
+        if(!GAccount|| !GPassword) return ;
+        getData({
+            variables: {
+                account:	GAccount,
+                password:	GPassword
+            }
+        })
+    },[GAccount,GPassword,GPic])
+
+    useEffect(async()=>{
+        if(!data || !Glogin || loading) return;
+        if(data.login === "wrong password")
+        {
+            alert("This email account has already been used");
+            setGName("")
+            setGEmail("")
+            setGAccount("")
+            setGPassword("")
+            setGPic("")
+        }
+        else if(data.login === "account not found")
+        {
+            const res = await signup_mutation({
+                variables: {
+                    name:		GName,
+                    email:		GEmail,
+                    account:	GAccount,
+                    password:	GPassword,
+                    picture:    GPic
+                }
+            })
+            if (res.data.signup === "success") {
+                localStorage.setItem('user', GName)
+                history.replace("/main")
+            } else if (res.data.signup === "account already exist") {
+                alert("This email account has already been used");
+                setGName("")
+                setGEmail("")
+                setGAccount("")
+                setGPassword("")
+                setGPic("")
+                return
+            }
+            else
+                return ;
+        }
+        else if(data.login === "login success")
+        {
+            localStorage.setItem("account",account);
+            history.replace("/main");
+        }
+        else
+            return ;
+    },[data])
+// -- google sign in
+//////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+
+//////////////////////////////////////////////////////////////////////////////////////////////////////////
+// to sign in --
+    useEffect(()=>{
+        if(!account || !password) return ;
+        getData({
+            variables: {
+                account:	account,
+                password:	password
+            }
+        })
+    },[account, password])
+
     const signin = async() => {
-        // localStorage.setItem('signin', true)
-        localStorage.setItem('user', name)
+		if (!account || !password) return;
+        if(data.login === "wrong password")
+        {
+            alert("wrong password");
+            setPassword("");
+        }
+        else if(data.login === "account not found")
+        {
+            alert("account not found. If you don't have an account, click the sign up button now!");
+            setAccount("");
+            setPassword("");
+        }
+        else if(data.login === "login success")
+        {
+            localStorage.setItem("account",account);
+            history.replace("/main");
+        }
+        else
+            return ;
     }
-    
+// -- to sign in
+//////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+
+//////////////////////////////////////////////////////////////////////////////////////////////////////////
+// to sign up --
     const signup = async() => {
-				if (!name || !email || !raccount || !rpassword) return
+		if (!name || !email || !raccount || !rpassword) return;
         const res = await signup_mutation({
             variables: {
-                name:			name,
+                name:		name,
                 email:		email,
                 account:	raccount,
                 password:	rpassword
             }
         })
-				if (res.data.signup === "success") {
-					localStorage.setItem('user', name)
-					setName("")
-					setEmail("")
-					setRAccount("")
-					setRPassword("")
-					history.push("/main")
-				} else if (res.data.signup === "account already exist") {
-					alert("account already exist")
-					setRAccount("")
-					return
-				}
+        if (res.data.signup === "success") {
+            localStorage.setItem('user', name)
+            history.replace("/main")
+        } else if (res.data.signup === "account already exist") {
+            alert("account already exist")
+            setRAccount("")
+            return
+        }
+        else
+            return ;
     }
+// -- to sign up
+//////////////////////////////////////////////////////////////////////////////////////////////////////////
+
 
     return(
         <div className="theme-dark" id="theme-controller">
@@ -112,7 +222,7 @@ const Login  = () => {
             </div>
             <div className="container" id="container">
                 <div className="form-container sign-up-container">
-										<form>
+					<form>
                         <h1>Create Account</h1>
                         <span>or use your email for registration</span>
                         <input type="text" placeholder="Name" value={name} required 
@@ -124,18 +234,19 @@ const Login  = () => {
                         <input type="password" placeholder="Password" value={rpassword} required 
 													onChange={(e) => setRPassword(e.target.value)}/>
                         <button type="submit" onClick={signup} id="signupBtn">Sign Up</button>
-										</form>
+					</form>
                 </div>
                 <div className="form-container sign-in-container">
                     <form>
                         <h1>Sign in</h1>
                         <div className="social-container">
-                            <GoogleBtn/>
+                            <GoogleBtn setname={(a)=>setGName(a)} setemail={(a)=>setGEmail(a)} setpic={(a)=>setGPic(a)}
+                             setaccount={(a)=>setGAccount(a)} setpassword={(a)=>setGPassword(a)} setglogin={(a)=>setGlogin(a)}/>
                         </div>
                         <span>or use your account</span>
-                        <input type="account" placeholder="Account" required 
+                        <input type="account" placeholder="Account" value={account} required 
 													onChange={(e) => setAccount(e.target.value)}/>
-                        <input type="password" placeholder="Password" required 
+                        <input type="password" placeholder="Password" value={password} required 
 													onChange={(e) => setPassword(e.target.value)}/>
                         <a href="#/Main" >Forgot your password?</a>
                         <button type="submit" onClick={signin} id="signinBtn">Sign In</button>
@@ -172,3 +283,7 @@ const Login  = () => {
 
 export default Login;
 
+// setName("")
+// setEmail("")
+// setRAccount("")
+// setRPassword("")
