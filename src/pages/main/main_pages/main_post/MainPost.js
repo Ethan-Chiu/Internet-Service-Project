@@ -317,9 +317,10 @@ function removeMedia(){
 
 //////////////////////////////////////////////////////////////////////////////
 //////////////////////////////////////////////////////////////////////////////
+		const theme = localStorage.getItem('theme')
     return (
         <>
-            <div class = "theme-dark" id = "theme-controller">
+						<div className = { theme } id = "theme-controller">
                 <MainNav className = "nav"/>
                 <div className = "main-div-post">
                     <div className = 'main-left-post'>
@@ -349,27 +350,27 @@ function removeMedia(){
                             }}
                         ></TextArea>
                         <div>
-                            <IconButton onClick = {addvideo}><VideoCallOutlinedIcon /></IconButton>
-                            <IconButton onClick = {addphoto}><AddAPhotoIcon /></IconButton>
+                            <IconButton onClick = {addvideo} className="contexts"><VideoCallOutlinedIcon /></IconButton>
+                            <IconButton onClick = {addphoto} className="contexts"><AddAPhotoIcon /></IconButton>
                             <input accept="image/*" className={classes.input} id="icon-button-file" type="file" name = 'file' />
                             <label htmlFor="icon-button-file">
                                 <IconButton color="primary" aria-label="upload picture" component="span" onClick = {addpic}>
                                 <AddPhotoAlternateIcon />
                                 </IconButton>
                             </label>
-                            <Button onClick = {post}>post</Button>
+                            <Button onClick = {post} className="contexts">post</Button>
                         </div>
 
                         
-                        <button id="playButton" onClick={playRecorded}></button>
+                        <button id="playButton" onClick={playRecorded} className="contexts"></button>
                         
-                        <button id="removePicture" onClick = {removeMedia}> Remove Picture Or Video</button>
+                        <button id="removePicture" onClick = {removeMedia} className="contexts"> Remove Picture Or Video</button>
 
                         <div id="mediaResult">
                             
                         </div>
-                        <button id="cancelButton" onClick = {confirm}> Confirm(close camera view) </button>
-                        <button id="downloadButton" onClick = {download}>Download</button>
+                        <button id="cancelButton" onClick = {confirm} className="contexts"> Confirm(close camera view) </button>
+                        <button id="downloadButton" onClick = {download} className="contexts">Download</button>
                     </div>
 
                     <div className = 'main-right-post' id="mainCam">
@@ -382,7 +383,7 @@ function removeMedia(){
                     </div>
 
                 </div>
-            </div>
+						</div>
         </>
     );
 }
