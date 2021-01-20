@@ -1,7 +1,9 @@
 .input {
     display: none;
 }
-
+#button {
+    color: var(--color-highlight) !important;
+}
 .nav{
     position: relative;
 }

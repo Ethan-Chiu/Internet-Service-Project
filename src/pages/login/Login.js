@@ -14,7 +14,7 @@ import { faInstagram } from '@fortawesome/free-brands-svg-icons'
 import {faAdjust} from '@fortawesome/free-solid-svg-icons'
 
 import {
-	LOGIN_QUERY,
+    LOGIN_QUERY ,
 	SIGNUP_MUTATION
 } from '../../graphql'
 

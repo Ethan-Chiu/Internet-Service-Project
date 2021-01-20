@@ -187,7 +187,8 @@ const Main = ()=>{
 							time,
 							tags,
 							id,
-							comments}, i) =>
+							comments,
+							video}, i) =>
             (<div className="each-slide" key = {i}>
               <Post
 								title={title}
@@ -198,7 +199,8 @@ const Main = ()=>{
 								time={time}
 								id={id}
 								tags={tags}
-								comments={comments}/>
+								comments={comments}
+								video={video}/>
               </div>)
             )): (<div></div>)}
             </Slide>
