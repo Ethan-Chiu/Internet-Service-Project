@@ -1,7 +1,7 @@
 import React from 'react'
 import { useState, useEffect } from 'react'
 import { useLazyQuery, useMutation } from "react-apollo"
-import { useHistory, useLocation } from "react-router-dom";
+import { useHistory } from "react-router-dom";
 import GoogleBtn from './GoogleBtn';
 // import InAppAccBtn from './InAppAccBtn'
 import './Login.css'
@@ -123,6 +123,7 @@ const Login  = () => {
             })
             if (res.data.signup === "success") {
                 localStorage.setItem('user', GName)
+                localStorage.setItem('account', GAccount)
                 history.replace("/main")
             } else if (res.data.signup === "account already exist") {
                 alert("This email account has already been used");
@@ -138,6 +139,7 @@ const Login  = () => {
         }
         else if(data.login === "login success")
         {
+            localStorage.setItem("user", GName);
             localStorage.setItem("account",account);
             history.replace("/main");
         }
@@ -198,6 +200,7 @@ const Login  = () => {
             }
         })
         if (res.data.signup === "success") {
+            localStorage.setItem('account',raccount)
             localStorage.setItem('user', name)
             history.replace("/main")
         } else if (res.data.signup === "account already exist") {
