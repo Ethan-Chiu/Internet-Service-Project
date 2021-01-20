@@ -35,7 +35,7 @@ const MainPost = () =>
     const inputRef = useRef(null)
 
     const [user, setUser] = useState(localStorage.getItem('user')); 
-    const [location, setLocation] = useState({ x: 23, y: 4, s:20});
+    const [location, setLocation] = useState({ x: 25.01, y: 121.53, s:15});
     const [title, setTitle] = useState("");
     const [type, setType] = useState("white");
     const [text, setText] = useState("");
@@ -49,6 +49,11 @@ const MainPost = () =>
         console.log(user)
     }, []);
 
+    setInterval(function(){
+        navigator.geolocation.getCurrentPosition((pos)=>{
+        setLocation({x:pos.coords.latitude, y: pos.coords.longitude, s: 15})
+        
+      })}, 3000);
 
 //////////////////////////////////////////////////////////////////////////////
 //show media--

@@ -18,13 +18,18 @@ import MoreVertIcon from '@material-ui/icons/MoreVert';
 import AddIcon from '@material-ui/icons/Add';
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
+import ReactPlayer from 'react-player'
+import Menu from '@material-ui/core/Menu'
+import MenuItem from '@material-ui/core/MenuItem';
 //apollo
 import {
 	GET_POST,
 	CREATE_POST_MUTATION,
 	POSTS_SUBSCRIPTION,
   COMMENT_MUTATION,
-  GET_ID
+  GET_ID,
+  LIKE_MUTATION,
+  UNLIKE_MUTATION
   } from '../../graphql'
 import { useQuery, useMutation } from 'react-apollo'
 
@@ -54,15 +59,20 @@ const useStyles = makeStyles((theme) => ({
 
 
 
-const Post = (props: { title: string, type: string, author: string, text: string, picture: string, tags: Array, time: Function, id: String, comments: Array, video: String}) => {
+const Post = (props: { title: string, type: string, author: string, text: string, picture: string, tags: Array, time: Function, id: String, comments: Array, video: String, likes: Array }) => {
   const classes = useStyles();
   const [expanded, setExpanded] = React.useState(false);
+  const [user, SetUser] = useState(localStorage.getItem("user"))
   const sendcontrol = useRef()
+  const [liked, Setliked] = useState(false);
   const [createComment] = useMutation(COMMENT_MUTATION)
   const { loading, error, data, subscribeToMore } = useQuery(GET_ID, {variables: {id: props.id}})
+  const [handleLike] = useMutation(LIKE_MUTATION)
+  const [handleUnlike] = useMutation(UNLIKE_MUTATION)
   const handleExpandClick = () => {
     setExpanded(!expanded);
   };
+  
 	var postColor1 = "white"
 	var postColor2 = "black"
 	switch(props.type) {
@@ -94,6 +104,14 @@ const Post = (props: { title: string, type: string, author: string, text: string
 	}
 
   useEffect(() => {
+    if(props.likes !== undefined)
+    {
+      props.likes.filter(name=> { 
+      if( name === user)
+    {
+      Setliked(true)
+    }} )
+  }
     subscribeToMore({
       document: POSTS_SUBSCRIPTION,
       variables: {id: props.id},
@@ -109,7 +127,33 @@ const Post = (props: { title: string, type: string, author: string, text: string
           }
           }
         }
-      }
+        else if (subscriptionData.data.postSub.mutation === "LIKED") {
+          Setliked(true)
+          return{
+            getPostFromId:
+            {
+              ...prev.getPostFromId,
+              likes: [...prev.getPostFromId.likes, user]
+            }
+          }
+        }
+        else if (subscriptionData.data.postSub.mutation === "UNLIKED") 
+        {
+          Setliked(false)
+          return {
+            getPostFromId:
+            {
+              ...prev.getPostFromId,
+              likes: prev.getPostFromId.likes.filter((names)=>{
+                if(names !== user)
+                {
+                  return names
+                }
+              })
+            }
+          }
+        }
+      } 
     })
   }, [subscribeToMore])
 
@@ -118,15 +162,16 @@ const Post = (props: { title: string, type: string, author: string, text: string
     createComment({
         variables: {
           id: props.id,
-          user: props.author,
+          user: user,
           text: document.getElementById(props.id).value,
         }
     })
     document.getElementById(props.id).value = ''
   }
   return (
-    <Card className={classes.root} style={{background: postColor1, color: postColor2}}>
+    <Card className={classes.root} >
       <CardHeader
+      style={{background: postColor1, color: postColor2}}
         avatar={
           <Avatar aria-label="recipe" className={classes.avatar}>
             {props.author[0]}
@@ -140,11 +185,13 @@ const Post = (props: { title: string, type: string, author: string, text: string
         title={props.title}
         subheader={props.time}
       />
-      <CardMedia
+        {props.picture? (<CardMedia
         className={classes.media}
-        image={props.picture}
-        title="Paella dish"
-      />
+        image = {props.picture}
+        controls
+        title="Paella dish"></CardMedia>): 
+        (<ReactPlayer url={props.video} playing = {true} controls style = {{margin: "0px auto"}}></ReactPlayer>)}
+        
       <CardContent>
         <Typography variant="body1" color={postColor2} component="p">
           {props.text}
@@ -158,12 +205,24 @@ const Post = (props: { title: string, type: string, author: string, text: string
         </Typography>
       </CardContent>
       <CardActions disableSpacing>
-        <IconButton aria-label="add to favorites">
-          <FavoriteIcon />
+        <IconButton aria-label="add to favorites" >
+          <FavoriteIcon color = {liked? ("secondary"):("default")} onClick = {()=>{
+            Setliked(!liked)
+            if(liked)
+            {
+              handleUnlike({variables : {
+                id: props.id, 
+                user: user}})
+            }
+            else if(liked === false)
+            {
+              handleLike({variables : {
+              id: props.id, 
+              user: user}})
+            }
+              }}/>
         </IconButton>
-        <IconButton aria-label="share">
-          <ShareIcon />
-        </IconButton>
+        <p>{data? data.getPostFromId.likes.length: 0}</p>
         <IconButton
           className={clsx(classes.expand, {
             [classes.expandOpen]: expanded,
@@ -176,12 +235,12 @@ const Post = (props: { title: string, type: string, author: string, text: string
         </IconButton>
       </CardActions>
 
-      <Collapse style = {{maxHeight: "300px", overflow: "scroll"}} in={expanded} timeout="auto" unmountOnExit>
+      <Collapse style = {{maxHeight: "300px", overflowY: "scroll"}} in={expanded} timeout="auto" unmountOnExit>
         <div style = {{paddingLeft: "10px"}}>Comments: </div>
         <div>
           <Card>
             <CardHeader avatar = 
-            {<Avatar aria-label="recipe" className={classes.avatar}>{props.author[0]}</Avatar>}
+            {<Avatar aria-label="recipe" className={classes.avatar}>{user[0]}</Avatar>}
             title = {
               <>
             <TextField style = {{borderRadius: "10", float: "left"}} placeholder="Addcomment" multiline rows={1} rowsMax={2} id={props.id} ref={sendcontrol} />
