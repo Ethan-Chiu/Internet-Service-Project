@@ -319,7 +319,7 @@ function removeMedia(){
 //////////////////////////////////////////////////////////////////////////////
     return (
         <>
-            <div id = "theme-controller">
+            {/* <div class = "theme-dark" id = "theme-controller"> */}
             <MainNav className = "nav"/>
             <div className = "main-div">
                 <div className = 'main-left'>
@@ -327,7 +327,7 @@ function removeMedia(){
                 </div>
                     
                 <div className = 'main-center' id="main">
-                    <img id="showimg" src="" />
+                    {/* <img id="showimg" src="" /> */}
                     <Input
                         placeholder="Title"
                         value={title}
@@ -382,7 +382,7 @@ function removeMedia(){
                 </div>
 
             </div>
-            </div>
+            {/* </div> */}
         </>
     );
 }

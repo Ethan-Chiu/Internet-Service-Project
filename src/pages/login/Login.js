@@ -153,7 +153,7 @@ const Login  = () => {
                         <input type="password" placeholder="Password" required 
 													onChange={(e) => setPassword(e.target.value)}/>
                         <a href="#/Main" >Forgot your password?</a>
-                        <button onClick={signin}>Sign In</button>
+                        <button id="signinBtn" onClick={signin}>Sign In</button>
                     </form>
                 </div>
                 <div class="overlay-container">
