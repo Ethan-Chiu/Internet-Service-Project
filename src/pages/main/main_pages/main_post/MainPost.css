@@ -60,6 +60,9 @@
 	height: 100%;
 	margin: 50px;
 	padding: 50px;
+	display: flex;
+	flex-direction: column;
+	align-content: center;
 }
 .contexts {
 	color: var(--color-accent) !important
@@ -74,4 +77,11 @@ h6{
 
 select{
 	border-radius:"5px";
+}
+
+#captureButton, #recordButton{
+	color: var(--color-primary) !important;
+	border: none;
+	border-radius: 3px;
+	background-color: var(--color-accent);
 }

@@ -11,6 +11,10 @@ import VideoCallOutlinedIcon from '@material-ui/icons/VideoCallOutlined';
 import { IconButton } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 import Button from '@material-ui/core/Button';
+//font awesome
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import {faDownload} from '@fortawesome/free-solid-svg-icons'
+import {faCameraRetro} from '@fortawesome/free-solid-svg-icons'
 // import PhotoCamera from '@material-ui/icons/PhotoCamera';
 // import { AirlineSeatIndividualSuiteSharp } from '@material-ui/icons';
 //antd
@@ -104,7 +108,8 @@ const MainPost = () => {
         videoHolder.innerHTML = "";
         const b1 = document.getElementById("captureButton");
         const b2 = document.getElementById("recordButton");
-        b1.innerHTML = ""; b2.innerHTML = "";
+        b1.style.display = "none"
+        b2.style.display = "none"
     }
     //--cancel show media
     //////////////////////////////////////////////////////////////////////////////
@@ -224,6 +229,8 @@ const MainPost = () => {
         inputRef.current.state.value = ""
         selectRef.current.value = ""
         confirm();
+        const downloadButton = document.getElementById("downloadButton");
+        downloadButton.style.display = "none";
         const mediaResult = document.getElementById("mediaResult")
         mediaResult.innerHTML = "";
     }
@@ -241,10 +248,10 @@ const MainPost = () => {
         const playButton = document.getElementById("playButton");
         const recordButton = document.getElementById("recordButton");
         const captureButton = document.getElementById("captureButton");
-
-        playButton.innerHTML = ""
-        recordButton.innerHTML = ""
-        captureButton.innerHTML = "Capture Image"
+        setVideo("");
+        const downloadButton = document.getElementById("downloadButton");
+        downloadButton.style.display = "none";
+        playButton.style.display = "none"
         captureButton.style.display = "inline-block"
         recordButton.style.display = "none"
 
@@ -278,6 +285,11 @@ const MainPost = () => {
         };
         image.src = urlsrc;
 
+        confirm();
+        setVideo("");
+        const downloadButton = document.getElementById("downloadButton");
+        downloadButton.style.display = "none";
+
         const mediaResult = document.getElementById("mediaResult")
         mediaResult.innerHTML = "";
         var newImg = document.createElement("img");
@@ -298,22 +310,30 @@ const MainPost = () => {
 
         const recordButton = document.getElementById("recordButton");
         const captureButton = document.getElementById("captureButton");
-        recordButton.innerHTML = "Start Recording"
-        captureButton.innerHTML = ""
-        recordButton.style.display = "inline-block"
+        recordButton.textContent = "Start Recording"
         captureButton.style.display = "none"
+        recordButton.style.display = "inline-block"
 
         recordButton.addEventListener("click", () => {
-
+            // console.log("abc")
+            // console.log(recordButton.textContent);
+            // console.log("abc")
             if (recordButton.textContent === "Start Recording") {
                 startRecording();
+                console.log("nnn")
+                console.log(mediaRecorder)
+                console.log(recordButton.textContent);
             }
-            else {
+            else{
+                // console.log("???")
                 stopRecording();
                 //set screen
                 recordButton.textContent = "Start Recording"
                 const playButton = document.getElementById("playButton");
                 playButton.innerHTML = "Play Recorded Video"
+                playButton.style.display = "inline-block"
+                const downloadButton = document.getElementById("downloadButton");
+                downloadButton.style.display = "inline-block"
                 //set screen done
             }
         })
@@ -367,11 +387,11 @@ const MainPost = () => {
                         </div>
 
                         <div style={{ textAlign: "center" }}>
-                            <button id="playButton" onClick={playRecorded} className="contexts"></button>
+                            <button id="playButton" onClick={playRecorded} className="contexts" style={{ display: "none"}}>Play recorded</button>
 
                             <button id="removePicture" onClick={removeMedia} className="contexts"> Remove Picture Or Video</button>
                             <button id="cancelButton" onClick={confirm} className="contexts"> Confirm(close camera view) </button>
-                            <button id="downloadButton" onClick={download} className="contexts">Download</button>
+                            <button id="downloadButton" onClick={download} className="contexts" style={{ display: "none"}}><FontAwesomeIcon icon={faDownload}/></button>
                         </div>
 
                         <div id="mediaResult" style={{ width: "100%", textAlign: "center" }}>
@@ -379,13 +399,14 @@ const MainPost = () => {
 
                     </div>
 
-                    <div className='main-right-post' id="mainCam" style={{ height: "80%" }}>
-                        Camera View
-                            <div className="video-holder" id="video-holder">
+                    <div className='main-right-post' id="mainCam">
+                        <div><FontAwesomeIcon icon={faCameraRetro} size="5x"/></div><br/><br/><br/>
+                        <div className="video-holder" id="video-holder">
                         </div>
+                        <br/><br/><br/>
                         <div style={{ margin: "0 auto", textAlign: "center" }}>
-                            <button id="captureButton" style={{ display: "none" }}></button>
-                            <button id="recordButton" style={{ dispaly: "none" }}></button>
+                            <button id="captureButton" style={{ display: "none"}}>Capture Image</button>
+                            <button id="recordButton" style={{ display: "none"}}>Start Recording</button>
                         </div>
                     </div>
 

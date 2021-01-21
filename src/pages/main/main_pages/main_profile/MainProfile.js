@@ -89,9 +89,9 @@ const MainProfile = () => {
     })
     return (
         <>
-            <div id='theme-controller'>
+            <div className="theme-dark" id='theme-controller'>
                 {<MainNav className="nav" />}
-                <div className="main-div">
+                <div className="main-div-profile">
                     <div className="profile_img">
                         <img className="profile_pic" src={picture?(picture):("https://ern-dubai.com/wp-content/uploads/2019/04/facebook-anonymous-app.jpg")}></img>
                         <input accept="image/*" className='input' id="icon-button-file" type="file" onChange={changecover}/>

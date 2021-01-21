@@ -59,8 +59,8 @@ const Main = ()=>{
     localStorage.setItem('theme', themeName);
     document.getElementById("theme-controller").className = themeName;
   }
+  
   useEffect(
-    
     // Immediately invoked function to set the theme on initial load
     () => {
       document.querySelectorAll('.images-wrap')[0].childNodes[0].setAttribute('aria-hidden', 'ture')

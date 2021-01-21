@@ -24,7 +24,7 @@ import MenuItem from '@material-ui/core/MenuItem';
 //apollo
 import {
 	GET_POST,
-	CREATE_POST_MUTATION,
+  CREATE_POST_MUTATION,
 	POSTS_SUBSCRIPTION,
   COMMENT_MUTATION,
   GET_ID,
@@ -73,7 +73,6 @@ const Post = (props: { title: string, type: string, author: string, text: string
   const handleExpandClick = () => {
     setExpanded(!expanded);
   };
-  
 
 	var postColor1 = "#f7f7e8"
 	var postColor2 = "black"
@@ -194,7 +193,7 @@ const Post = (props: { title: string, type: string, author: string, text: string
           title="Paella dish"></CardMedia>):(<></>)}
 
           {props.video? 
-          (<ReactPlayer url={props.video} playing = {true} controls width="360px" height="360px"
+          (<ReactPlayer url={props.video} playing = {false} controls width="360px" height="360px"
           style = {{margin: "0px auto"}}></ReactPlayer>):(<></>)}
           
         
