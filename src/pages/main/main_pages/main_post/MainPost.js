@@ -15,6 +15,7 @@ import Button from '@material-ui/core/Button';
 // import { AirlineSeatIndividualSuiteSharp } from '@material-ui/icons';
 //antd
 import { Input } from 'antd'
+
 const { TextArea } = Input;
 
 const useStyles = makeStyles((theme) => ({
@@ -30,20 +31,15 @@ const useStyles = makeStyles((theme) => ({
 
 const MainPost = () =>
 {  
-    const classes = useStyles();
-
     const inputRef = useRef(null)
+    const titleRef = useRef(null)
+    const selectRef = useRef(null)
 
     const [user, setUser] = useState(localStorage.getItem('user')); 
     const [location, setLocation] = useState({ x: 25.01, y: 121.53, s:15});
-    const [title, setTitle] = useState("");
     const [type, setType] = useState("white");
-    const [text, setText] = useState("");
     const [picture, setPicture] = useState("");
     const [video, setVideo] = useState("");
-    const [tags, setTags] = useState([]);
-    
-    const [tempPic, setTempPic] =useState("")
 
     const [createPost] = useMutation(CREATE_POST_MUTATION)
 
@@ -55,15 +51,15 @@ const MainPost = () =>
         navigator.geolocation.getCurrentPosition((pos)=>{
         setLocation({x:pos.coords.latitude, y: pos.coords.longitude, s: 15})
         
-      })}, 3000);
+      })}, 10000);
 
 //////////////////////////////////////////////////////////////////////////////
 //show media--
     const constraints = {
         audio: true,
         video:{
-            width: 360,
-            height: 360
+            width: 300,
+            height: 300
         }
     }
 
@@ -95,14 +91,12 @@ const MainPost = () =>
         videoHolder.innerHTML="";
         const rawImg = document.createElement("img");
         rawImg.setAttribute('id', "raw-img");
-        rawImg.setAttribute('height', "360");
+        rawImg.style.maxWidth="300px"
+        rawImg.style.maxHeight="300px"
         rawImg.setAttribute('src', stream);
         videoHolder.appendChild(rawImg);
     }
 //--show media
-//////////////////////////////////////////////////////////////////////////////
-
-
 //////////////////////////////////////////////////////////////////////////////
 //cancel show media--
     function confirm(){
@@ -114,20 +108,14 @@ const MainPost = () =>
     }
 //--cancel show media
 //////////////////////////////////////////////////////////////////////////////
-
-
-//////////////////////////////////////////////////////////////////////////////
 //remove Media--
-function removeMedia(){
-    setPicture("");
-    setVideo("");
-    const mediaResult = document.getElementById("mediaResult")
-    mediaResult.innerHTML = "";
-}
+    function removeMedia(){
+        setPicture("");
+        setVideo("");
+        const mediaResult = document.getElementById("mediaResult")
+        mediaResult.innerHTML = "";
+    }
 //--remove Media
-//////////////////////////////////////////////////////////////////////////////
-
-
 //////////////////////////////////////////////////////////////////////////////
 //record--
     let mediaRecorder;
@@ -174,9 +162,6 @@ function removeMedia(){
     }
 //--record
 //////////////////////////////////////////////////////////////////////////////
-
-
-//////////////////////////////////////////////////////////////////////////////
 //play recorded--
     function playRecorded() {
 
@@ -185,29 +170,19 @@ function removeMedia(){
         mediaResult.innerHTML = "";
         var recordedVideo = document.createElement("video");
         recordedVideo.setAttribute('id', "videoPrev");
-        recordedVideo.setAttribute('width', "360");
-        recordedVideo.setAttribute('height', "360");
+        recordedVideo.setAttribute('width', "300");
+        recordedVideo.setAttribute('height', "300");
         mediaResult.appendChild(recordedVideo);
         // reset screen done
-        // const superBuffer = new Blob(recordedBlobs, {type: 'video/webm'});
-        // console.log(recordedBlobs)
-        // recordedVideo.src = null;
-        // recordedVideo.srcObject = null;
-        // recordedVideo.src = window.URL.createObjectURL(superBuffer);
-        // recordedVideo.play();
+        
         recordedVideo.controls = true;
         recordedVideo.src = video;
         recordedVideo.play();
     };
 //--play recorded
 //////////////////////////////////////////////////////////////////////////////
-
-
-//////////////////////////////////////////////////////////////////////////////
 //download--
     function download(){
-        // const blob = new Blob(recordedBlobs, {type: 'video/mp4'});
-        // const url = window.URL.createObjectURL(blob);
         const url = video;
         const a = document.createElement('a');
         a.style.display = 'none';
@@ -221,44 +196,36 @@ function removeMedia(){
         }, 100);
     }
 //--download
-//////////////////////////////////////////////////////////////////////////////
 
-
-//////////////////////////////////////////////////////////////////////////////
-//set tags--
-    useEffect(()=>{
-        var [doncare, ...pretags] = text.replace(/\n/g, " ").split('#');
+//graphql
+    function post(){
+        if (!user || !location || !titleRef.current.state.value || !selectRef.current.value) return;
+        var [doncare, ...pretags] = inputRef.current.state.value.replace(/\n/g, " ").split('#');
         var temptags = [];
         pretags.map(e=>{
             temptags.push(e.split(' ')[0]);
         })
-        setTags(temptags)
-    },[text])
-//--set tags
-//////////////////////////////////////////////////////////////////////////////
-
-
-//graphql
-    function post(){
-        if (!user || !location || !title || !type) return
-
-        console.log("post")
         createPost({
             variables: {
                 author: user,
                 x: location.x,
                 y: location.y,
                 s: location.s,
-                title: title,
-                type: type,
-                text: text,
+                title: titleRef.current.state.value,
+                type: selectRef.current.value,
+                text: inputRef.current.state.value,
                 picture: picture,
                 video: video,
-                tags: tags
+                tags: temptags
             }
         })
-        setTitle('')
-        setText('')
+        setPicture("");setVideo("");
+        titleRef.current.state.value=""
+        inputRef.current.state.value=""
+        selectRef.current.value=""
+        confirm();
+        const mediaResult = document.getElementById("mediaResult")
+        mediaResult.innerHTML = "";
     }
     
 
@@ -280,7 +247,7 @@ function removeMedia(){
         recordButton.innerHTML = ""
         recordButton.dispaly = "inline-block"
         captureButton.innerHTML = "Captuer Image"
-        captureButton.dispaly = "inline-block"
+        captureButton.style.dispaly = "inline-block"
 
         captureButton.addEventListener("click",function(){
             // reset display
@@ -288,41 +255,41 @@ function removeMedia(){
             mediaResult.innerHTML = "";
             var newCanvas = document.createElement("canvas");
             newCanvas.setAttribute('id', "canvas");
-            newCanvas.setAttribute('width', "360");
-            newCanvas.setAttribute('height', "360");
+            newCanvas.setAttribute('width', "300");
+            newCanvas.setAttribute('height', "300");
             mediaResult.appendChild(newCanvas);
             // reset done (append canvas)
             var context = newCanvas.getContext('2d');
 
             const rawVideo = document.getElementById("raw-video");
-            context.drawImage(rawVideo, 0, 0, 360, 360);
+            context.drawImage(rawVideo, 0, 0, 300, 300);
             setPicture(newCanvas.toDataURL("image/png"));
             // console.log(picture);
         })
     }
 
-    const addpic = ()=>{
-        console.log('hi')
-        // reset display
+    const addpic = (urlsrc)=>{
+        var image = new Image();
+        image.onload = function () {
+        var canvas = document.createElement('canvas');
+        canvas.width = 300; 
+        canvas.height = 300; 
+        canvas.getContext('2d').drawImage(this, 0, 0, 300, 300);
+        setPicture(canvas.toDataURL('image/png'));
+        };
+        image.src = urlsrc;
+
         const mediaResult = document.getElementById("mediaResult")
         mediaResult.innerHTML = "";
-        var newCanvas = document.createElement("canvas");
-        newCanvas.setAttribute('id', "canvas");
-        // newCanvas.setAttribute('width', "360");
-        newCanvas.setAttribute('height', "360");
-        mediaResult.appendChild(newCanvas);
-        // reset done (append canvas)
-
-        var context = newCanvas.getContext('2d');
-
-        const rawImg = document.getElementById("raw-img");
-        context.drawImage(rawImg, 0, 0, 360, 360);
-        setPicture(newCanvas.toDataURL("image/png"));
-        // console.log(newCanvas.toDataURL("image/png"))
+        var newImg= document.createElement("img");
+        newImg.setAttribute('id', "newImg");
+        newImg.style.maxWidth="300px"
+        newImg.style.maxHeight="300px"
+        newImg.src = urlsrc;
+        mediaResult.appendChild(newImg);
     }
 
     const addvideo = ()=>{
-        console.log("add video")
         init(); 
 
         // reset display
@@ -334,6 +301,7 @@ function removeMedia(){
         const captureButton = document.getElementById("captureButton");
         recordButton.innerHTML = "Start Recording"
         captureButton.innerHTML = ""
+        captureButton.style.dispaly = "inline-block"
         recordButton.addEventListener("click",()=>{
             if(recordButton.textContent === "Start Recording"){
                 startRecording();
@@ -348,26 +316,18 @@ function removeMedia(){
             }
         })
     }
-
 //////////////////////////////////////////////////////////////////////////////
-//////////////////////////////////////////////////////////////////////////////
-		const theme = localStorage.getItem('theme')
+	const theme = localStorage.getItem('theme')
     return (
         <>
 			<div className = { theme } id = "theme-controller">
                 <MainNav className = "nav"/>
                 <div className = "main-div-post">
-                    <div className = 'main-left-post'>
-                        
-                    </div>
-                        
                     <div className = 'main-center-post' id="mainPost">
-                        {/* <img id="showimg" src="" /> */}
                         <Input
                             placeholder="Title"
-                            value={title}
-                            onChange={(e) => setTitle(e.target.value)}
-                            style={{ marginBottom: 10 }}
+                            ref={titleRef}
+                            style={{ marginBottom: 10 ,borderRadius:"5px"}}
                             onKeyDown={(e) => {
                                 if (e.key === 'Enter') {
                                     inputRef.current.focus()
@@ -377,17 +337,12 @@ function removeMedia(){
                         <TextArea
                             rows={4}
                             placeholder="Type your text here..."
-                            value={text}
+                            style={{borderRadius:"5px"}}
                             ref={inputRef}
-                            onChange={(e) => {
-                                setText(e.target.value);
-                            }}
                         ></TextArea>
                         <div>
-                            <label htmlFor="type" style = {{fontSize: "20px"}}>Select a type: </label>
-                            <select style = {{fontSize: "20px", color :"black"}} name="type" onChange={(e)=>{
-                                setType(e.target.value)
-                            }}>
+                            <label htmlFor="type" style = {{fontSize: "14px"}}><h6>Select a type: </h6></label>
+                            <select style = {{fontSize: "14px", color :"black"}} name="type" ref={selectRef}>
                                 <option value="">-- --</option>
                                 <option value="red">Emergency</option>
                                 <option value="orange">Activity</option>
@@ -398,23 +353,21 @@ function removeMedia(){
                             </select>
                             <IconButton onClick = {addvideo} className="contexts"><VideoCallOutlinedIcon /></IconButton>
                             <IconButton onClick = {addphoto} className="contexts"><AddAPhotoIcon /></IconButton>
-                            <Button  component="label"><AddPhotoAlternateIcon /><input type="file" 
-                                onChange={(e)=>{setTempPic( e.target.files?.item(0) );
-                                                handleImageUpload(URL.createObjectURL(e.target.files?.item(0)));
-                                                addpic();}}
-                                 hidden /></Button>
+                            <IconButton  component="label"><AddPhotoAlternateIcon style={{color:(theme==="theme-dark")?("#98ccd3"):("#364e68")}}/>
+                            <input type="file" 
+                                onChange={(e)=>{const urlsrc = URL.createObjectURL(e.target.files?.item(0));
+                                                handleImageUpload(urlsrc);
+                                                addpic(urlsrc);}}
+                                 hidden /></IconButton>
                             <Button onClick = {post} className="contexts">post</Button>
                         </div>
-
                         
-                        {/* {tempPic&&<img src = {URL.createObjectURL(tempPic)}/>}sdfaf */}
+                        <div style = {{ textAlign: "center"}}>
+                            <button id="playButton" onClick={playRecorded} className="contexts"></button>
+                            <button id="removePicture" onClick = {removeMedia} className="contexts"> Remove Picture Or Video</button>
+                        </div>
 
-
-                        <button id="playButton" onClick={playRecorded} className="contexts"></button>
-                        
-                        <button id="removePicture" onClick = {removeMedia} className="contexts"> Remove Picture Or Video</button>
-
-                        <div id="mediaResult">    
+                        <div id="mediaResult" style = {{width: "100%"}}>    
                         </div>
 
                         <button id="cancelButton" onClick = {confirm} className="contexts"> Confirm(close camera view) </button>
@@ -429,8 +382,8 @@ function removeMedia(){
                             <div className = "video-holder" id = "video-holder">
                             </div>
                         <div style = {{margin: "0 auto", textAlign:"center"}}>
-                            <button id="captureButton" style = {{display: "none" }}></button>
-                            <button id="recordButton" style = {{display: "none" }}></button>
+                            <button id="captureButton" ></button>
+                            <button id="recordButton" ></button>
                         </div>
                     </div>
 
@@ -439,13 +392,9 @@ function removeMedia(){
         </>
     );
 }
-
 export default MainPost;
 
-
-// <input accept="image/*" className={classes.input} id="icon-button-file" type="file" name = 'file' />
-//                             <label htmlFor="icon-button-file">
-//                                 <IconButton color="primary" aria-label="upload picture" component="span"  onChange={(e)=>{setTempPic(e.target.file); console.log(e.target.file); console.log("asd")}}>
-//                                 <AddPhotoAlternateIcon />
-//                                 </IconButton>
-//                             </label>
+// value={title}
+//                             onChange={(e) => setTitle(e.target.value)}  
+// value={text}
+// onChange={(e) => {setText(e.target.value);}}

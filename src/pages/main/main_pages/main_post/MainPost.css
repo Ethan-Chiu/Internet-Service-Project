@@ -44,7 +44,7 @@
 	position: absolute;
 	left: 6%;
 	right: 66%;
-	top: 10.5%;
+	top: 0%;
 	width: 50%;
 	height: 100%;
 	margin: 50px;
@@ -54,9 +54,9 @@
 	border-radius: 10px;
 	position: absolute;
 	background: linear-gradient(var(--color-primary), var(--color-secondary)) ;
-	right: 5%;
+	right: 2%;
 	width: 30%;
-	top: 10.5%;
+	top: 0%;
 	height: 100%;
 	margin: 50px;
 	padding: 50px;
@@ -66,4 +66,12 @@
 }
 .main-right-post {
 	color: var(--color-accent) !important
+}
+
+h6{
+	display: inline;
+}
+
+select{
+	border-radius:"5px";
 }

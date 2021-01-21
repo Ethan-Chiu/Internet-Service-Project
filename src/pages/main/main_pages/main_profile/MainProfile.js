@@ -92,7 +92,7 @@ const MainProfile = () => {
                             <IconButton color="primary" aria-label="upload picture" component="span" >
                                 <PhotoCamera />
                             </IconButton>
-                            <h >add cover</h>
+                            <h4 >add cover</h4>
                         </label>
 
                         <button id="themeswitch" onClick={toggleTheme}><FontAwesomeIcon icon={faAdjust} /></button>

@@ -193,7 +193,7 @@ const changeSaturation = (e) => { setSaturation((e.target.value-50)/50); }
 
 
 	return { ready } ? (
-		<div class = "theme-dark" id = "theme-controller">
+		<div className = "theme-dark" id = "theme-controller">
 			<MainNav className = "nav"/>
 			<div className="App">
 				<div className = 'main-center-v' id="main">
