@@ -13,7 +13,7 @@ import {
 import { useQuery, useMutation } from 'react-apollo'
 //map
 import { withScriptjs, withGoogleMap, GoogleMap, Marker } from "react-google-maps"
-import MarkerWithLabel from "react-google-maps/lib/components/addons/MarkerWithLabel";
+import InfoBox from "react-google-maps/lib/components/addons/InfoBox";
 
 //SPA Navigation 
 import MainNav from './Nav'

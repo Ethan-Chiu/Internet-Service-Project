@@ -180,7 +180,7 @@ const Post = (props: { title: string, type: string, author: string, text: string
           }
           
           title={props.title}
-          subheader={Date(props.time)}
+          subheader={props.time}
         />
         <div style={{maxHeight: "37vh", overflowY: "scroll", overflowX:"hidden", width:"100%",display:'flex',
           flexDirection:"column", alignItems:"center", justifyContent:'space-around'}}>
