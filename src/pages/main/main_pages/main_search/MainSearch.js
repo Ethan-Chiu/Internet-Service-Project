@@ -28,11 +28,13 @@ const MainSearch = () =>
 	}
 	return (
 		<>
+		
 			<div id = 'theme-controller'>
 				<p>MainSearch</p>
 				<MainNav/>
 			</div>
-			<div className="context">
+		
+			<div className="context" >
 				<div className="searchbar">
 					<input placeholder="🔍 Search" onChange={
 						(e)=>{setSearchValue(e.target.value)}}/>
@@ -55,10 +57,12 @@ const MainSearch = () =>
 								setSearchType(searchType-(searchType%2))}}}/>
 					<label htmlFor="content">Content</label>
 				</div>
+			<div style = {{maxHeight: "80vh", overflowY: "scroll"}}>
 				<div>
 					{	searchPosts }
 				</div>
 			</div>
+		</div>
 		</>
 	);
 }

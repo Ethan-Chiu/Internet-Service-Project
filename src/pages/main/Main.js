@@ -13,7 +13,8 @@ import {
 	CREATE_POST_MUTATION,
 	POSTS_SUBSCRIPTION,
   COMMENT_MUTATION,
-  GET_ID
+  GET_ID,
+  ALL_SUBSCRIPTION
   } from '../../graphql'
 import { useQuery, useMutation } from 'react-apollo'
 //map
@@ -83,8 +84,11 @@ const Main = ()=>{
     document.getElementById("theme-controller").className = themeName;
   }
   useEffect(
+    
     // Immediately invoked function to set the theme on initial load
     () => {
+      document.querySelectorAll('.images-wrap')[0].childNodes[0].setAttribute('aria-hidden', 'ture')
+      document.querySelectorAll('.images-wrap')[0].childNodes[document.querySelectorAll('.images-wrap')[0].childNodes.length - 1].setAttribute('aria-hidden', 'true')
         if (localStorage.getItem('theme') === 'theme-dark') {
             setTheme('theme-dark');
         } else {
@@ -92,7 +96,19 @@ const Main = ()=>{
         }
       }
   );
-
+  useEffect(() => {
+    subscribeToMore({
+      document: ALL_SUBSCRIPTION,
+      updateQuery: (prev, { subscriptionData }) => {
+        if (!subscriptionData.data) return prev
+        
+        
+      const newPost = subscriptionData
+      console.log(prev)
+          return prev
+      } 
+    })
+  }, [subscribeToMore])
 
  setInterval(function(){
    navigator.geolocation.getCurrentPosition((pos)=>{

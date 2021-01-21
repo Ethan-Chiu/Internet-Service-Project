@@ -276,11 +276,9 @@ function removeMedia(){
         const captureButton = document.getElementById("captureButton");
         
         playButton.innerHTML = ""
-        playButton.dispaly = "inline-block"
         recordButton.innerHTML = ""
-        recordButton.dispaly = "inline-block"
         captureButton.innerHTML = "Captuer Image"
-        captureButton.dispaly = "inline-block"
+        captureButton.style.dispaly = "inline-block"
 
         captureButton.addEventListener("click",function(){
             // reset display
@@ -334,6 +332,7 @@ function removeMedia(){
         const captureButton = document.getElementById("captureButton");
         recordButton.innerHTML = "Start Recording"
         captureButton.innerHTML = ""
+        captureButton.style.display = "inline-block"
         recordButton.addEventListener("click",()=>{
             if(recordButton.textContent === "Start Recording"){
                 startRecording();
@@ -361,7 +360,7 @@ function removeMedia(){
                         
                     </div>
                         
-                    <div className = 'main-center-post' id="mainPost">
+                    <div className = 'main-center-post' id="mainPost"style = {{height: "80%"}}>
                         {/* <img id="showimg" src="" /> */}
                         <Input
                             placeholder="Title"
@@ -398,7 +397,7 @@ function removeMedia(){
                             </select>
                             <IconButton onClick = {addvideo} className="contexts"><VideoCallOutlinedIcon /></IconButton>
                             <IconButton onClick = {addphoto} className="contexts"><AddAPhotoIcon /></IconButton>
-                            <Button  component="label"><AddPhotoAlternateIcon /><input type="file" 
+                            <Button  component="label"><AddPhotoAlternateIcon style ={{color: "rgb(54, 78, 106)"}}/><input type="file" 
                                 onChange={(e)=>{setTempPic( e.target.files?.item(0) );
                                                 handleImageUpload(URL.createObjectURL(e.target.files?.item(0)));
                                                 addpic();}}
@@ -409,22 +408,23 @@ function removeMedia(){
                         
                         {/* {tempPic&&<img src = {URL.createObjectURL(tempPic)}/>}sdfaf */}
 
-
-                        <button id="playButton" onClick={playRecorded} className="contexts"></button>
+                        <div style = {{ textAlign: "center"}}>
+                            <button id="playButton" onClick={playRecorded} className="contexts"></button>
                         
-                        <button id="removePicture" onClick = {removeMedia} className="contexts"> Remove Picture Or Video</button>
-
+                            <button id="removePicture" onClick = {removeMedia} className="contexts"> Remove Picture Or Video</button>
+                            <button id="cancelButton" onClick = {confirm} className="contexts"> Confirm(close camera view) </button>
+                            <button id="downloadButton" onClick = {download} className="contexts">Download</button>
+                        </div>
                         <div id="mediaResult">    
                         </div>
 
-                        <button id="cancelButton" onClick = {confirm} className="contexts"> Confirm(close camera view) </button>
-                        <button id="downloadButton" onClick = {download} className="contexts">Download</button>
-                        <div id="mediaResult">
+                        
+                        <div id="mediaResult" style = {{width: "100%"}}>
                         </div>
                         
                     </div>
 
-                    <div className = 'main-right-post' id="mainCam">
+                    <div className = 'main-right-post' id="mainCam" style = {{height: "80%"}}>
                             Camera View
                             <div className = "video-holder" id = "video-holder">
                             </div>
