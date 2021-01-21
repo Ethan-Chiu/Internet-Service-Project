@@ -43,7 +43,7 @@ input PostInput {
 	picture: String
 	video: String
 	tags: [String]
-	time: String!
+	time: String
 }
 
 input LocationInput {
