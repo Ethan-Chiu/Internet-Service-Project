@@ -25,6 +25,10 @@ import { makeStyles } from '@material-ui/core/styles';
 import "react-slideshow-image/dist/styles.css"
 import { Slide } from 'react-slideshow-image';
 
+//font awesome
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import {faSync} from '@fortawesome/free-solid-svg-icons'
+
 const useStyles = makeStyles((theme) => ({
   root: {
     width: '100%',
@@ -182,8 +186,8 @@ const Main = ()=>{
           
 
         </div>
-        <div style = {{position: "absolute", right: "1%", top: "8%", backgroundColor: "red"}}>
-          <button onClick ={()=>{refetch()}}>REFRESH</button>
+        <div style = {{position: "absolute", right: "1%", top: "10%", width:"50px", height:"50px", backgroundColor: "red", alignContent:"center", display:"flex"}}>
+          <button style={{ backgroundColor:"red", color:"red", width:"100%"}} onClick ={()=>{refetch()}}><FontAwesomeIcon icon={faSync} /></button>
         </div>
     </div>
     </div>

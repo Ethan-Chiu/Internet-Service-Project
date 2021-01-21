@@ -119,6 +119,8 @@ const MainPost = () => {
         setVideo("");
         const mediaResult = document.getElementById("mediaResult")
         mediaResult.innerHTML = "";
+        const downloadButton = document.getElementById("downloadButton");
+        downloadButton.style.display = "none";
     }
     //--remove Media
     //////////////////////////////////////////////////////////////////////////////
@@ -345,7 +347,7 @@ const MainPost = () => {
             <div className={theme} id="theme-controller">
                 <MainNav className="nav" />
                 <div className="main-div-post">
-                    <div className='main-center-post' id="mainPost" style = {{height: "80%"}}>
+                    <div className='main-center-post' id="mainPost">
                         <Input
                             placeholder="Title"
                             ref={titleRef}

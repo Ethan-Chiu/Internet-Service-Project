@@ -46,11 +46,10 @@ const Post = (props) => {
   const { p } = props;
   return (
 		<div>
-			<Card>
+			<Card style={{background: props.Ctheme==='theme-dark'?("#364e68"):("#98ccd3")}}>
 				
 				<CardHeader title = {p.title} subheader = {p.author} 
 				avatar = {<Avatar className = {classes.avatar}>{p.author}</Avatar>}/>
-				<button onClick = {()=>{window.open(p.picture, "_blank")}} style = {{padding: "20px", color: "red"}}>image</button>
 				<IconButton
 				className={clsx(classes.expand, {
 				[classes.expandOpen]: expanded,

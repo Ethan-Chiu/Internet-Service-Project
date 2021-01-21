@@ -24,44 +24,61 @@ const MainSearch = () =>
 		}
 	}, [searchValue, searchType, data])
 	const mapPosts = (p) => {
-		return <Post p={p}/>
+		return <Post p={p} ctheme={localStorage.getItem('theme')}/>
 	}
+
+	function setTheme(themeName) {
+        localStorage.setItem('theme', themeName);
+        document.getElementById("theme-controller").className = themeName;
+    }
+	useEffect(
+        // Immediately invoked function to set the theme on initial load
+        () => {
+            if (localStorage.getItem('theme') === 'theme-dark') {
+                setTheme('theme-dark');
+            } else {
+                setTheme('theme-light');
+            }
+        }
+    );
+
 	return (
 		<>
 		
-			<div id = 'theme-controller'>
+		<div className="theme-dark" id="theme-controller">
 				<p>MainSearch</p>
 				<MainNav/>
-			</div>
+			
 		
 			<div className="context" >
 				<div className="searchbar">
-					<input placeholder="🔍 Search" onChange={
+					<input className="searchinput" placeholder="🔍 Search" onChange={
 						(e)=>{setSearchValue(e.target.value)}}/>
 					<input type="checkbox" name="title" onChange={
 						(e)=>{if(e.target.checked){
 								setSearchType(searchType%4+4)
 							} else {
 								setSearchType(searchType%4)}}}/>
-					<label htmlFor="title">Title </label>
+					<label htmlFor="title" className="Opt">Title </label>
 					<input type="checkbox" name="tag" onChange={
 						(e)=>{if(e.target.checked){
 								setSearchType(searchType-(searchType%4)+(searchType%2)+2)
 							} else {
 								setSearchType(searchType-(searchType%4)+(searchType%2))}}}/>
-					<label htmlFor="tag">Tag </label>
+					<label htmlFor="tag" className="Opt">Tag </label>
 					<input type="checkbox" name="content" onChange={
 						(e)=>{if(e.target.checked){
 								setSearchType(searchType-(searchType%2)+1)
 							} else {
 								setSearchType(searchType-(searchType%2))}}}/>
-					<label htmlFor="content">Content</label>
+					<label htmlFor="content" className="Opt">Content</label>
 				</div>
-			<div style = {{maxHeight: "80vh", overflowY: "scroll"}}>
+			<div style = {{maxHeight: "60vh", overflowY: "scroll"}}>
 				<div>
 					{	searchPosts }
 				</div>
 			</div>
+		</div>
 		</div>
 		</>
 	);

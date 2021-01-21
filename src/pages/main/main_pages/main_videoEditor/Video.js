@@ -8,7 +8,7 @@ class PureVideoComp extends PureComponent
             <>
                 <video
                         controls
-                        width="400"
+                        width="350"
                         src={URL.createObjectURL(this.props.videoSrc)}
                 ></video>
             </>

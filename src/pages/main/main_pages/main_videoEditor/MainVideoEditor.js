@@ -31,11 +31,11 @@ function MainVideoEditor() {
 
 	//for Trim
 		const [start_time, setStartTime] = useState("00:00:00");
-		const [end_time, setEndTime] = useState("00:00:09");
-		const [duration, setDuration] = useState("00:00:01");
+		const [end_time, setEndTime] = useState("00:00:00");
+		const [duration, setDuration] = useState("00:00:03");
 
 	//preview
-		const [preview, setPreview] = useState();
+		// const [preview, setPreview] = useState();
 	
 	//--all the states
 //handle change	
@@ -126,12 +126,7 @@ function MainVideoEditor() {
 		// Write the file to memory
 		ffmpeg.FS("writeFile", "test.mov", await fetchFile(video));
 
-		setStartTime("00:00:08");
-		setEndTime("00:00:09");
 		//setDuration(end_time-start_time);
-		console.log(end_time.substring(6, 8));
-		console.log(start_time.substring(6, 8));
-		console.log(end_time.substring(6, 8)-start_time.substring(6, 8));
 
 		// MOV -> MP4 and Trim
 		await ffmpeg.run(
@@ -269,19 +264,22 @@ const changeSaturation = (e) => { setSaturation((e.target.value-50)/50); }
 					<input
 						type="file"
 						onChange={(e) => setVideo(e.target.files?.item(0))}
+						style={{borderRadius:"10px"}}
 					/>
 					{video?
 					<>
 					<div>
-						<button style ={{padding: "10px", display: "inline"}}>start</button>
-						<p style = {{display: "inline"}}>    </p>
-						<button style ={{padding: "10px", display: "inline"}}>stop</button>
+						<p style = {{display: "inline"}}>  start time:  </p>
+						<input style={{width:"100px", display:"inline", borderRadius:"10px"}} value={start_time} onChange={(e) => setStartTime(e.target.value)}/>
+						<p style = {{display: "inline"}}>  duration:  </p>
+						<input style={{width:"100px", display:"inline", borderRadius:"10px"}} value={duration} onChange={(e) => {setDuration(e.target.value)}}/>
 					</div>
 						
-						<h3>Result</h3>
-						<button onClick={convertToGif} id="convertBtn">Convert to GIF</button>
-						<br/><br/>
-						{gif && <><img src={gif} width="400" /><br/>{gif}</>}
+						
+						<button style={{borderRadius:"10px"}} onClick={convertToGif} id="convertBtn">Convert to GIF</button>
+						<br/>
+						<h3>Result</h3><br/>
+						{gif && <><img src={gif} width="350" /><br/>{gif}</>}
 						<br/><br/>
 						</>:<>
 						<h2>Select video above</h2>
