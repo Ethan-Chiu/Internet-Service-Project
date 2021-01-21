@@ -325,7 +325,7 @@ const MainPost = () => {
             <div className={theme} id="theme-controller">
                 <MainNav className="nav" />
                 <div className="main-div-post">
-                    <div className='main-center-post' id="mainPost">
+                    <div className='main-center-post' id="mainPost" style = {{height: "80%"}}>
                         <Input
                             placeholder="Title"
                             ref={titleRef}

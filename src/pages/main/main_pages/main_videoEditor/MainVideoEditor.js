@@ -13,7 +13,7 @@ function MainVideoEditor() {
 	//for init
 		const [ready, setReady] = useState(false);
 		const [video, setVideo] = useState();
-		const [gif, setGif] = useState();
+		const [gif, setGif] = useState('');
 	
 	//for filter
 		const [gif_filter, setGifFilter] = useState();
@@ -38,7 +38,53 @@ function MainVideoEditor() {
 		const [preview, setPreview] = useState();
 	
 	//--all the states
+//handle change	
+	useEffect(()=>{
+		console.log(gif_filter)
+		if(gif_filter === '1')
+		{
+			console.log("hi")
+			if(document.getElementById("Contrast"))
+			{
+				document.getElementById("Contrast").disabled = true
+			}
+			if(document.getElementById("Saturation"))
+			{
+				console.log("c1")
+				document.getElementById("Saturation").disabled = true
+			}
+			if(document.getElementById("Brighten"))
+			{
+				console.log("c2")
+				document.getElementById("Brighten").disabled = true
+			}
+			if(document.getElementById("Flip"))
+			{
+				console.log("c3")
+				document.getElementById("Flip").disabled = true
+			}
 
+		}
+		else
+		{
+			if(document.getElementById("Contrast"))
+			{
+				document.getElementById("Contrast").disabled = false
+			} 
+			if(document.getElementById("Saturation"))
+			{
+				document.getElementById("Saturation").disabled = false
+			}
+			if(document.getElementById("Brighten"))
+			{
+				document.getElementById("Brighten").disabled = false
+			}
+			if(document.getElementById("Flip"))
+			{
+				document.getElementById("Flip").disabled = false
+			}
+		}
+	}, [gif_filter])
 
 
 //theme
@@ -116,7 +162,11 @@ function MainVideoEditor() {
 // FILTERS-------------------------
 /////////////////////////////////////////////////////////////////////////////
 	const addFilter_flip = async () => {
-		
+		document.getElementById("contrastRange").value = "50"
+		document.getElementById("brightnessRange").value = "0"
+		document.getElementById("saturationRange").value = "50"
+		await setGifFilter('1')
+		ffmpeg.FS("writeFile", "out.gif", await fetchFile(gif));
 		await ffmpeg.run("-i", "out.gif", "-vf", "hflip", "filterout.gif");
 		const filter_data =  ffmpeg.FS("readFile", "filterout.gif");
 
@@ -130,8 +180,11 @@ function MainVideoEditor() {
 	};
 
 	const addFilter_brightness = async () => {
-
+		document.getElementById("contrastRange").value = "50"
+		document.getElementById("saturationRange").value = "50"
 		var command = "eq=brightness="+brightness;
+		await setGifFilter('1')
+		ffmpeg.FS("writeFile", "out.gif", await fetchFile(gif));
 		await ffmpeg.run("-i", "out.gif", "-vf", command, "filterout.gif");
 		const filter_data =  ffmpeg.FS("readFile", "filterout.gif");
 
@@ -145,8 +198,11 @@ function MainVideoEditor() {
 	};
 
 	const addFilter_contrast = async () => {
-
+		document.getElementById("brightnessRange").value = "0"
+		document.getElementById("saturationRange").value = "50"
 		var command = "eq=contrast="+contrast;
+		await setGifFilter('1')
+		ffmpeg.FS("writeFile", "out.gif", await fetchFile(gif));
 		await ffmpeg.run("-i", "out.gif", "-vf", command, "filterout.gif");
 		const filter_data =  ffmpeg.FS("readFile", "filterout.gif");
 
@@ -159,9 +215,20 @@ function MainVideoEditor() {
 		setGifFilter(filter_url);
 	};
 
+	const save_change = () =>{
+		setGif(gif_filter)
+		document.getElementById("contrastRange").value = "50"
+		document.getElementById("brightnessRange").value = "0"
+		document.getElementById("saturationRange").value = "50"
+	}
+
 	const addFilter_saturation = async () => {
 
 		var command = "eq=saturation="+saturation;
+		document.getElementById("contrastRange").value = "50"
+		document.getElementById("brightnessRange").value = "0"
+		await setGifFilter('1')
+		ffmpeg.FS("writeFile", "out.gif", await fetchFile(gif));
 		await ffmpeg.run("-i", "out.gif", "-vf", command, "filterout.gif");
 		const filter_data =  ffmpeg.FS("readFile", "filterout.gif");
 
@@ -203,7 +270,14 @@ const changeSaturation = (e) => { setSaturation((e.target.value-50)/50); }
 						type="file"
 						onChange={(e) => setVideo(e.target.files?.item(0))}
 					/>
-					{video?<>
+					{video?
+					<>
+					<div>
+						<button style ={{padding: "10px", display: "inline"}}>start</button>
+						<p style = {{display: "inline"}}>    </p>
+						<button style ={{padding: "10px", display: "inline"}}>stop</button>
+					</div>
+						
 						<h3>Result</h3>
 						<button onClick={convertToGif} id="convertBtn">Convert to GIF</button>
 						<br/><br/>
@@ -216,20 +290,68 @@ const changeSaturation = (e) => { setSaturation((e.target.value-50)/50); }
 
 				<div className = 'main-right-v' id="main">
 				{video?<>
-					{gif?<>
+					{gif?
+					gif_filter?
+					(gif_filter === '1'?
+					<>
 						<h2>Select one filter</h2>
-						<input type="range" min="0" max="100" onInput={changeContrast} id="contrastRange"/>
-						<button onClick={addFilter_contrast}>Filter_contrast</button>
+						<input type="range" min="0" max="99" onInput={changeContrast} id="contrastRange"/>
+						<button id = "Contrast" onClick={addFilter_contrast}>Filter_contrast</button>
 
 						<input type="range" min="-50" max="50" onInput={changeBrightness} id="brightnessRange"/>
-						<button onClick={addFilter_brightness}>Filter_brighten</button>
+						<button id = "Brighten" onClick={addFilter_brightness}>Filter_brighten</button>
 						
-						<br/><br/><button onClick={addFilter_flip}>Filter_flip</button>
+						<br/><br/><button id = "Flip" onClick={addFilter_flip}>Filter_flip</button>
 						
 						<input type="range" min="0" max="100" onInput={changeSaturation} id="saturationRange"/>
-						<button onClick={addFilter_saturation}>Filter_saturation</button>
+						<button id = "Saturation" onClick={addFilter_saturation}>Filter_saturation</button>
 
-						{gif_filter && <><img src={gif_filter} width="250" /><br/>{gif_filter}</>}
+						{<>
+						<div style ={{padding: "10px"}}>
+							<img src="https://i.stack.imgur.com/kOnzy.gif" width="80" style ={{padding: "10px"}}/>
+							<br/>
+						</div></>}
+					</>:<>
+						<h2>Select one filter</h2>
+						<input type="range" min="0" max="100" onInput={changeContrast} id="contrastRange"/>
+						<button id = "Contrast" onClick={addFilter_contrast}>Filter_contrast</button>
+
+						<input type="range" min="-50" max="50" onInput={changeBrightness} id="brightnessRange"/>
+						<button id = "Brighten" onClick={addFilter_brightness}>Filter_brighten</button>
+						
+						<br/><br/><button id = "Flip" onClick={addFilter_flip}>Filter_flip</button>
+						
+						<input type="range" min="0" max="100" onInput={changeSaturation} id="saturationRange"/>
+						<button id = "Saturation" onClick={addFilter_saturation}>Filter_saturation</button>
+
+						{gif_filter && <>
+						<div style ={{padding: "10px"}}>
+							<img src={gif_filter} width="250" />
+							<br/>
+							{gif_filter}
+						</div>
+						<div>
+							<button onClick = {save_change}>Save Change</button>
+						</div></>}
+					</>):<>
+						<h2>Select one filter</h2>
+						<input type="range" min="0" max="100" onInput={changeContrast} id="contrastRange"/>
+						<button id = "Contrast" onClick={addFilter_contrast}>Filter_contrast</button>
+
+						<input type="range" defaultValue = "0" min="-50" max="50" onInput={changeBrightness} id="brightnessRange"/>
+						<button id = "Brighten" onClick={addFilter_brightness}>Filter_brighten</button>
+						
+						<br/><br/><button id = "Flip" onClick={addFilter_flip}>Filter_flip</button>
+						
+						<input type="range" min="0" max="100" onInput={changeSaturation} id="saturationRange"/>
+						<button id="Saturation" onClick={addFilter_saturation}>Filter_saturation</button>
+
+						{gif && <>
+						<div style ={{padding: "20px"}}>
+							<img src={gif} width="250" />
+							<br/>
+							PLEASE APPLY CHANGE
+						</div></>}
 					</>:<>
 						<h2>To add filter</h2><br/><br/><br/><br/>
 						<h2>Please convert the video first!!!</h2><br/>

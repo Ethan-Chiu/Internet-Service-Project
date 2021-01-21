@@ -47,7 +47,7 @@ const Main = ()=>{
   const [currentlat, SetLat] = useState(25.01);
   const [currentlng, SetLng] = useState(121.53);
   const [posts, Setposts] = useState([])
-  const { loading, error, data, subscribeToMore} = useQuery(GET_POST, {variables: {x: currentlat, y: currentlng, s: 2000}})
+  const { loading, error, data, subscribeToMore} = useQuery(GET_POST, {variables: {x: currentlat, y: currentlng, s: 0.5}})
   const cachedMutatedData = useMemo(() => {
     if (loading || error) return null
     Setposts(data.getPosts)
