@@ -68,8 +68,8 @@ const Main = ()=>{
   useEffect(
     // Immediately invoked function to set the theme on initial load
     () => {
-      document.querySelectorAll('.images-wrap')[0].childNodes[0].setAttribute('aria-hidden', 'ture')
-      document.querySelectorAll('.images-wrap')[0].childNodes[document.querySelectorAll('.images-wrap')[0].childNodes.length - 1].setAttribute('aria-hidden', 'true')
+      // document.querySelectorAll('.images-wrap')[0].childNodes[0].setAttribute('aria-hidden', 'ture')
+      // document.querySelectorAll('.images-wrap')[0].childNodes[document.querySelectorAll('.images-wrap')[0].childNodes.length - 1].setAttribute('aria-hidden', 'true')
         if (localStorage.getItem('theme') === 'theme-dark') {
             setTheme('theme-dark');
         } else {

@@ -117,13 +117,13 @@ const MainProfile = () => {
                             <p style={{ float: "left", width: '120px', fontSize: "15px" }}>name:</p>
                             {name ?
                                 (<>
-                                    <p style={{ float: "left", width: "200px", fontSize: "15px" }}>{name}</p>
+                                    <p style={{ float: "left", width: "400px", fontSize: "15px" }}>{name}</p>
                                     <Button id="button" onClick={() => {
                                         SetName('')
                                     }}>reset</Button>
                                 </>)
                                 : (<>
-                                    <input id='name' className='name' style={{ float: "left", width: "200px" }}></input>
+                                    <input id='name' className='name' style={{ float: "left", width: "400px" }}></input>
                                     <label htmlFor='name'>
                                         <Button id="button" onClick={(e) => {
                                             editp({
@@ -145,11 +145,11 @@ const MainProfile = () => {
                             <p style={{ float: "left", width: '120px', fontSize: "15px" }}>phone:</p>
                             {phone ?
                                 (<>
-                                    <p style={{ float: "left", width: "200px", fontSize: "15px" }}>{phone}</p>
+                                    <p style={{ float: "left", width: "400px", fontSize: "15px" }}>{phone}</p>
                                     <Button id="button" onClick={() => { SetPhone('') }}>reset</Button>
                                 </>)
                                 : (<>
-                                    <input id='phone' style={{ float: "left", width: "200px" }}></input>
+                                    <input id='phone' style={{ float: "left", width: "400px" }}></input>
                                     <Button id="button" onClick={(e) => {
                                         editp({
                                             variables: {
@@ -167,11 +167,11 @@ const MainProfile = () => {
                             <p style={{ float: "left", width: '120px', fontSize: "15px" }}>address:</p>
                             {address ?
                                 (<>
-                                    <p style={{ float: "left", width: "200px", fontSize: "15px" }}>{address}</p>
+                                    <p style={{ float: "left", width: "400px", fontSize: "15px" }}>{address}</p>
                                     <Button id="button" onClick={() => { SetAddress('') }}>reset</Button>
                                 </>)
                                 : (<>
-                                    <input id='address' style={{ float: "left", width: "200px" }}></input>
+                                    <input id='address' style={{ float: "left", width: "400px" }}></input>
                                     <Button id="button" onClick={(e) => {
                                         editp({
                                             variables: {
@@ -188,11 +188,11 @@ const MainProfile = () => {
                             <p style={{ float: "left", width: '120px', fontSize: "15px" }}>email:</p>
                             {email ?
                                 (<>
-                                    <p style={{ float: "left", width: "200px", fontSize: "15px" }}>{email}</p>
+                                    <p style={{ float: "left", width: "400px", fontSize: "15px" }}>{email}</p>
                                     <Button id="button" onClick={() => { setEMail('') }}>reset</Button>
                                 </>)
                                 : (<>
-                                    <input id='email' style={{ float: "left", width: "200px" }}></input>
+                                    <input id='email' style={{ float: "left", width: "400px" }}></input>
                                     <Button id="button" onClick={(e) => {
                                         editp({
                                             variables: {
@@ -210,11 +210,11 @@ const MainProfile = () => {
                             <p style={{ float: "left", width: '120px', fontSize: "15px" }}>password:</p>
                             {password ?
                                 (<>
-                                    <p style={{ float: "left", width: "200px", fontSize: "15px" }}>{password}</p>
+                                    <p style={{ float: "left", width: "400px", fontSize: "15px" }}>{password}</p>
                                     <Button id="button" onClick={() => { SetPass('') }}>reset</Button>
                                 </>)
                                 : (<>
-                                    <input id='password' style={{ float: "left", width: "200px" }}></input>
+                                    <input id='password' style={{ float: "left", width: "400px" }}></input>
                                     <Button id="button" onClick={(e) => {
                                         editp({
                                             variables: {
@@ -232,11 +232,11 @@ const MainProfile = () => {
                             <p style={{ float: "left", width: '120px', fontSize: "15px" }}>age:</p>
                             {age ?
                                 (<>
-                                    <p style={{ float: "left", width: "200px", fontSize: "15px" }}>{age}</p>
+                                    <p style={{ float: "left", width: "400px", fontSize: "15px" }}>{age}</p>
                                     <Button id="button" onClick={() => { SetAge('') }}>reset</Button>
                                 </>)
                                 : (<>
-                                    <input id='age' style={{ float: "left", width: "200px" }}></input>
+                                    <input id='age' style={{ float: "left", width: "400px" }}></input>
                                     <Button id="button" onClick={(e) => {
                                         editp({
                                             variables: {
@@ -254,11 +254,11 @@ const MainProfile = () => {
                             <p style={{ float: "left", width: '120px', fontSize: "15px" }}>introduction:</p>
                             {introduction ?
                                 (<>
-                                    <p style={{ float: "left", width: "200px", fontSize: "15px" }}>{introduction}</p>
+                                    <p style={{ float: "left", width: "400px", fontSize: "15px" }}>{introduction}</p>
                                     <Button id="button" onClick={() => { SetIntro('') }}>reset</Button>
                                 </>)
                                 : (<>
-                                    <input id='introduction' style={{ float: "left", width: "200px" }}></input>
+                                    <input id='introduction' style={{ float: "left", width: "400px" }}></input>
                                     <Button id="button" onClick={(e) => {
                                         editp({
                                             variables: {
