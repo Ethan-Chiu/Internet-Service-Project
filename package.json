@@ -2,7 +2,7 @@
   "name": "rics-chat",
   "version": "0.1.0",
   "private": true,
-  "homepage": "https://ZOIjimmy.github.io/near-to-u/",
+  
   "dependencies": {
     "@ffmpeg/core": "^0.8.5",
     "@ffmpeg/ffmpeg": "^0.9.7",
