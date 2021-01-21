@@ -243,9 +243,7 @@ const MainPost = () =>
         const captureButton = document.getElementById("captureButton");
         
         playButton.innerHTML = ""
-        playButton.dispaly = "inline-block"
         recordButton.innerHTML = ""
-        recordButton.dispaly = "inline-block"
         captureButton.innerHTML = "Captuer Image"
         captureButton.style.dispaly = "inline-block"
 
@@ -301,7 +299,7 @@ const MainPost = () =>
         const captureButton = document.getElementById("captureButton");
         recordButton.innerHTML = "Start Recording"
         captureButton.innerHTML = ""
-        captureButton.style.dispaly = "inline-block"
+        captureButton.style.display = "inline-block"
         recordButton.addEventListener("click",()=>{
             if(recordButton.textContent === "Start Recording"){
                 startRecording();
@@ -364,20 +362,18 @@ const MainPost = () =>
                         
                         <div style = {{ textAlign: "center"}}>
                             <button id="playButton" onClick={playRecorded} className="contexts"></button>
+                        
                             <button id="removePicture" onClick = {removeMedia} className="contexts"> Remove Picture Or Video</button>
+                            <button id="cancelButton" onClick = {confirm} className="contexts"> Confirm(close camera view) </button>
+                            <button id="downloadButton" onClick = {download} className="contexts">Download</button>
                         </div>
-
-                        <div id="mediaResult" style = {{width: "100%"}}>    
-                        </div>
-
-                        <button id="cancelButton" onClick = {confirm} className="contexts"> Confirm(close camera view) </button>
-                        <button id="downloadButton" onClick = {download} className="contexts">Download</button>
-                        <div id="mediaResult">
+                        
+                        <div id="mediaResult" style = {{width: "100%"}}>
                         </div>
                         
                     </div>
 
-                    <div className = 'main-right-post' id="mainCam">
+                    <div className = 'main-right-post' id="mainCam" style = {{height: "80%"}}>
                             Camera View
                             <div className = "video-holder" id = "video-holder">
                             </div>

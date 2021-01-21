@@ -77,7 +77,7 @@ type Post {
 	tags: [String]
 	likes: [String]!
 	comments: [Comment]!
-	time: String!
+	time: String
 }
 
 type Comment {

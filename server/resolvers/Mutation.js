@@ -49,7 +49,7 @@ const Mutation = {
 			await Post.create(args.data)
 			state = "create successfully"
 			await pubsub.publish("newSub", {
-				newSub: args.data
+				newSub: {...args.data, likes: [], comments: [], id: "args.data.id"}
 			})
 			return state
 		}
