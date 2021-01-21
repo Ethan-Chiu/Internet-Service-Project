@@ -20,23 +20,22 @@ const { TextArea } = Input;
 
 const useStyles = makeStyles((theme) => ({
     root: {
-      '& > *': {
-        margin: theme.spacing(1),
-      },
+        '& > *': {
+            margin: theme.spacing(1),
+        },
     },
     input: {
-      display: 'none',
+        display: 'none',
     },
 }));
 
-const MainPost = () =>
-{  
+const MainPost = () => {
     const inputRef = useRef(null)
     const titleRef = useRef(null)
     const selectRef = useRef(null)
 
-    const [user, setUser] = useState(localStorage.getItem('user')); 
-    const [location, setLocation] = useState({ x: 25.01, y: 121.53, s:15});
+    const [user, setUser] = useState(localStorage.getItem('user'));
+    const [location, setLocation] = useState({ x: 25.01, y: 121.53, s: 15 });
     const [type, setType] = useState("white");
     const [picture, setPicture] = useState("");
     const [video, setVideo] = useState("");
@@ -47,36 +46,37 @@ const MainPost = () =>
         console.log(user)
     }, []);
 
-    setInterval(function(){
-        navigator.geolocation.getCurrentPosition((pos)=>{
-        setLocation({x:pos.coords.latitude, y: pos.coords.longitude, s: 15})
-        
-      })}, 10000);
+    setInterval(function () {
+        navigator.geolocation.getCurrentPosition((pos) => {
+            setLocation({ x: pos.coords.latitude, y: pos.coords.longitude, s: 15 })
 
-//////////////////////////////////////////////////////////////////////////////
-//show media--
+        })
+    }, 10000);
+
+    //////////////////////////////////////////////////////////////////////////////
+    //show media--
     const constraints = {
         audio: true,
-        video:{
+        video: {
             width: 300,
             height: 300
         }
     }
 
-    async function init(){
-        try{
+    async function init() {
+        try {
             const stream = await navigator.mediaDevices.getUserMedia(constraints);
             handleCapture(stream);
         }
-        catch(e){
+        catch (e) {
             console.log(`navigator.mediaDevices.getUserMedia: ${e.toString()}`)
         }
     }
 
-    function handleCapture(stream){
+    function handleCapture(stream) {
         window.stream = stream;
         const videoHolder = document.getElementById("video-holder");
-        videoHolder.innerHTML="";
+        videoHolder.innerHTML = "";
         const rawVideo = document.createElement("video");
         rawVideo.setAttribute('id', "raw-video");
         rawVideo.setAttribute('playsInline', null);
@@ -86,51 +86,51 @@ const MainPost = () =>
         videoHolder.appendChild(rawVideo);
     }
 
-    function handleImageUpload(stream){
+    function handleImageUpload(stream) {
         const videoHolder = document.getElementById("video-holder");
-        videoHolder.innerHTML="";
+        videoHolder.innerHTML = "";
         const rawImg = document.createElement("img");
         rawImg.setAttribute('id', "raw-img");
-        rawImg.style.maxWidth="300px"
-        rawImg.style.maxHeight="300px"
+        rawImg.style.maxWidth = "300px"
+        rawImg.style.maxHeight = "300px"
         rawImg.setAttribute('src', stream);
         videoHolder.appendChild(rawImg);
     }
-//--show media
-//////////////////////////////////////////////////////////////////////////////
-//cancel show media--
-    function confirm(){
+    //--show media
+    //////////////////////////////////////////////////////////////////////////////
+    //cancel show media--
+    function confirm() {
         const videoHolder = document.getElementById("video-holder");
-        videoHolder.innerHTML="";
+        videoHolder.innerHTML = "";
         const b1 = document.getElementById("captureButton");
         const b2 = document.getElementById("recordButton");
-        b1.innerHTML = "";b2.innerHTML = "";
+        b1.innerHTML = ""; b2.innerHTML = "";
     }
-//--cancel show media
-//////////////////////////////////////////////////////////////////////////////
-//remove Media--
-    function removeMedia(){
+    //--cancel show media
+    //////////////////////////////////////////////////////////////////////////////
+    //remove Media--
+    function removeMedia() {
         setPicture("");
         setVideo("");
         const mediaResult = document.getElementById("mediaResult")
         mediaResult.innerHTML = "";
     }
-//--remove Media
-//////////////////////////////////////////////////////////////////////////////
-//record--
+    //--remove Media
+    //////////////////////////////////////////////////////////////////////////////
+    //record--
     let mediaRecorder;
     let recordedBlobs;
 
     function startRecording() {
         recordedBlobs = [];
-        let options = {mimeType: 'video/webm;codecs=vp9,opus'};
+        let options = { mimeType: 'video/webm;codecs=vp9,opus' };
         try {
-        mediaRecorder = new MediaRecorder(window.stream, options);
+            mediaRecorder = new MediaRecorder(window.stream, options);
         } catch (e) {
-        console.error('Exception while creating MediaRecorder:', e);
-        return;
+            console.error('Exception while creating MediaRecorder:', e);
+            return;
         }
-    
+
         const recordButton = document.getElementById("recordButton");
         recordButton.innerHTML = "Stop Recording"
         mediaRecorder.onstop = (event) => {
@@ -147,11 +147,11 @@ const MainPost = () =>
         if (event.data && event.data.size > 0) {
             recordedBlobs.push(event.data);
             console.log(recordedBlobs);
-            const superBuffer = new Blob(recordedBlobs, {type: 'video/webm'});
+            const superBuffer = new Blob(recordedBlobs, { type: 'video/webm' });
             var reader = new FileReader();
             reader.readAsDataURL(superBuffer);
-            reader.onload = function() {
-                var base64data = reader.result;                
+            reader.onload = function () {
+                var base64data = reader.result;
                 setVideo(base64data);
             }
         }
@@ -160,9 +160,9 @@ const MainPost = () =>
     function stopRecording() {
         mediaRecorder.stop();
     }
-//--record
-//////////////////////////////////////////////////////////////////////////////
-//play recorded--
+    //--record
+    //////////////////////////////////////////////////////////////////////////////
+    //play recorded--
     function playRecorded() {
 
         // reset screen
@@ -174,15 +174,15 @@ const MainPost = () =>
         recordedVideo.setAttribute('height', "300");
         mediaResult.appendChild(recordedVideo);
         // reset screen done
-        
+
         recordedVideo.controls = true;
         recordedVideo.src = video;
         recordedVideo.play();
     };
-//--play recorded
-//////////////////////////////////////////////////////////////////////////////
-//download--
-    function download(){
+    //--play recorded
+    //////////////////////////////////////////////////////////////////////////////
+    //download--
+    function download() {
         const url = video;
         const a = document.createElement('a');
         a.style.display = 'none';
@@ -191,18 +191,18 @@ const MainPost = () =>
         document.body.appendChild(a);
         a.click();
         setTimeout(() => {
-          document.body.removeChild(a);
-          window.URL.revokeObjectURL(url);
+            document.body.removeChild(a);
+            window.URL.revokeObjectURL(url);
         }, 100);
     }
-//--download
+    //--download
 
-//graphql
-    function post(){
+    //graphql
+    function post() {
         if (!user || !location || !titleRef.current.state.value || !selectRef.current.value) return;
         var [doncare, ...pretags] = inputRef.current.state.value.replace(/\n/g, " ").split('#');
         var temptags = [];
-        pretags.map(e=>{
+        pretags.map(e => {
             temptags.push(e.split(' ')[0]);
         })
         createPost({
@@ -219,18 +219,18 @@ const MainPost = () =>
                 tags: temptags
             }
         })
-        setPicture("");setVideo("");
-        titleRef.current.state.value=""
-        inputRef.current.state.value=""
-        selectRef.current.value=""
+        setPicture(""); setVideo("");
+        titleRef.current.state.value = ""
+        inputRef.current.state.value = ""
+        selectRef.current.value = ""
         confirm();
         const mediaResult = document.getElementById("mediaResult")
         mediaResult.innerHTML = "";
     }
-    
 
-//button function
-    const addphoto = ()=>{
+
+    //button function
+    const addphoto = () => {
         init();
 
         // reset display
@@ -241,13 +241,14 @@ const MainPost = () =>
         const playButton = document.getElementById("playButton");
         const recordButton = document.getElementById("recordButton");
         const captureButton = document.getElementById("captureButton");
-        
+
         playButton.innerHTML = ""
         recordButton.innerHTML = ""
-        captureButton.innerHTML = "Captuer Image"
-        captureButton.style.dispaly = "inline-block"
+        captureButton.innerHTML = "Capture Image"
+        captureButton.style.display = "inline-block"
+        recordButton.style.display = "none"
 
-        captureButton.addEventListener("click",function(){
+        captureButton.addEventListener("click", function () {
             // reset display
             const mediaResult = document.getElementById("mediaResult")
             mediaResult.innerHTML = "";
@@ -266,29 +267,29 @@ const MainPost = () =>
         })
     }
 
-    const addpic = (urlsrc)=>{
+    const addpic = (urlsrc) => {
         var image = new Image();
         image.onload = function () {
-        var canvas = document.createElement('canvas');
-        canvas.width = 300; 
-        canvas.height = 300; 
-        canvas.getContext('2d').drawImage(this, 0, 0, 300, 300);
-        setPicture(canvas.toDataURL('image/png'));
+            var canvas = document.createElement('canvas');
+            canvas.width = 300;
+            canvas.height = 300;
+            canvas.getContext('2d').drawImage(this, 0, 0, 300, 300);
+            setPicture(canvas.toDataURL('image/png'));
         };
         image.src = urlsrc;
 
         const mediaResult = document.getElementById("mediaResult")
         mediaResult.innerHTML = "";
-        var newImg= document.createElement("img");
+        var newImg = document.createElement("img");
         newImg.setAttribute('id', "newImg");
-        newImg.style.maxWidth="300px"
-        newImg.style.maxHeight="300px"
+        newImg.style.maxWidth = "300px"
+        newImg.style.maxHeight = "300px"
         newImg.src = urlsrc;
         mediaResult.appendChild(newImg);
     }
 
-    const addvideo = ()=>{
-        init(); 
+    const addvideo = () => {
+        init();
 
         // reset display
         const mediaResult = document.getElementById("mediaResult")
@@ -299,12 +300,15 @@ const MainPost = () =>
         const captureButton = document.getElementById("captureButton");
         recordButton.innerHTML = "Start Recording"
         captureButton.innerHTML = ""
-        captureButton.style.display = "inline-block"
-        recordButton.addEventListener("click",()=>{
-            if(recordButton.textContent === "Start Recording"){
+        recordButton.style.display = "inline-block"
+        captureButton.style.display = "none"
+
+        recordButton.addEventListener("click", () => {
+
+            if (recordButton.textContent === "Start Recording") {
                 startRecording();
             }
-            else{
+            else {
                 stopRecording();
                 //set screen
                 recordButton.textContent = "Start Recording"
@@ -314,18 +318,18 @@ const MainPost = () =>
             }
         })
     }
-//////////////////////////////////////////////////////////////////////////////
-	const theme = localStorage.getItem('theme')
+    //////////////////////////////////////////////////////////////////////////////
+    const theme = localStorage.getItem('theme')
     return (
         <>
-			<div className = { theme } id = "theme-controller">
-                <MainNav className = "nav"/>
-                <div className = "main-div-post">
-                    <div className = 'main-center-post' id="mainPost">
+            <div className={theme} id="theme-controller">
+                <MainNav className="nav" />
+                <div className="main-div-post">
+                    <div className='main-center-post' id="mainPost">
                         <Input
                             placeholder="Title"
                             ref={titleRef}
-                            style={{ marginBottom: 10 ,borderRadius:"5px"}}
+                            style={{ marginBottom: 10, borderRadius: "5px" }}
                             onKeyDown={(e) => {
                                 if (e.key === 'Enter') {
                                     inputRef.current.focus()
@@ -335,12 +339,12 @@ const MainPost = () =>
                         <TextArea
                             rows={4}
                             placeholder="Type your text here..."
-                            style={{borderRadius:"5px"}}
+                            style={{ borderRadius: "5px" }}
                             ref={inputRef}
                         ></TextArea>
                         <div>
-                            <label htmlFor="type" style = {{fontSize: "14px"}}><h6>Select a type: </h6></label>
-                            <select style = {{fontSize: "14px", color :"black"}} name="type" ref={selectRef}>
+                            <label htmlFor="type" style={{ fontSize: "14px" }}><h6>Select a type: </h6></label>
+                            <select style={{ fontSize: "14px", color: "black" }} name="type" ref={selectRef}>
                                 <option value="">-- --</option>
                                 <option value="red">Emergency</option>
                                 <option value="orange">Activity</option>
@@ -349,42 +353,44 @@ const MainPost = () =>
                                 <option value="blue">Mood</option>
                                 <option value="purple">Things lost</option>
                             </select>
-                            <IconButton onClick = {addvideo} className="contexts"><VideoCallOutlinedIcon /></IconButton>
-                            <IconButton onClick = {addphoto} className="contexts"><AddAPhotoIcon /></IconButton>
-                            <IconButton  component="label"><AddPhotoAlternateIcon style={{color:(theme==="theme-dark")?("#98ccd3"):("#364e68")}}/>
-                            <input type="file" 
-                                onChange={(e)=>{const urlsrc = URL.createObjectURL(e.target.files?.item(0));
-                                                handleImageUpload(urlsrc);
-                                                addpic(urlsrc);}}
-                                 hidden /></IconButton>
-                            <Button onClick = {post} className="contexts">post</Button>
+                            <IconButton onClick={addvideo} className="contexts"><VideoCallOutlinedIcon /></IconButton>
+                            <IconButton onClick={addphoto} className="contexts"><AddAPhotoIcon /></IconButton>
+                            <IconButton component="label"><AddPhotoAlternateIcon style={{ color: (theme === "theme-dark") ? ("#98ccd3") : ("#364e68") }} />
+                                <input type="file"
+                                    onChange={(e) => {
+                                        const urlsrc = URL.createObjectURL(e.target.files?.item(0));
+                                        handleImageUpload(urlsrc);
+                                        addpic(urlsrc);
+                                    }}
+                                    hidden /></IconButton>
+                            <Button onClick={post} className="contexts">post</Button>
                         </div>
-                        
-                        <div style = {{ textAlign: "center"}}>
+
+                        <div style={{ textAlign: "center" }}>
                             <button id="playButton" onClick={playRecorded} className="contexts"></button>
-                        
-                            <button id="removePicture" onClick = {removeMedia} className="contexts"> Remove Picture Or Video</button>
-                            <button id="cancelButton" onClick = {confirm} className="contexts"> Confirm(close camera view) </button>
-                            <button id="downloadButton" onClick = {download} className="contexts">Download</button>
+
+                            <button id="removePicture" onClick={removeMedia} className="contexts"> Remove Picture Or Video</button>
+                            <button id="cancelButton" onClick={confirm} className="contexts"> Confirm(close camera view) </button>
+                            <button id="downloadButton" onClick={download} className="contexts">Download</button>
                         </div>
-                        
-                        <div id="mediaResult" style = {{width: "100%"}}>
+
+                        <div id="mediaResult" style={{ width: "100%", textAlign: "center" }}>
                         </div>
-                        
+
                     </div>
 
-                    <div className = 'main-right-post' id="mainCam" style = {{height: "80%"}}>
-                            Camera View
-                            <div className = "video-holder" id = "video-holder">
-                            </div>
-                        <div style = {{margin: "0 auto", textAlign:"center"}}>
-                            <button id="captureButton" ></button>
-                            <button id="recordButton" ></button>
+                    <div className='main-right-post' id="mainCam" style={{ height: "80%" }}>
+                        Camera View
+                            <div className="video-holder" id="video-holder">
+                        </div>
+                        <div style={{ margin: "0 auto", textAlign: "center" }}>
+                            <button id="captureButton" style={{ display: "none" }}></button>
+                            <button id="recordButton" style={{ dispaly: "none" }}></button>
                         </div>
                     </div>
 
                 </div>
-			</div>
+            </div>
         </>
     );
 }
