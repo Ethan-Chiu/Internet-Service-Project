@@ -63,11 +63,25 @@ const MainProfile = () => {
         }
     );
 
-
     const changecover = (e) => {
         e.preventDefault();
-        console.log("hi")
         console.log(e.target.value)
+        const urlsrc = URL.createObjectURL(e.target.files?.item(0))
+        var image = new Image();
+        image.onload = function () {
+        var canvas = document.createElement('canvas');
+        canvas.width = 230; 
+        canvas.height = 230; 
+        canvas.getContext('2d').drawImage(this, 0, 0, 230, 230);
+        SetPic(canvas.toDataURL('image/png'));
+            editp({
+                variables: {
+                    account: account,
+                    picture: canvas.toDataURL('image/png')
+                }
+            })
+        };
+        image.src = urlsrc;
     }
 
     useEffect(() => {
@@ -79,7 +93,7 @@ const MainProfile = () => {
                 {<MainNav className="nav" />}
                 <div className="main-div">
                     <div className="profile_img">
-                        <img className="profile_pic" src="https://memes.tw/user-template/bee4c8f3cd6c4426c86a343e6b9a4ad3.png"></img>
+                        <img className="profile_pic" src={picture?(picture):("https://ern-dubai.com/wp-content/uploads/2019/04/facebook-anonymous-app.jpg")}></img>
                         <input accept="image/*" className='input' id="icon-button-file" type="file" onChange={changecover}/>
                         <label htmlFor="icon-button-file">
                             <IconButton color="primary" aria-label="upload picture" component="span" className="change_photo">
