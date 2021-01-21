@@ -12,7 +12,7 @@ const PostSchema = new Schema({
 	tags:			{ type: Array },
 	likes:		{ type: [String], default: [] },
 	comments:	{ type: [{ user: String, text: String }], default: [] },
-	time:			{ type: Date, default: Date.now }
+	time:			{ type: String }
 }, {
 	collection:	"Post"
 })
