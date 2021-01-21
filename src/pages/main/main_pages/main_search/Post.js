@@ -50,7 +50,7 @@ const Post = (props) => {
 				
 				<CardHeader title = {p.title} subheader = {p.author} 
 				avatar = {<Avatar className = {classes.avatar}>{p.author}</Avatar>}/>
-				<a href = {p.picture? p.picture: p.video} style = {{padding: "20px", color: "red"}}>image</a>
+				<button onClick = {()=>{window.open(p.picture, "_blank")}} style = {{padding: "20px", color: "red"}}>image</button>
 				<IconButton
 				className={clsx(classes.expand, {
 				[classes.expandOpen]: expanded,
