@@ -1,13 +1,7 @@
 import React, { useEffect, useRef, useState, useMemo } from "react";
-//import { Button, Input, message, Tag } from 'antd'
-import GridList from '@material-ui/core/Gridlist'
-import GridListTile from '@material-ui/core/GridListTile';
-import GridListTileBar from '@material-ui/core/GridListTileBar';
-import urls from '../../images';
-import Box from '@material-ui/core/Box';
+
 import './Main.css'
-import { Button, Input, message, Tag } from 'antd'
-import useChat from '../../useChat'
+
 import {
 	GET_POST,
 	CREATE_POST_MUTATION,
@@ -18,29 +12,14 @@ import {
   } from '../../graphql'
 import { useQuery, useMutation } from 'react-apollo'
 //map
-import GoogleMapReact from 'google-map-react';
 import { withScriptjs, withGoogleMap, GoogleMap, Marker } from "react-google-maps"
-
-
 
 //SPA Navigation 
 import MainNav from './Nav'
 import Post from './Post'
 //material-ui
 import { makeStyles } from '@material-ui/core/styles';
-import Collapse from '@material-ui/core/Collapse';
-import ListSubheader from '@material-ui/core/ListSubheader';
-import List from '@material-ui/core/List';
-import ListItem from '@material-ui/core/ListItem';
-import ListItemIcon from '@material-ui/core/ListItemIcon';
-import ListItemText from '@material-ui/core/ListItemText';
-import InboxIcon from '@material-ui/icons/MoveToInbox';
-import DraftsIcon from '@material-ui/icons/Drafts';
-import SendIcon from '@material-ui/icons/Send';
-import ExpandLess from '@material-ui/icons/ExpandLess';
-import ExpandMore from '@material-ui/icons/ExpandMore';
-import StarBorder from '@material-ui/icons/StarBorder';
-import Avatar from '@material-ui/core/Avatar';
+
 //bootstrap
 import "react-slideshow-image/dist/styles.css"
 import { Slide } from 'react-slideshow-image';
@@ -55,9 +34,6 @@ const useStyles = makeStyles((theme) => ({
     paddingLeft: theme.spacing(4),
   },
 }));
-
-
-
 
 const Main = ()=>{
   const AnyReactComponent = ({ text }) => <div>{text}</div>;
