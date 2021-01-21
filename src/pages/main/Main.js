@@ -13,6 +13,7 @@ import {
 import { useQuery, useMutation } from 'react-apollo'
 //map
 import { withScriptjs, withGoogleMap, GoogleMap, Marker } from "react-google-maps"
+import MarkerWithLabel from "react-google-maps/lib/components/addons/MarkerWithLabel";
 
 //SPA Navigation 
 import MainNav from './Nav'
@@ -47,7 +48,7 @@ const Main = ()=>{
   const [currentlat, SetLat] = useState(25.01);
   const [currentlng, SetLng] = useState(121.53);
   const [posts, Setposts] = useState([])
-  const { loading, error, data, subscribeToMore} = useQuery(GET_POST, {variables: {x: currentlat, y: currentlng, s: 0.5}})
+  const { loading, error, data, refetch} = useQuery(GET_POST, {variables: {x: currentlat, y: currentlng, s: 0.5}})
   const cachedMutatedData = useMemo(() => {
     if (loading || error) return null
     Setposts(data.getPosts)
@@ -72,19 +73,6 @@ const Main = ()=>{
         }
       }
   );
-  useEffect(() => {
-    subscribeToMore({
-      document: ALL_SUBSCRIPTION,
-      updateQuery: (prev, { subscriptionData }) => {
-        if (!subscriptionData.data) return prev
-        
-        
-      const newPost = subscriptionData
-      console.log(prev)
-          return prev
-      } 
-    })
-  }, [subscribeToMore])
 
  setInterval(function(){
    navigator.geolocation.getCurrentPosition((pos)=>{
@@ -124,8 +112,7 @@ const Main = ()=>{
         zoom = {15}
         center = {{lat: currentlat, lng: currentlng}}
       >
-        
-          {posts !== undefined? posts.map(({location}, i)=>(<Marker 
+          {posts !== undefined? posts.map(({location}, i)=>(<Marker
           position = {{
             lat: location.x,
             lng: location.y
@@ -194,6 +181,9 @@ const Main = ()=>{
           </div>
           
 
+        </div>
+        <div style = {{position: "absolute", right: "1%", top: "8%", backgroundColor: "red"}}>
+          <button onClick ={()=>{refetch()}}>REFRESH</button>
         </div>
     </div>
     </div>
