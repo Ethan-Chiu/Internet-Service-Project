@@ -373,13 +373,13 @@ const MainPost = () =>
                         
                     </div>
 
-                    <div className = 'main-right-post' id="mainCam" style = {{height: "80%"}}>
+                    <div className = 'main-right-post' id="mainCam" >
                             Camera View
                             <div className = "video-holder" id = "video-holder">
                             </div>
                         <div style = {{margin: "0 auto", textAlign:"center"}}>
-                            <button id="captureButton" ></button>
-                            <button id="recordButton" ></button>
+                            <button id="captureButton" style={{display: "none"}}></button>
+                            <button id="recordButton" style={{display: "none"}}></button>
                         </div>
                     </div>
 

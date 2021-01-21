@@ -80,19 +80,11 @@ const MainProfile = () => {
                 <div className="main-div">
                     <div className="profile_img">
                         <img className="profile_pic" src="https://memes.tw/user-template/bee4c8f3cd6c4426c86a343e6b9a4ad3.png"></img>
-                        <input accept="image/*" className='input' id="icon-button-file" type="file" />
+                        <input accept="image/*" className='input' id="icon-button-file" type="file" onChange={changecover}/>
                         <label htmlFor="icon-button-file">
                             <IconButton color="primary" aria-label="upload picture" component="span" className="change_photo">
                                 <PhotoCamera />
                             </IconButton>
-                        </label>
-
-                        <input accept="image/*" className='input' id="icon-button-file" type="file" onChange={changecover} />
-                        <label htmlFor="icon-button-file" className="change_cover" >
-                            <IconButton color="primary" aria-label="upload picture" component="span" >
-                                <PhotoCamera />
-                            </IconButton>
-                            <h4 >add cover</h4>
                         </label>
 
                         <button id="themeswitch" onClick={toggleTheme}><FontAwesomeIcon icon={faAdjust} /></button>
